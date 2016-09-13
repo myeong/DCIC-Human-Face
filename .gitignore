@@ -91,3 +91,6 @@ ENV/
 
 .DS_Store
 GIS/parcels
+GIS/Asheville_map
+
+!README.md

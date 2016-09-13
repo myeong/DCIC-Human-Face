@@ -1,0 +1,91 @@
+<PAMDataset>
+  <Metadata domain="xml:ESRI" format="xml">
+    <GeodataXform xsi:type="typens:ApproximationXform" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:typens="http://www.esri.com/schemas/ArcGIS/10.3">
+      <Approximation>true</Approximation>
+      <RecalculateTolerance>true</RecalculateTolerance>
+      <Tolerance>0</Tolerance>
+      <GridSize>32</GridSize>
+      <ConstantZ>0</ConstantZ>
+      <ZFactor>1</ZFactor>
+      <ZOffset>0</ZOffset>
+      <CorrectGeoid>true</CorrectGeoid>
+      <RequireDEM>false</RequireDEM>
+      <SpatialReference xsi:type="typens:UnknownCoordinateSystem">
+        <HighPrecision>true</HighPrecision>
+      </SpatialReference>
+      <GeodataXform xsi:type="typens:AdjustXform">
+        <NaturalNeighbor>true</NaturalNeighbor>
+        <PolynomialApproximation>-1</PolynomialApproximation>
+        <SpatialReference xsi:type="typens:ProjectedCoordinateSystem">
+          <WKT>PROJCS["NAD_1983_StatePlane_North_Carolina_FIPS_3200_Feet",GEOGCS["GCS_North_American_1983",DATUM["D_North_American_1983",SPHEROID["GRS_1980",6378137.0,298.257222101]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Lambert_Conformal_Conic"],PARAMETER["False_Easting",2000000.002616666],PARAMETER["False_Northing",0.0],PARAMETER["Central_Meridian",-79.0],PARAMETER["Standard_Parallel_1",34.33333333333334],PARAMETER["Standard_Parallel_2",36.16666666666666],PARAMETER["Latitude_Of_Origin",33.75],UNIT["Foot_US",0.3048006096012192],AUTHORITY["EPSG",2264]]</WKT>
+          <XOrigin>-121841900</XOrigin>
+          <YOrigin>-93659000</YOrigin>
+          <XYScale>36365718.124241434</XYScale>
+          <ZOrigin>-100000</ZOrigin>
+          <ZScale>10000</ZScale>
+          <MOrigin>-100000</MOrigin>
+          <MScale>10000</MScale>
+          <XYTolerance>0.0032808333333333331</XYTolerance>
+          <ZTolerance>0.001</ZTolerance>
+          <MTolerance>0.001</MTolerance>
+          <HighPrecision>true</HighPrecision>
+          <WKID>102719</WKID>
+          <LatestWKID>2264</LatestWKID>
+        </SpatialReference>
+        <PolynomialXform xsi:type="typens:PolynomialXform">
+          <PolynomialOrder>1</PolynomialOrder>
+          <SpatialReference xsi:type="typens:UnknownCoordinateSystem">
+            <XOrigin>-5952.5</XOrigin>
+            <YOrigin>-13199.5</YOrigin>
+            <XYScale>409418147942.77228</XYScale>
+            <XYTolerance>4.8849813083506896e-012</XYTolerance>
+            <HighPrecision>true</HighPrecision>
+          </SpatialReference>
+          <SourceGCPs xsi:type="typens:ArrayOfDouble">
+            <Double>1252.2220280446345</Double>
+            <Double>-3775.9001108222292</Double>
+            <Double>1204.8618999922182</Double>
+            <Double>-587.93051287595881</Double>
+            <Double>2210.5618801375936</Double>
+            <Double>-2697.1595999790588</Double>
+            <Double>1733.983044389259</Double>
+            <Double>-3114.1954844202633</Double>
+            <Double>1313.070410063365</Double>
+            <Double>-1312.4866777004488</Double>
+            <Double>588.66983036790134</Double>
+            <Double>-3758.490031138761</Double>
+          </SourceGCPs>
+          <TargetGCPs xsi:type="typens:ArrayOfDouble">
+            <Double>941903.17960593104</Double>
+            <Double>683384.52089034021</Double>
+            <Double>941814.87302400172</Double>
+            <Double>688537.97022908926</Double>
+            <Double>943437.89307191968</Double>
+            <Double>685122.75429050624</Double>
+            <Double>942678.3033837527</Double>
+            <Double>684455.08928725123</Double>
+            <Double>941991.29817251139</Double>
+            <Double>687380.61726985103</Double>
+            <Double>940827.16371333599</Double>
+            <Double>683402.37124833465</Double>
+          </TargetGCPs>
+        </PolynomialXform>
+      </GeodataXform>
+    </GeodataXform>
+  </Metadata>
+  <PAMRasterBand band="1">
+    <Histograms>
+      <HistItem>
+        <HistMin>-0.498015873015873</HistMin>
+        <HistMax>251.4980158730159</HistMax>
+        <BucketCount>252</BucketCount>
+        <IncludeOutOfRange>0</IncludeOutOfRange>
+        <Approximate>1</Approximate>
+        <HistCounts>3|8|10|4|10|5|11|10|8|12|4|16|10|7|10|2|14|5|3|5|2|10|4|4|4|3|1|4|3|5|2|2|5|2|3|3|6|4|5|4|3|5|5|2|8|3|10|7|6|1|4|8|7|4|7|0|9|4|2|14|2|5|10|9|4|2|3|8|4|14|8|6|8|3|7|3|13|9|3|10|5|13|13|2|7|5|10|11|3|9|5|15|16|5|13|6|16|15|7|17|12|16|20|13|16|15|24|18|15|25|8|19|28|15|27|9|24|26|12|14|9|25|28|13|23|15|25|29|17|32|23|32|35|13|39|17|31|32|15|40|15|38|37|19|32|22|49|34|19|34|24|49|41|19|36|23|46|41|21|44|19|47|54|18|53|8|50|53|21|47|20|46|40|19|57|34|41|44|18|60|30|50|55|22|59|18|65|63|25|59|40|62|75|38|70|35|62|67|36|52|41|62|70|37|67|40|69|66|30|52|28|51|63|31|42|24|44|64|39|65|36|65|74|32|96|51|120|121|90|252|153|285|325|163|310|140|816|167|78|133|54|99|99|35|87|39|55|48|13|16|1|0</HistCounts>
+      </HistItem>
+    </Histograms>
+    <Metadata domain="IMAGE_STRUCTURE">
+      <MDI key="COMPRESSION">JPEG</MDI>
+    </Metadata>
+  </PAMRasterBand>
+</PAMDataset>
