@@ -9,7 +9,7 @@ This is a repository for the Human Face of Big Data project from DCIC, iSchool, 
 Any technical documents that students learned and implmented can be placed here as markdown (.md) files. Markdown syntax are avaible at https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
 
 #### GIS
-QGIS files and shape files for target cities are available here. Some big files need to be downloaded from the UMD Box that will be notified separately. 
+QGIS files and shape files for target cities are available here. Some big files need to be downloaded from the UMD Box for the project. 
 
 #### html
 Any web-related materials such as PHP, Javascript, and SQL files are here. This folder will be directly used on the server in the future.
