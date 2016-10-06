@@ -1,0 +1,1 @@
+Hello this is Rajesh Kumar Gnanasekaran, joined this project to get experience on working with a real world business problem related to data mining and exploration.
