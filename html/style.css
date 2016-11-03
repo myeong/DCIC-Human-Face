@@ -1,0 +1,145 @@
+*{
+margin:0px;
+padding:0px;
+}
+img{border:0px;}
+html{
+width:100%;
+height:100%;
+background:url(images/bg.jpg) center ;
+}
+body{
+width:100%;
+height:100%
+}
+#site{
+width:988px;
+margin:0 auto;
+}
+#header{
+padding:78px 0 0 0;
+width:988px;
+overflow:hidden;
+position:relative
+}
+
+#menu{
+background:url(images/menu_bg.jpg) top left no-repeat;
+width:988px;
+height:46px;
+float:left;
+/ float:none;
+margin:40px 0 0 0;
+/ margin:40px 0 0 3px;
+padding:2px 0 0 4px;
+}
+#menu ul{
+background:url(images/end_menu.gif) top right no-repeat;
+overflow:hidden;
+float:left;
+padding:0 3px 0 0;
+}
+#menu li{
+display:inline;
+list-style-type:none;
+}
+#menu a{
+display:block;
+float:left;
+}
+
+.but1{background:url(images/but1.jpg) top left no-repeat;}
+.but2{background:url(images/but2.jpg) top left no-repeat;}
+.but3{background:url(images/but3.jpg) top left no-repeat;}
+.but4{background:url(images/but4.jpg) top left no-repeat;}
+.but5{background:url(images/but5.jpg) top left no-repeat;}
+.but6{background:url(images/but6.jpg) top left no-repeat;}
+
+#menu a:hover, .active{
+background-position:bottom left
+}
+
+
+#content{
+width:988px;
+background:url(images/content_bg.jpg) center no-repeat;
+overflow:hidden;
+/ margin:0 0 0 0;
+padding:0 0 8px 0;
+
+}
+#main{
+width:550px;
+float:left;
+overflow:auto;
+padding:13px 5px 0 19px;
+}
+#map{ 
+width: 550px;
+height: 520px; 
+}
+
+#sidebar{
+width:277px;
+float:left;
+}
+
+.year{
+width:277px;
+height:150px;
+float:right;		
+}
+
+.search {
+width:277px;
+height:150px;
+float:right;	
+margin:0 0 20px 0;	
+}
+
+.dynamic {
+width:277px;
+height:150px;
+float:right;	
+margin:0 0 20px 0;	
+}
+
+#footer{
+width:100%;
+padding:15px 0 70px 0;
+font-family:Arial, Helvetica, sans-serif;
+font-size:12px;
+color:#6D7072;
+}
+#footer span{
+float:left;
+}
+#footer div{
+width:988px;
+margin:0 auto;
+padding:0 0 0 15px;
+}
+#footer a{
+color:#0893EF;
+text-decoration:underline
+}
+#footer a:visited{text-decoration:underline}
+#footer a:hover{text-decoration:none}
+#footer .bft{text-decoration:none}
+#footer .bft:visited{text-decoration:none}
+#footer .bft:hover{text-decoration:underline}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
