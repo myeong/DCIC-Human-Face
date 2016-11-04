@@ -3,8 +3,9 @@
 <title>Human Face</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="style.css" />
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script type='text/javascript' src='http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js'></script>
-<script src="jquery-2.1.1.min.js"></script>
+
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
 </head>
 <body>
@@ -16,7 +17,6 @@
 					<li><a href="#" class="but2"><img src="images/spacer.gif" alt="" width="118" height="42" /></a></li>
 					<li><a href="#" class="but3"><img src="images/spacer.gif" alt="" width="106" height="42" /></a></li>
 					<li><a href="#" class="but4"><img src="images/spacer.gif" alt="" width="99" height="42" /></a></li>
-					<li><a href="#" class="but5"><img src="images/spacer.gif" alt="" width="154" height="42" /></a></li>
 					<li><a href="#" class="but6"><img src="images/spacer.gif" alt="" width="129" height="42" /></a></li>
 				</ul>
 			</div>
@@ -29,25 +29,41 @@
 		<div id="content">	
 			<div id="main">
 				<div id="map">
-	
 				</div>
+				
 				<script>
 
-					// initialize the map
-					var map = L.map('map').setView([35.5955, -82.5566], 18);
-
-					// load a tile layer
-					L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-					
-					{				
-					attribution: 'Tiles by <a href="http://mapc.org">MAPC</a>, Data by <a href="http://mass.gov/mgis">MassGIS</a>',
-					maxZoom: 18,
-					minZoom: 14
-					}).addTo(map);
-
-					</script>
-			</div>
+				var map = L.map('map').setView([35.5861, -82.5554], 16);
 			
+				// load a main layer
+				L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 
+					{				
+					center:[35.5861, -82.5554],
+					maxZoom: 18,
+					minZoom: 13
+					}).addTo(map);
+				
+				// load polygons
+				$.getJSON("source/geojson.geojson",function(data){ 
+				
+				 L.geoJson(data,
+				 {
+					//popups ,not finish
+					pointToLayer: function (feature, latlng) {
+					return L.Marker(latlng, geojsonMarkerOptions);	}
+	
+				 }
+				 
+				 ).addTo(map);
+				});
+
+				
+	
+	
+
+				</script>
+	
+				</div>
 			
 			<div id="sidebar">
 				
