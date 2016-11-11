@@ -87,8 +87,30 @@ float:left;
 .year{
 width:277px;
 height:150px;
-float:right;		
+float:right;
+		
 }
+#years{
+margin-top:60px;		
+}
+
+
+#slid{
+margin:8px 0 0 51.5px;	
+}
+
+
+#slid ul li {
+　display:inline;
+}
+
+#but{
+	
+padding:0 0 0 0 50px;	
+	
+}
+
+
 
 .search {
 width:277px;
@@ -102,6 +124,10 @@ width:277px;
 height:150px;
 float:right;	
 margin:0 0 20px 0;	
+}
+
+.leaflet-map-pane svg.leaflet-zoom-animated{
+	z-index: 1;
 }
 
 #footer{
