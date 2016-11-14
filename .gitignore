@@ -91,6 +91,6 @@ ENV/
 
 .DS_Store
 GIS/parcels
-GIS/Asheville_map
+GIS/Asheville_map/new_Asheville_map3.tif*
 
 !README.md
