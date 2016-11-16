@@ -1,7 +1,7 @@
 <html>
 <head>
 <title>Human Face</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" type="text/css" href="style.css" />
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script type='text/javascript' src='http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js'></script>
@@ -26,16 +26,13 @@
 		
 		
 		
-		
-		
 		<div id="content">	
 			<div id="main">
 				<div id="map">
 				</div>
 				
 				<script>
-
-			var map = L.map('map').setView([35.5861, -82.5554], 17);
+		var map = L.map('map').setView([35.5861, -82.5554], 17);
 			
 			// load a main layer
 			L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 
@@ -45,52 +42,84 @@
 				maxZoom: 19,
 				minZoom: 14
 				}).addTo(map);
-	 
-			var ab = {
-
-				"fillColor": "#00FF00",
 				
+        	
+				
+				
+				
+		// Turn the color to green when click the polygon
+				var fillColor = {
+				"fillColor": "#00FF00",
 				};			
-			
-			var cd = {
+			    // Basci color of the polygon layer
+				var basicColor = {
 			    "color":"#800080",
 				"fillColor":"#800080",
 				"opacity": 1,
 				};			
-	  
-				// load polygons
-			var geojsonURL ='source/geojson.geojson';	
-			$.getJSON(geojsonURL,function(data){ 
-				L.geoJson(data, {
-					style: function (feature) {
-						return feature.properties;
-					},
+	 
+			
 				
-				
-				onEachFeature:function (feature, layer){
-					 // Fill the color for all properities
-					 layer.setStyle(cd);
-					 
-					// Popup
-					layer.bindPopup(feature.properties.st_num  + ' ' +feature.properties.st_name);
-					// Highlight the target properity and history
-                    layer.on('click', function () {
-                        layer.setStyle(ab);
-							}
-						);
-                    
-					}
-					
-					
-				}
-				).addTo(map);
-				
-				$(".leaflet-map-pane svg").css("z-index", 0);
-				
-				
-			});		
-					
+			// load polygons
+	
+		var geojsonURL ='geojson.geojson';	
+	
+	
+		
+	
+		var promise= $.getJSON(geojsonURL,function(data) {
+			
+	var MaxCount =1960;
+		var count=1960;
 
+	    // Year filter
+		for (count;count<=MaxCount;count++) {
+			var selected= L.geoJson(data, {
+				filter: function(feature, layer) {
+					return   feature.properties.year == count ;
+				}
+				});
+	
+			
+		
+        // Add to map
+			selected.setStyle(basicColor);
+			
+			
+			
+			
+			selected.on('click', function (e) {
+			selected = e.layer;
+			
+			// Check for selected
+			if (selected) {
+				// Reset selected to default style
+				e.target.setStyle(basicColor);
+				};
+			// Assign new selected
+			selected = e.layer;
+			// Bring selected to front
+			selected.bringToFront();	
+			
+			selected.bindPopup(selected.feature.properties.st_num  + ' ' +selected.feature.properties.st_name);
+			selected.setStyle(fillColor);
+			
+			
+			
+			});
+
+			selected.addTo(map);
+		
+			
+			} ;
+					
+		
+
+			
+		
+		$(".leaflet-map-pane svg").css("z-index", 0);
+		});
+				
 				</script>
 	
 				</div>
@@ -99,31 +128,29 @@
 				
 					<div class="year">
 					
-					 <label for="years">&nbsp;&nbsp;&nbsp;Year：</label>
-					<input type="text" id="years" style="background-color:transparent;border:0; color:#f6931f; font-weight:bold;">
-				
-							
-						<div id="slid">
-						<script>
-							$(function() {
-								$( "#slid" ).slider({
-								range: "min",
-								value: 1960,
-								min: 1960,
-								max: 1972,
-								step: 1,
-								slide: function( event, ui ) {
-									$( "#years" ).val( ui.value );
-									}
-								});
-								$( "#years" ).val($( "#slid" ).slider( "value" ) );
-							});
-							</script>
-						
-							
-							
-							
-						</div>
+					
+					
+					<ul id="slid">
+					<li><label>Year：</label></li>
+					<li><input type="text" id="demo" style="background-color:transparent;border:0; color:#f6931f; font-weight:bold;">
+					
+					</ul>
+					<input type="range" id="years"  min="1960" max="1972" step="1" value ="1960" onchange="myFunction()">
+                    
+					<script>
+					document.getElementById("demo").value=1960;
+					function myFunction() {
+					var MaxCount = document.getElementById("years").value;
+					document.getElementById("demo").value=MaxCount;
+															}
+	
+			
+
+					</script>
+					
+					
+					
+					</div>
 					</div>
 		
 				<div class="search">
@@ -132,6 +159,11 @@
 				<div class="dynamic">
 					
 				<p> Dynamic </p>
+				<script>
+			
+					
+				
+				</script>
 				
 				</div>
 			</div>
