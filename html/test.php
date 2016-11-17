@@ -62,7 +62,7 @@
 			
 			
 				var promise= $.getJSON(geojsonURL,function(data) {
-					// Year filter
+					
 	
 					var selected= L.geoJson(data, {
 						style: function(feature) {
@@ -70,7 +70,7 @@
 						}
 					});
 	
-				
+			
 		
 			
 			
@@ -93,8 +93,7 @@
 			
 					selected.bindPopup(selected.feature.properties.st_num  + ' ' +selected.feature.properties.st_name);
 					selected.setStyle(fillColor);
-			
-			
+				
 					});
 
 			    selected.addTo(map);
@@ -125,22 +124,57 @@
 				
 				
 				function myFunction(){  
-				var input = document.getElementById('fname').value;
-				document.getElementById('demo').value=input;
-				var count=input;
-				var hu=promise.responseJSON.features;
+					var input = document.getElementById('fname').value;
+					document.getElementById('demo').value=input;
+					// Get slider value
+					var count=input;
 				
+					final_title=[];
+					offer_made=[];
+					offer_accepted=[];
+					rejected=[];
+					removed=[];
+
 				
+					var hu=promise.responseJSON.features;
+
+					
 				
+					var length=promise.responseJSON.features.length;
+					var colors;
+					
+					for (var i = 0; i <length; i++) {
+						//Store different year data
+						final_title[i]=hu[i].properties.final_title;
+						offer_made[i]=hu[i].properties.offer_made;
+						offer_accepted[i]=hu[i].properties.offer_accepted;
+						rejected[i]=hu[i].properties.rejected;
+						removed[i]=hu[i].properties.removed;
+		
+						// Find the color 
+						if (count>=offer_made[i] &&  count< offer_accepted[i]) {colors='yellow'} 
+						else if (count>=offer_accepted[i]  && count< rejected[i] ) {colors='green'}
+						else if (count>=rejected[i] && count< final_title[i]) {colors='red'}
+						else if (count>=final_title[i] && count<removed[i]) {colors='grey'}
+						else if (count>removed[i]) {colors='black'}
+						else {colors='blue'};
+						
+						var cc={ "fillColor":"colors"};
+						
+						//Set the  Color ?????
+						
+						
 			
-				
-				
-			};
-				
-				
-				
-				
+					};		
 			
+			
+
+
+						
+				};
+					
+			
+
 			
 				</script>
 	
