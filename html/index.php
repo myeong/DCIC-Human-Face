@@ -33,21 +33,7 @@
 				</div>
 				
 				<script>
-				
-				
-			function myFunction(){  
-				var input = document.getElementById('fname').value;
-
-				document.getElementById('demo').value=input;
-				
-				var MaxCount=input;
-				console.log(MaxCount);
-				
-				$("svg g path").attr("fill", "blue");
-				
-			}
-				
-			var map = L.map('map').setView([35.5861, -82.5554], 17);
+				var map = L.map('map').setView([35.5861, -82.5554], 17);
 			
 			// load a main layer
 			L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 
@@ -60,49 +46,45 @@
 				
         	
 				
-				
-				
-		// Turn the color to green when click the polygon
+				// load polygons
+	
+				var geojsonURL ='with_date.geojson';		
+				// Turn the color to green when click the polygon
 				var fillColor = {
 				"fillColor": "#00FF00",
 				};			
 			    // Basci color of the polygon layer
 				var basicColor = {
-			    "color":"#800080",
-				"fillColor":"#800080",
+			    "color":"#0000FF",
+				"fillColor":"#0000FF",
 				"opacity": 1,
-				};			
-	 
+				};				
 			
+			
+				var promise= $.getJSON(geojsonURL,function(data) {
+					// Year filter
+	
+					var selected= L.geoJson(data, {
+						style: function(feature) {
+						return  basicColor;
+						}
+					});
+	
 				
-			// load polygons
-	
-		var geojsonURL ='geojson.geojson';	
-	
-	
-		var MaxCount=$('fname').value;
-		console.log(MaxCount);
-	
-		var promise= $.getJSON(geojsonURL,function(data) {
-
-			// Year filter
-	
-			var selected= L.geoJson(data, {
-					style: function(feature) {
-					return  basicColor;
-					}
-				});
-	
-			
 		
-			// Add to map
-			selected.on('click', function (e) {
-				selected = e.layer;
+			
+			
+				// Add to map
+				selected.on('click', function (e) {
+				
 			
 				// Check for selected
+					
 					if (selected) {
+				
 					// Reset selected to default style
 					e.target.setStyle(basicColor);
+					
 					};
 					// Assign new selected
 					selected = e.layer;
@@ -111,17 +93,55 @@
 			
 					selected.bindPopup(selected.feature.properties.st_num  + ' ' +selected.feature.properties.st_name);
 					selected.setStyle(fillColor);
-	
-			});
+			
+			
+					});
 
-			selected.addTo(map);
-			
-			
-		
-		$(".leaflet-map-pane svg").css("z-index", 0);
-		});
-		
+			    selected.addTo(map);
 				
+				
+				//Legend
+				var legend = L.control({position: 'bottomleft'});
+
+				legend.onAdd = function (map) {
+
+					var div = L.DomUtil.create('div', 'info legend'),
+					grades = [" "],
+					labels = ["1.png"];
+
+					// loop through our density intervals and generate a label with a colored square for each interval
+					for (var i = 0; i < grades.length; i++) {
+						div.innerHTML +=
+						grades[i] + (" <img src="+ labels[i] +" height='200' width='200' style='opacity:0.8'>") +'<br>';
+					}
+
+					return div;
+				};
+
+				legend.addTo(map);
+				// Bring popup on the top	
+				$(".leaflet-map-pane svg").css("z-index", 0);
+				});
+				
+				
+				function myFunction(){  
+				var input = document.getElementById('fname').value;
+				document.getElementById('demo').value=input;
+				var count=input;
+				var hu=promise.responseJSON.features;
+				
+				
+				
+			
+				
+				
+			};
+				
+				
+				
+				
+			
+			
 				</script>
 	
 				</div>
@@ -135,10 +155,10 @@
 					<ul id="slid">
 					<li><label>Year：</label></li>
 					<li>
-					<input type="text" id="demo" style="background-color:transparent;border:0; color:#f6931f; font-weight:bold;">
+					<input type="text" id="demo" style="background-color:transparent;border:0;  font-size:18px;color:#f6931f; font-weight:bold;">
 					</li>
 					</ul>
-					<input type="range" id="fname" min="1960" max="1972" step="1" value="1960" onchange="myFunction()">
+					<input type="range" id="fname" min="1960" max="1976" step="1" value="1960" onchange="myFunction()">
                     <script>
 						document.getElementById("demo").value=1960;
 					</script>	
