@@ -187,7 +187,7 @@
 					
 					
 					<ul id="slid">
-					<li><label>Year：</label></li>
+					<li><label>Year:</label></li>
 					<li>
 					<input type="text" id="demo" style="background-color:transparent;border:0;  font-size:18px;color:#f6931f; font-weight:bold;">
 					</li>
