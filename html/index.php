@@ -37,55 +37,50 @@
 			
 			// load a main layer
 			L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 
-				{				
+			{				
 				center:[35.5861, -82.5554],
 			    //Zoom level
 				maxZoom: 19,
 				minZoom: 14
-				}).addTo(map);
+			}).addTo(map);
 				
         	
 				
-				// load polygons
-	
-				var geojsonURL ='with_date.geojson';		
-				// Turn the color to green when click the polygon
-				var fillColor = {
+			// load polygons
+
+			var geojsonURL ='with_date.geojson';		
+			// Turn the color to green when click the polygon
+			var fillColor = {
 				"fillColor": "#00FF00",
-				};			
-			    // Basci color of the polygon layer
-				var basicColor = {
+			};			
+		    // Basci color of the polygon layer
+			var basicColor = {
 			    "color":"#0000FF",
 				"fillColor":"#0000FF",
 				"opacity": 1,
-				};				
+			};				
 			
 			
-				var promise= $.getJSON(geojsonURL,function(data) {
-					
+			var promise= $.getJSON(geojsonURL,function(data) {
+				
+
+				var selected= L.geoJson(data, {
+					style: function(feature) {
+					return  basicColor;
+					}
+				});
 	
-					var selected= L.geoJson(data, {
-						style: function(feature) {
-						return  basicColor;
-						}
-					});
-	
-			
-		
-			
-			
+
 				// Add to map
 				selected.on('click', function (e) {
-				
-			
+
 				// Check for selected
 					
 					if (selected) {
-				
-					// Reset selected to default style
-					e.target.setStyle(basicColor);
-					
+						// Reset selected to default style
+						e.target.setStyle(basicColor);
 					};
+
 					// Assign new selected
 					selected = e.layer;
 					// Bring selected to front
@@ -93,8 +88,8 @@
 			
 					selected.bindPopup(selected.feature.properties.st_num  + ' ' +selected.feature.properties.st_name);
 					selected.setStyle(fillColor);
-				
-					});
+			
+				});
 
 			    selected.addTo(map);
 				
@@ -118,60 +113,56 @@
 				};
 
 				legend.addTo(map);
-				// Bring popup on the top	
+					// Bring popup on the top	
 				$(".leaflet-map-pane svg").css("z-index", 0);
-				});
+			});
 				
 				
-				function myFunction(){  
-					var input = document.getElementById('fname').value;
-					document.getElementById('demo').value=input;
-					// Get slider value
-					var count=input;
-				
-					final_title=[];
-					offer_made=[];
-					offer_accepted=[];
-					rejected=[];
-					removed=[];
+			function myFunction(){  
+				var input = document.getElementById('fname').value;
+				document.getElementById('demo').value=input;
+				// Get slider value
+				var count=input;
+			
+				final_title=[];
+				offer_made=[];
+				offer_accepted=[];
+				rejected=[];
+				removed=[];
+
+			
+				var hu=promise.responseJSON.features;
 
 				
-					var hu=promise.responseJSON.features;
-
-					
+			
+				var length=promise.responseJSON.features.length;
+				var colors;
 				
-					var length=promise.responseJSON.features.length;
-					var colors;
+				for (var i = 0; i <length; i++) {
+					//Store different year data
+					final_title[i]=hu[i].properties.final_title;
+					offer_made[i]=hu[i].properties.offer_made;
+					offer_accepted[i]=hu[i].properties.offer_accepted;
+					rejected[i]=hu[i].properties.rejected;
+					removed[i]=hu[i].properties.removed;
+	
+					// Find the color 
+					if (count>=offer_made[i] &&  count< offer_accepted[i]) {colors='yellow'} 
+					else if (count>=offer_accepted[i]  && count< rejected[i] ) {colors='green'}
+					else if (count>=rejected[i] && count< final_title[i]) {colors='red'}
+					else if (count>=final_title[i] && count<removed[i]) {colors='grey'}
+					else if (count>removed[i]) {colors='black'}
+					else {colors='blue'};
 					
-					for (var i = 0; i <length; i++) {
-						//Store different year data
-						final_title[i]=hu[i].properties.final_title;
-						offer_made[i]=hu[i].properties.offer_made;
-						offer_accepted[i]=hu[i].properties.offer_accepted;
-						rejected[i]=hu[i].properties.rejected;
-						removed[i]=hu[i].properties.removed;
+					var cc={ "fillColor":"colors"};
+					
+					//Set the  Color ?????
+					
+					
 		
-						// Find the color 
-						if (count>=offer_made[i] &&  count< offer_accepted[i]) {colors='yellow'} 
-						else if (count>=offer_accepted[i]  && count< rejected[i] ) {colors='green'}
-						else if (count>=rejected[i] && count< final_title[i]) {colors='red'}
-						else if (count>=final_title[i] && count<removed[i]) {colors='grey'}
-						else if (count>removed[i]) {colors='black'}
-						else {colors='blue'};
+				};		
 						
-						var cc={ "fillColor":"colors"};
-						
-						//Set the  Color ?????
-						
-						
-			
-					};		
-			
-			
-
-
-						
-				};
+			};
 					
 			
 
