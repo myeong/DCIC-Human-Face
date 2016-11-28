@@ -1,1 +1,1 @@
-- How to dump and restore a PostgreSQL DB? [a relative link](db_dump.md)
+- How to dump and restore a PostgreSQL DB? [Go to the documnet](db_dump.md)
