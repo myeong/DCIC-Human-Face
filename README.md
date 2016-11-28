@@ -41,9 +41,7 @@ Slack is a team-based chattinng tool. We will use a Slack channel for quick comm
 - Rajesh Gnanasekaran (rgnanase@umd.edu) 
 - Hardik Jhaveri (hardikjhaveri93@gmail.com)
 - Edel Spencer (espence2@umd.edu)
-- Will Thomas (wrt2.dc@gmail.com)
 - David Yuheng Zhang (yzhang63@umd.edu)
 - Myeong Lee (Project Manager)
-- Dr. Victoria Lemieux (Affiliated Faculty)
 - Dr. Richard Marciano (Director of DCIC)
 
