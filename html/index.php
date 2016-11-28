@@ -32,17 +32,17 @@
 				<div id="map">
 				</div>
 				
-				<script>
-				var map = L.map('map').setView([35.5861, -82.5554], 17);
+<script>
+			var map = L.map('map').setView([35.5861, -82.5554], 17);
 			
 			// load a main layer
-			L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 
-			{				
-				center:[35.5861, -82.5554],
-			    //Zoom level
-				maxZoom: 19,
-				minZoom: 14
-			}).addTo(map);
+			var baseMap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 
+							{				
+								center:[35.5861, -82.5554],
+							    //Zoom level
+								maxZoom: 19,
+								minZoom: 14
+							}).addTo(map);
 				
         	
 				
@@ -51,22 +51,30 @@
 			var geojsonURL ='with_date.geojson';		
 			// Turn the color to green when click the polygon
 			var fillColor = {
-				"fillColor": "#00FF00",
+				"fillColor": "#0000FF",
+				"opacity": 1
 			};			
 		    // Basci color of the polygon layer
 			var basicColor = {
 			    "color":"#0000FF",
 				"fillColor":"#0000FF",
-				"opacity": 1,
+				// "opacity": 1,
 			};				
-			
+
+			var clusters = L.layerGroup();
 			
 			var promise= $.getJSON(geojsonURL,function(data) {
 				
 
 				var selected= L.geoJson(data, {
 					style: function(feature) {
-					return  basicColor;
+						//console.log(feature.properties);
+						if (feature.properties.offer_made < 1970) {
+				            return basicColor;
+				        } else {
+				        	return {color: "yellow"};
+				        }
+						//return  basicColor;
 					}
 				});
 	
@@ -116,24 +124,32 @@
 					// Bring popup on the top	
 				$(".leaflet-map-pane svg").css("z-index", 0);
 			});
-				
-				
+			clusters.addLayer(promise);
+			
+			// console.log(clusters.hasLayer(promise));
+			layerControl = L.control.layers().addTo(map);
+			layerControl.addOverlay(clusters , "Parcels");			
+
+			
 			function myFunction(){  
 				var input = document.getElementById('fname').value;
 				document.getElementById('demo').value=input;
 				// Get slider value
 				var count=input;
+
+				
+				// map.eachLayer(function (layer) {
+				// 	console.log(layer);
+				//     // map.removeLayer(layer);
+				// });
 			
 				final_title=[];
 				offer_made=[];
 				offer_accepted=[];
 				rejected=[];
 				removed=[];
-
-			
-				var hu=promise.responseJSON.features;
-
 				
+				var hu=promise.responseJSON.features;
 			
 				var length=promise.responseJSON.features.length;
 				var colors;
@@ -163,33 +179,26 @@
 				};		
 						
 			};
-					
-			
-
-			
-				</script>
+				
+</script>
 	
 				</div>
 			
-			<div id="sidebar">
-				
+				<div id="sidebar">
 					<div class="year">
-					
-					
-					
-					<ul id="slid">
-					<li><label>Year:</label></li>
-					<li>
-					<input type="text" id="demo" style="background-color:transparent;border:0;  font-size:18px;color:#f6931f; font-weight:bold;">
-					</li>
-					</ul>
-					<input type="range" id="fname" min="1960" max="1976" step="1" value="1960" onchange="myFunction()">
-                    <script>
-						document.getElementById("demo").value=1960;
-					</script>	
+						<ul id="slid">
+							<li><label>Year:</label></li>
+							<li>
+							<input type="text" id="demo" style="background-color:transparent;border:0;  font-size:18px;color:#f6931f; font-weight:bold;">
+							</li>
+						</ul>
+						<input type="range" id="fname" min="1960" max="1976" step="1" value="1960" onchange="myFunction()">
+	                    <script>
+							document.getElementById("demo").value=1960;
+						</script>	
 					
 					</div>
-					</div>
+				</div>
 		
 				<div class="search">
 					<p> Search </p>
