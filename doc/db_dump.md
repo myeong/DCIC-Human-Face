@@ -1,4 +1,4 @@
-# How to Dump and Restore a Database from PostgreSQL
+How to Dump and Restore a Database from PostgreSQL
 ==============
 Myeong Lee
 ------------
