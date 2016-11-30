@@ -12,8 +12,8 @@
    - name: restart iptables
      service: name=iptables state=restarted
 
-   - name: restart httpd
-     service: name=httpd state=restarted
+   - name: restart apache
+     service: name=apache2 state=restarted
 
    tasks: 
 
@@ -28,6 +28,7 @@
      with_items:
         - libselinux1
         - policykit-1
+        - policycoreutils
         # - libselinux-python
         # - policycoreutils-python
 
@@ -40,50 +41,48 @@
      become_user: vagrant
 
    - name: copy firewall template
-     copy: src=templates/etc/sysconfig/iptables dest=/etc/sysconfig/iptables owner=root group=root mode=0600
+     copy: src=templates/etc/sysconfig/iptables dest=/sbin/iptables owner=root group=root mode=0600
      notify: restart iptables
 
    - name: gettext
-     yum: pkg={{ item }} state=installed
+     apt: pkg={{ item }} state=installed
      with_items:
         - gettext
 
    - name: Install http and php etc
-     yum: pkg={{ item }} state=installed
+     apt: pkg={{ item }} state=installed
      with_items:
-        - httpd
-        - php
-        - php-common
-        - php-xml
-        - php-mysql
-        - php-gd
-        - php-tidy
+        - apache2
+        - php5
+        - php5-mcrypt
+        - php5-mysql
+        - php5-gd
+        - php5-tidy
         - php-pear
-        - php-posix
 
    # httpd.conf update necessary to address vagrant/virtualbox issue so changes to synched folder static html files work 
-   - name: Set 'EnableSendfile off' in Apache2 httpd.conf 
-     lineinfile: dest=/etc/httpd/conf/httpd.conf regexp="^EnableSendfile off" insertafter="^#EnableSendfile " line="EnableSendfile off"
+   # - name: Set 'EnableSendfile off' in Apache2 httpd.conf 
+   #   lineinfile: dest=/etc/httpd/conf/httpd.conf regexp="^EnableSendfile off" insertafter="^#EnableSendfile " line="EnableSendfile off"
 
    - name: Ensure Apache running
-     service: name=httpd state=started enabled=yes
+     service: name=apache2 state=started enabled=yes
 
    - name: Copy Apache vhost config file for default web pages 
-     copy: src=templates/etc/httpd/conf.d/15-default.conf dest=/etc/httpd/conf.d/15-default.conf
-     notify: restart httpd
+     copy: src=templates/etc/httpd/conf.d/15-default.conf dest=/etc/apache2/conf-available/15-default.conf
+     notify: restart apache
 
    - name: Copy gettext.ini file 
-     copy: src=templates/etc/php.d/gettext.ini dest=/etc/php.d/gettext.ini
-     notify: restart httpd
+     copy: src=templates/etc/php.d/gettext.ini dest=/etc/php5/apache2/conf.d/gettext.ini
+     notify: restart apache
 
    - name: Create application log directory
-     file: path=/var/log/odesurvey state=directory owner=apache group=apache
+     file: path=/var/log/humanface state=directory owner=www-data group=www-data
 
    - name: Set application log file permissions
-     file: path=/var/log/odesurvey/odesurvey.log state=touch owner=apache group=apache
+     file: path=/var/log/humanface/humanface.log state=touch owner=www-data group=www-data
 
    - name: Install git
-     yum: pkg=git state=installed
+     apt: pkg=git state=installed
 
    # - name: install composer
    #   shell: >
