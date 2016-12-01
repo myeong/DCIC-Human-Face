@@ -9,6 +9,7 @@ This folder has a Vagrantfile and Ansible scripts that automatically install PHP
 	- Virtualbox (>= 5.1)
 	- Vagrant (>= 1.8)
 	- Ansible (>= 2.0)
+	- Python (2.x)
 
 # Quickstart
 
