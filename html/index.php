@@ -24,28 +24,6 @@
 			return input;
 	}
 </script>
-</head>
-<body>
-	<div id="site">
-		<div id="header">																										
-			<!-- <div id="menu">
-				<ul>
-					<li><a href="#" class="but1"><img src="images/spacer.gif" alt="" width="106" height="42" /></a></li>
-					<li><a href="#" class="but2"><img src="images/spacer.gif" alt="" width="118" height="42" /></a></li>
-					<li><a href="#" class="but3"><img src="images/spacer.gif" alt="" width="106" height="42" /></a></li>
-					<li><a href="#" class="but4"><img src="images/spacer.gif" alt="" width="99" height="42" /></a></li>
-					<li><a href="#" class="but6"><img src="images/spacer.gif" alt="" width="129" height="42" /></a></li>
-				</ul>
-			</div> -->
-		</div>
-		
-		
-		
-		<div id="content">	
-			<div id="main">
-				<div id="map">
-				</div>
-				
 <script>
 $(document).ready(function(){
 	var map = L.map('map').setView([35.5861, -82.5554], 16);
@@ -81,6 +59,22 @@ $(document).ready(function(){
 		weight: 1,
 		fillOpacity: 1
 	};	
+
+	function highlightDot(e){
+		var layer = e.target;
+		layer.setStyle(hoverColor);
+	}
+
+	function resetDotHighlight(e){
+		var layer = e.target;		
+
+		// this is the way to access propertis from "event"
+		if (layer.feature.properties.offer_made < getYear()) {
+            layer.setStyle(before1970);
+        } else {
+        	layer.setStyle(defaultStyle);
+        }
+	}
 	
 	// When a polygon is clicked
 	function onEachFeature(feature, layer) {
@@ -91,18 +85,10 @@ $(document).ready(function(){
 				popupContent += feature.properties.popupContent;
 			}
 
-			layer.on("mouseover", function (e) {		        
-		        layer.setStyle(hoverColor);
-	    	});
-
-	    	layer.on("mouseout", function (e) {
-	    		if (feature.properties.offer_made < getYear()) {
-		            layer.setStyle(before1970);
-		        } else {
-		        	layer.setStyle(defaultStyle);
-		        }
-		        
-			});
+			layer.on({
+		        mouseover: highlightDot,
+		        mouseout: resetDotHighlight
+		    });
 
 			layer.bindPopup(popupContent);
 	}
@@ -128,37 +114,55 @@ $(document).ready(function(){
 });
 				
 </script>
-	
-				</div>
-			
-				<div id="sidebar">
-					<div class="year">
-						<ul id="slid">
-							<li><label>Year:</label></li>
-							<li>
-							<input type="text" id="demo" style="background-color:transparent;border:0;  font-size:18px;color:#f6931f; font-weight:bold;">
-							</li>
-						</ul>
-						<input type="range" id="fname" name="fname" min="1960" max="1976" step="1" value="1960" onchange="getYear()">
-	                    <script>
-							document.getElementById("demo").value=1960;							
-						</script>	
-					
-					</div>
-				</div>
+</head>
+<body>
+	<div id="site">
+		<div id="header">																										
+			<!-- <div id="menu">
+				<ul>
+					<li><a href="#" class="but1"><img src="images/spacer.gif" alt="" width="106" height="42" /></a></li>
+					<li><a href="#" class="but2"><img src="images/spacer.gif" alt="" width="118" height="42" /></a></li>
+					<li><a href="#" class="but3"><img src="images/spacer.gif" alt="" width="106" height="42" /></a></li>
+					<li><a href="#" class="but4"><img src="images/spacer.gif" alt="" width="99" height="42" /></a></li>
+					<li><a href="#" class="but6"><img src="images/spacer.gif" alt="" width="129" height="42" /></a></li>
+				</ul>
+			</div> -->
+		</div>
 		
-				<div class="search">
-					<p> Search </p>
+		
+		
+		<div id="content">	
+			<div id="main">
+				<div id="map">
 				</div>
-				<div class="dynamic">
-					
-				<p> Dynamic </p>
+
+			</div>
 			
+			<div id="sidebar">
+				<div class="year">
+					<ul id="slid">
+						<li><label>Year:</label></li>
+						<li>
+						<input type="text" id="demo" style="background-color:transparent;border:0;  font-size:18px;color:#f6931f; font-weight:bold;">
+						</li>
+					</ul>
+					<input type="range" id="fname" name="fname" min="1960" max="1976" step="1" value="1960" onchange="getYear()">
+                    <script>
+						document.getElementById("demo").value=1960;							
+					</script>	
 				
 				</div>
 			</div>
+		
+			<div class="search">
+				<p> Search </p>
+			</div>
+			<div class="dynamic">				
+				<p> Dynamic </p>
+			</div>
 		</div>
 	</div>
+
 	<div id="footer">
 		<div>
 			<span>Copyright &copy;. All rights reserved. Design from <a href="http://dcicblog.umd.edu/human-face-of-big-data/" class="bft" >Human-Face Team</a></span>
