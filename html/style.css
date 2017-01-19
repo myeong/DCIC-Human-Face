@@ -54,13 +54,13 @@ list-style-type:none;
 display:block;
 float:left;
 }
-.but1{background:url(images/but1.jpg) top left no-repeat;}
+/*.but1{background:url(images/but1.jpg) top left no-repeat;}
 .but2{background:url(images/but2.jpg) top left no-repeat;}
 .but3{background:url(images/but3.jpg) top left no-repeat;}
 .but4{background:url(images/but4.jpg) top left no-repeat;}
 .but5{background:url(images/but6.jpg) top left no-repeat;}
 .but6{background:url(images/but6.jpg) top left no-repeat;}
-
+*/
 
 #menu a:hover, .active{
 background-position:bottom left
@@ -80,10 +80,10 @@ padding:0 0 8px 0;
 }
 #main{
 height:100%;
-width:65%;
+width:70%;
 float:left;
 
-padding:13px 5px 0 19px;
+/*padding:13px 5px 0 19px;*/
 }
 #map{ 
 height: 100%; 
