@@ -2,7 +2,7 @@
 <head>
 <title>Human Face</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="stylesheet" type="text/css" href="source/style.css" />
+<link rel="stylesheet" type="text/css" href="style.css" />
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script type='text/javascript' src='http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js'></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
@@ -35,7 +35,7 @@
 <script>
 			var parcels = new L.LayerGroup();
 			var poly = new L.LayerGroup();
-			var geojsonURL ='source/with_date.geojson';					
+			var geojsonURL ='with_date.geojson';					
     		
 			// load polygon and map
 			// Basic color (Blue)
@@ -129,7 +129,7 @@
 
 						var div = L.DomUtil.create('div', 'info legend'),
 						grades = [" "],
-						labels = ["source/1.png"];
+						labels = ["1.png"];
 
 						// loop through our density intervals and generate a label with a colored square for each interval
 						for (var i = 0; i < grades.length; i++) {

@@ -9,7 +9,9 @@ html{
 width:100%;
 height:100%;
 
+
 background:url(../images/bg.jpg);
+
 background-size: cover;
 }
 body{
@@ -28,7 +30,9 @@ float:left;
 }
 
 #menu{
+
 background:url(../images/menu.jpg);
+
 background-size: cover;
 
 width:100%;
@@ -40,7 +44,9 @@ margin:0 0 0 0;
 padding:2px 2px 0 4px;
 }
 #menu ul{
+
 background:url(../images/end_menu.gif) top right no-repeat;
+
 overflow:hidden;
 
 float:left;
@@ -54,12 +60,14 @@ list-style-type:none;
 display:block;
 float:left;
 }
+
 .but1{background:url(../images/but1.jpg) top left no-repeat;}
 .but2{background:url(../images/but2.jpg) top left no-repeat;}
 .but3{background:url(../images/but3.jpg) top left no-repeat;}
 .but4{background:url(../images/but4.jpg) top left no-repeat;}
 .but5{background:url(../images/but6.jpg) top left no-repeat;}
 .but6{background:url(../images/but6.jpg) top left no-repeat;}
+
 
 
 #menu a:hover, .active{
@@ -69,7 +77,9 @@ background-position:bottom left
 
 #content{
 width:100%;
+
 background:url(../images/content_bg.jpg);
+
 background-size: cover;
 background-position: center;
 
@@ -121,8 +131,8 @@ margin:0 0 20px 0;
 padding:200px 0 20px 0;		
 }
 
-.form{width: 300px; margin: 0 auto;}
 
+.form{width: 300px; margin: 0 auto;}
 
 .dynamic{
 padding:100px 0 20px 0;		
