@@ -33,7 +33,7 @@
 				</div>
 				
 <script>
-			var map = L.map('map').setView([35.5861, -82.5554], 17);
+			var map = L.map('map').setView([35.5861, -82.5554], 16);
 			
 			// load a main layer
 			var baseMap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 
@@ -45,7 +45,6 @@
 							}).addTo(map);
 				
         	
-				
 			// load polygons
 
 			var geojsonURL ='with_date.geojson';		
