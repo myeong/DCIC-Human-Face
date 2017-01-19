@@ -15,7 +15,7 @@ QGIS files and shape files for target cities are available here. Some big files 
 Any web-related materials such as PHP, Javascript, and SQL files are here. This folder will be directly used on the server in the future.
 
 #### vm
-Vagrant and Ansible are a good solution to maintain each member's local development environment consistent. It is not required to use Vagrant, but it is highly recommended in the development process. Configuration files and scripts will be placed here in the future.
+Vagrant and Ansible are a good solution to maintain each member's local development environment consistent. It is not required to use Vagrant, but it is highly recommended in the development process. Configuration files and scripts are available in this folder.
 
 
 ### Resources and Tools
@@ -28,7 +28,7 @@ Raw data, scanned documents, and supporting PPT files are available at UMD Box a
 We have a Google doc folder to share online documents. A kick-off meeting slide and a design document are available at the Google Doc folder.
 
 #### Blog
-We are maintaining a dedicated blot for the Human Face of Big Data project. Feel free to share your experience and new findings on the blog.
+We are maintaining a dedicated blog for the Human Face of Big Data project. Feel free to share your experience and new findings on the blog.
 http://dcicblog.umd.edu/human-face-of-big-data/
 
 #### Slack Channel

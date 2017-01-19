@@ -3,6 +3,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+vm/basic/.vagrant
+
 # C extensions
 *.so
 
@@ -42,7 +44,7 @@ htmlcov/
 .cache
 nosetests.xml
 coverage.xml
-*,cover
+*.cover
 .hypothesis/
 
 # Translations
@@ -92,5 +94,7 @@ ENV/
 .DS_Store
 GIS/parcels
 GIS/Asheville_map/new_Asheville_map3.tif*
+
+
 
 !README.md
