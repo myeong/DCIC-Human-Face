@@ -9,9 +9,11 @@
 <!-- <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script> -->
 <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 <script src="js/leaflet.ajax.min.js"> </script>
+<script src="js/leaflet-slider.js"> </script>
 <script src="source/with_date.js"> </script>
 
 <link rel="stylesheet" type="text/css" href="style.css" />
+<link rel="stylesheet" type="text/css" href="js/leaflet-slider.css" />
 <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
 
 <!-- <script type='text/javascript' src='http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js'></script>
@@ -25,6 +27,8 @@
 	}
 </script>
 <script>
+var polygons;
+
 $(document).ready(function(){
 	var map = L.map('map').setView([35.5861, -82.5554], 16);
 
@@ -95,7 +99,7 @@ $(document).ready(function(){
 	
 
 	// drawing a Polygon Layer
-	L.geoJSON([parcels], {
+	polygons = L.geoJSON([parcels], {
 
 		style: function(feature) {
 	        if (feature.properties.offer_made < getYear()) {
@@ -107,8 +111,16 @@ $(document).ready(function(){
 
 		onEachFeature: onEachFeature,
 
+	});
+	map.addLayer(polygons);
 
-	}).addTo(map);
+	map.fitBounds(polygons.getBounds());
+
+	function changeColors(value){
+	   polygons.setStyle(resetDotHighlight);
+	}
+	
+
 
 	
 });
@@ -146,7 +158,7 @@ $(document).ready(function(){
 						<input type="text" id="demo" style="background-color:transparent;border:0;  font-size:18px;color:#f6931f; font-weight:bold;">
 						</li>
 					</ul>
-					<input type="range" id="fname" name="fname" min="1960" max="1976" step="1" value="1960" onchange="getYear()">
+					<input type="range" id="fname" name="fname" min="1960" max="1976" step="1" value="1960" onchange="changeColors(this.value)">
                     <script>
 						document.getElementById("demo").value=1960;							
 					</script>	
