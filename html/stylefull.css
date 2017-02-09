@@ -9,9 +9,7 @@ html{
 width:100%;
 height:100%;
 
-
-background:url(../images/bg.jpg);
-
+background:url(images/bg.jpg);
 background-size: cover;
 }
 body{
@@ -30,9 +28,7 @@ float:left;
 }
 
 #menu{
-
-background:url(../images/menu.jpg);
-
+background:url(images/menu.jpg);
 background-size: cover;
 
 width:100%;
@@ -44,9 +40,7 @@ margin:0 0 0 0;
 padding:2px 2px 0 4px;
 }
 #menu ul{
-
-background:url(../images/end_menu.gif) top right no-repeat;
-
+background:url(images/end_menu.gif) top right no-repeat;
 overflow:hidden;
 
 float:left;
@@ -60,15 +54,13 @@ list-style-type:none;
 display:block;
 float:left;
 }
-
-.but1{background:url(../images/but1.jpg) top left no-repeat;}
-.but2{background:url(../images/but2.jpg) top left no-repeat;}
-.but3{background:url(../images/but3.jpg) top left no-repeat;}
-.but4{background:url(../images/but4.jpg) top left no-repeat;}
-.but5{background:url(../images/but6.jpg) top left no-repeat;}
-.but6{background:url(../images/but6.jpg) top left no-repeat;}
-
-
+/*.but1{background:url(images/but1.jpg) top left no-repeat;}
+.but2{background:url(images/but2.jpg) top left no-repeat;}
+.but3{background:url(images/but3.jpg) top left no-repeat;}
+.but4{background:url(images/but4.jpg) top left no-repeat;}
+.but5{background:url(images/but6.jpg) top left no-repeat;}
+.but6{background:url(images/but6.jpg) top left no-repeat;}
+*/
 
 #menu a:hover, .active{
 background-position:bottom left
@@ -77,9 +69,7 @@ background-position:bottom left
 
 #content{
 width:100%;
-
-background:url(../images/content_bg.jpg);
-
+background:url(images/content_bg.jpg);
 background-size: cover;
 background-position: center;
 
@@ -90,36 +80,15 @@ padding:0 0 8px 0;
 }
 #main{
 height:100%;
-width:65%;
+width:100%;
 float:left;
 
-padding:13px 5px 0 19px;
+/*padding:13px 5px 0 19px;*/
 }
 #map{ 
-height: 100%; 
-}
-
-#sidebar{
-
-float:left; 	
-}
-
-.year{
+height:100%;
+width:100%;
 float:left;
-margin:0 0 20px 0;
-		
-}
-
-#years{margin:15px 0 0 15px;}
-
-#demo{margin-top:4px}
-
-#slid li{
-	display: inline;
-	list-style-type: none;
-	padding-top:30px;
-	margin: 0 0 0 10px;
-	float: left;
 }
 
 
@@ -127,16 +96,8 @@ margin:0 0 20px 0;
 
 
 
-.search{
-padding:200px 0 20px 0;		
-}
 
 
-.form{width: 300px; margin: 0 auto;}
-
-.dynamic{
-padding:100px 0 20px 0;		
-}
 
 
 .leaflet-map-pane svg.leaflet-zoom-animated{
