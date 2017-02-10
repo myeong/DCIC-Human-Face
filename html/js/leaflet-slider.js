@@ -1,6 +1,11 @@
 L.Control.Slider = L.Control.extend({
     update: function(value){
+        _updateValue();
         return value;
+    },
+    updateAll: function(value){
+        this.slider.value = value;
+        this._sliderValue.innerHTML = value; 
     },
 
     options: {
@@ -20,7 +25,7 @@ L.Control.Slider = L.Control.extend({
             return value;
         },
         showValue: true,
-        syncSlider: false
+        syncSlider: true
     },
     initialize: function (f, options) {
         L.setOptions(this, options);

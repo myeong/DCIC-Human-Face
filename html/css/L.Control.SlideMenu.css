@@ -5,10 +5,10 @@
 
 .leaflet-menu{
 	position:absolute;
-    background-color: rgba(255, 255, 255, 255);
-     overflow-x:hidden;
-	 overflow-y:hidden;
-	    cursor: default;
+    background-color: #343434;
+    overflow-x:hidden;
+	overflow-y:hidden;
+    cursor: default;
     z-index: 9999;
 }
 
