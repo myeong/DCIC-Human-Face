@@ -3,13 +3,16 @@
   <title></title>
   <layer-tree-group expanded="1" checked="Qt::PartiallyChecked" name="">
     <customproperties/>
-    <layer-tree-layer expanded="1" checked="Qt::Checked" id="acquisition20160913140824204" name="acquisition">
+    <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="asheville_geo20170213150308983" name="asheville_geo">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" checked="Qt::Checked" id="new_Asheville_map320160508032018227" name="new_Asheville_map3">
+    <layer-tree-layer expanded="1" checked="Qt::Checked" id="new_Asheville_map320170213144129298" name="new_Asheville_map3">
       <customproperties/>
     </layer-tree-layer>
     <layer-tree-layer expanded="1" checked="Qt::Checked" id="tl_2015_37021_roads20160508031951450" name="tl_2015_37021_roads">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer expanded="1" checked="Qt::Checked" id="acquisition20160913140824204" name="acquisition">
       <customproperties/>
     </layer-tree-layer>
     <layer-tree-layer expanded="1" checked="Qt::Checked" id="tl_2009_37021_areawater20160508031945541" name="tl_2009_37021_areawater">
@@ -26,10 +29,10 @@
   <mapcanvas>
     <units>meters</units>
     <extent>
-      <xmin>-9191335.93500706925988197</xmin>
-      <ymin>4241902.92363463994115591</ymin>
-      <xmax>-9189386.13167747482657433</xmax>
-      <ymax>4244785.69737464468926191</ymax>
+      <xmin>-9190450.67219927161931992</xmin>
+      <ymin>4243295.06405394058674574</ymin>
+      <xmax>-9190206.94678307324647903</xmax>
+      <ymax>4243655.41077143978327513</ymax>
     </extent>
     <rotation>0</rotation>
     <projections>1</projections>
@@ -49,10 +52,12 @@
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:4269" srcDatumTransform="-1" destDatumTransform="-1" layerid="tl_2009_37021_areawater20160508031945541"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:3857" srcDatumTransform="-1" destDatumTransform="-1" layerid="asheville_polygons20160508032916005"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:3857" srcDatumTransform="-1" destDatumTransform="-1" layerid="asheville_polygons20160508032719555"/>
+      <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:3785" srcDatumTransform="-1" destDatumTransform="-1" layerid="new_Asheville_map320170213144129298"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:4269" srcDatumTransform="-1" destDatumTransform="-1" layerid="tl_2015_37021_roads20160508031951450"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:3785" srcDatumTransform="-1" destDatumTransform="-1" layerid="new_Asheville_map320160508032018227"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="USER:100001" srcDatumTransform="-1" destDatumTransform="-1" layerid="property20160508031932426"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:3857" srcDatumTransform="-1" destDatumTransform="-1" layerid="OpenLayers_plugin_layer20160508031915989"/>
+      <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:3857" srcDatumTransform="-1" destDatumTransform="-1" layerid="asheville_geo20170213150308983"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="acquisition20160913140824204"/>
     </layer_coordinate_transform_info>
   </mapcanvas>
@@ -63,24 +68,30 @@
       <item>property20160508031932426</item>
       <item>tl_2009_37021_areawater20160508031945541</item>
       <item>tl_2015_37021_roads20160508031951450</item>
-      <item>new_Asheville_map320160508032018227</item>
       <item>acquisition20160913140824204</item>
+      <item>new_Asheville_map320170213144129298</item>
+      <item>asheville_geo20170213150308983</item>
     </custom-order>
   </layer-tree-canvas>
   <legend updateDrawingOrder="true">
-    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="acquisition" showFeatureCount="0">
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="asheville_geo" showFeatureCount="0">
       <filegroup open="true" hidden="false">
-        <legendlayerfile isInOverview="0" layerid="acquisition20160913140824204" visible="1"/>
+        <legendlayerfile isInOverview="0" layerid="asheville_geo20170213150308983" visible="0"/>
       </filegroup>
     </legendlayer>
     <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="new_Asheville_map3" showFeatureCount="0">
       <filegroup open="true" hidden="false">
-        <legendlayerfile isInOverview="0" layerid="new_Asheville_map320160508032018227" visible="1"/>
+        <legendlayerfile isInOverview="0" layerid="new_Asheville_map320170213144129298" visible="1"/>
       </filegroup>
     </legendlayer>
     <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="tl_2015_37021_roads" showFeatureCount="0">
       <filegroup open="true" hidden="false">
         <legendlayerfile isInOverview="0" layerid="tl_2015_37021_roads20160508031951450" visible="1"/>
+      </filegroup>
+    </legendlayer>
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="acquisition" showFeatureCount="0">
+      <filegroup open="true" hidden="false">
+        <legendlayerfile isInOverview="0" layerid="acquisition20160913140824204" visible="1"/>
       </filegroup>
     </legendlayer>
     <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="tl_2009_37021_areawater" showFeatureCount="0">
@@ -99,7 +110,7 @@
       </filegroup>
     </legendlayer>
   </legend>
-  <projectlayers layercount="6">
+  <projectlayers layercount="7">
     <maplayer minimumScale="0" maximumScale="1e+08" type="plugin" hasScaleBasedVisibilityFlag="0" name="openlayers">
       <id>OpenLayers_plugin_layer20160508031915989</id>
       <datasource>.</datasource>
@@ -217,10 +228,10 @@
         <multilineenabled fieldname="" on=""/>
         <selectedonly on=""/>
       </labelattributes>
-      <editform></editform>
+      <editform>.</editform>
       <editforminit/>
       <featformsuppress>0</featformsuppress>
-      <annotationform></annotationform>
+      <annotationform>.</annotationform>
       <editorlayout>generatedlayout</editorlayout>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
@@ -243,8 +254,54 @@
         </edittype>
       </edittypes>
     </maplayer>
+    <maplayer minimumScale="0" maximumScale="1e+08" type="raster" hasScaleBasedVisibilityFlag="0">
+      <id>asheville_geo20170213150308983</id>
+      <datasource>../asheville_geo.tif</datasource>
+      <title></title>
+      <abstract></abstract>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>asheville_geo</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4>+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs</proj4>
+          <srsid>3857</srsid>
+          <srid>3857</srid>
+          <authid>EPSG:3857</authid>
+          <description>WGS 84 / Pseudo Mercator</description>
+          <projectionacronym>merc</projectionacronym>
+          <ellipsoidacronym>WGS84</ellipsoidacronym>
+          <geographicflag>false</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <customproperties>
+        <property key="identify/format" value="Value"/>
+      </customproperties>
+      <provider>gdal</provider>
+      <noData>
+        <noDataList bandNo="1" useSrcNoData="1"/>
+      </noData>
+      <map-layer-style-manager current="">
+        <map-layer-style name=""/>
+      </map-layer-style-manager>
+      <pipe>
+        <rasterrenderer gradient="BlackToWhite" opacity="1" alphaBand="-1" type="singlebandgray" grayBand="1">
+          <rasterTransparency/>
+          <contrastEnhancement>
+            <minValue>130</minValue>
+            <maxValue>255</maxValue>
+            <algorithm>StretchToMinimumMaximum</algorithm>
+          </contrastEnhancement>
+        </rasterrenderer>
+        <brightnesscontrast brightness="0" contrast="0"/>
+        <huesaturation colorizeGreen="128" colorizeOn="0" colorizeRed="255" colorizeBlue="128" grayscaleMode="0" saturation="0" colorizeStrength="100"/>
+        <rasterresampler maxOversampling="2"/>
+      </pipe>
+      <blendMode>0</blendMode>
+    </maplayer>
     <maplayer minimumScale="-4.65661e-10" maximumScale="1e+08" type="raster" hasScaleBasedVisibilityFlag="0">
-      <id>new_Asheville_map320160508032018227</id>
+      <id>new_Asheville_map320170213144129298</id>
       <datasource>../Asheville_map/new_Asheville_map3.tif</datasource>
       <title></title>
       <abstract></abstract>
@@ -275,8 +332,12 @@
         <map-layer-style name=""/>
       </map-layer-style-manager>
       <pipe>
-        <rasterrenderer gradient="BlackToWhite" opacity="0.568627" alphaBand="0" type="singlebandgray" grayBand="1">
-          <rasterTransparency/>
+        <rasterrenderer gradient="BlackToWhite" opacity="1" alphaBand="-1" type="singlebandgray" grayBand="1">
+          <rasterTransparency>
+            <singleValuePixelList>
+              <pixelListEntry min="255" max="255" percentTransparent="100"/>
+            </singleValuePixelList>
+          </rasterTransparency>
           <contrastEnhancement>
             <minValue>121</minValue>
             <maxValue>255</maxValue>
@@ -1149,11 +1210,13 @@
     <Digitizing>
       <DefaultSnapToleranceUnit type="int">1</DefaultSnapToleranceUnit>
       <LayerSnappingList type="QStringList">
+        <value>acquisition20160913140824204</value>
         <value>property20160508031932426</value>
         <value>tl_2009_37021_areawater20160508031945541</value>
         <value>tl_2015_37021_roads20160508031951450</value>
       </LayerSnappingList>
       <LayerSnappingEnabledList type="QStringList">
+        <value>disabled</value>
         <value>enabled</value>
         <value>enabled</value>
         <value>enabled</value>
@@ -1165,8 +1228,10 @@
         <value>2</value>
         <value>2</value>
         <value>2</value>
+        <value>2</value>
       </LayerSnappingToleranceUnitList>
       <LayerSnapToList type="QStringList">
+        <value>to_vertex_and_segment</value>
         <value>to_vertex</value>
         <value>to_vertex</value>
         <value>to_vertex</value>
@@ -1175,6 +1240,7 @@
       <DefaultSnapTolerance type="double">10</DefaultSnapTolerance>
       <TopologicalEditing type="bool">true</TopologicalEditing>
       <LayerSnappingToleranceList type="QStringList">
+        <value>0.000000</value>
         <value>0.000000</value>
         <value>0.000000</value>
         <value>0.000000</value>

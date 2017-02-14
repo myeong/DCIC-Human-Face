@@ -11,6 +11,7 @@ vm/.vagrant
 
 # TIFF files
 *.tif
+*.tif.aux.xml
 
 # Distribution / packaging
 .Python

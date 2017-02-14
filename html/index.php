@@ -199,6 +199,8 @@ $(document).ready(function(){
 	var pie = L.DomUtil.create('div', 'menu-pie');
 	mapbuttons_div.appendChild(pie);
 
+
+	// Loading the Asheville Raster Layer (tilemap)
 	var asheville = L.tileLayer('asheville_tiles/{z}/{x}/{y}.png', {
 		tms: true, 
 		opacity: 0.8, 
@@ -206,8 +208,6 @@ $(document).ready(function(){
 	});
 	map.addLayer(asheville);
 	
-	
-
 	
 	// Year slider
 	var SLIDER_VALUE = 1960;
