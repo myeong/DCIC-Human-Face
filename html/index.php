@@ -102,14 +102,19 @@ $(document).ready(function(){
 					{				
 						center:[35.5861, -82.5554],
 					    //Zoom level
-						maxZoom: 19,
-						minZoom: 14,
+						maxZoom: 18,
+						minZoom: 10,
 					});
 
 	map.addLayer(baseMap);
 
 	// Slider menu 
-	var slideMenu = L.control.slideMenu('',{position: 'topright', height: '595px', width: '330px'}).addTo(map);
+	var slideMenu = L.control.slideMenu('',{
+		position: 'topright', 
+		height: '595px', 
+		width: '330px'
+	}).addTo(map);
+
 	slideMenu.setContents('<div id=\'menu_slider\'></div>');
 	
 	//Slider on right
@@ -140,7 +145,7 @@ $(document).ready(function(){
 	var search_box_div = L.DomUtil.create('div', 'menu-search-container');
 	mapbuttons_div.appendChild(search_box_div);
 	var search_box_text = L.DomUtil.create('p', 'menu-search-text', search_box_div);
-	search_box_text.innerHTML = 'ID Search';
+	search_box_text.innerHTML = 'Address';
 	var search_box = L.DomUtil.create('div', 'menu-search', search_box_div);
 	search_box.setAttribute('id', 'menu-search-div');
 	
@@ -152,7 +157,7 @@ $(document).ready(function(){
 		collapsed: false,
 		textErr: 'No data',
 		textCancel: 'Cancel',		
-		textPlaceholder: 'Please enter an ID', 
+		textPlaceholder: 'Please enter a street name', 
 		hideMarkerOnCollapse: true,
 		marker: false,
 		minLength: 0,
@@ -194,7 +199,12 @@ $(document).ready(function(){
 	var pie = L.DomUtil.create('div', 'menu-pie');
 	mapbuttons_div.appendChild(pie);
 
-	
+	var asheville = L.tileLayer('asheville_tiles/{z}/{x}/{y}.png', {
+		tms: true, 
+		opacity: 0.8, 
+		attribution: ""
+	});
+	map.addLayer(asheville);
 	
 	
 
@@ -388,7 +398,7 @@ $(document).ready(function(){
 						layer.setStyle(c6);
 					}
 				} else {
-					layer.setStyle(c7);
+					layer.setStyle(c1);
 				}
 			};
 			
@@ -439,7 +449,7 @@ $(document).ready(function(){
 					layer.setStyle(c6);
 				}
 			} else {
-				layer.setStyle(c7);
+				layer.setStyle(c1);
 				}
 		}
 	}

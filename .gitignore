@@ -9,6 +9,9 @@ vm/.vagrant
 # C extensions
 *.so
 
+# TIFF files
+*.tif
+
 # Distribution / packaging
 .Python
 env/
