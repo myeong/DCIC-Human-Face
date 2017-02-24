@@ -140,6 +140,12 @@ body{
 
 }
 
+.leaflet-popup-content {
+    width:380px;
+	height:120px;
+}
+
+
 
 /* Footer */
 
