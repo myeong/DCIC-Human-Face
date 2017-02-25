@@ -467,9 +467,9 @@ $(document).ready(function(){
 			var  pic_url='images/test.jpg';
 			var customPopup= "<span style='float:left;width: 50%;'>"+"<img src="+  pic_url   + " height='220px'	;width='250px' />"+"</span>" +"<span style='float:right;width: 50%;'>"+popupContent+"</span>" ;
 			var customOptions =
-        {
-        'maxWidth': '500'
-        }
+	        {
+	        'maxWidth': '500'
+	        }
 		
 			layer.on({
 		        mouseover: highlightDot,

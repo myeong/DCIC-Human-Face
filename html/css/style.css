@@ -137,8 +137,13 @@ body{
 	width: 290px;
 	padding-top: 198px;
 	padding-left: 1px;
-
 }
+
+ .leaflet-popup-content {
+	height:240px;
+	margin: 15px 5px 0 5px;
+	line-height: 1.4;
+  }
 
 /* Footer */
 
