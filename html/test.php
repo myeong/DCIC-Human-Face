@@ -13,9 +13,6 @@
 <!-- <script src="js/leaflet.ajax.min.js"> </script> -->
 <script src="with_date.js"> </script>
 <link rel="stylesheet" type="text/css" href="stylefull.css" />
-
-
-
 <link rel="stylesheet" href="leaflet-slider.css"/>
 <script src="leaflet-slider.js"></script>
 
@@ -75,7 +72,6 @@
 		margin-left: 20px;
 		font-size: 18px;
 		font-weight: bold;
-
 	}
 	#menu-search-div > div {
 		width: calc(100% - 20px);
@@ -623,12 +619,25 @@ $(document).ready(function(){
 				popupContent += feature.properties.popupContent;
 			}
 
+			var  pic_url='images/test.jpg';
+		
+			var customPopup= "<span style='float:left;width: 50%;'>"+"<img src="+  pic_url   + " height='220px'	;width='250px' />"+"</span>" +"<span style='float:right;width: 50%;'>"+popupContent+"</span>" ;
+		    
+			
+			var customOptions =
+        {
+        'maxWidth': '500'
+        }
+		
+
 			layer.on({
 		        mouseover: highlightDot,
 		        mouseout: resetDotHighlight
 		    });
 
-			layer.bindPopup(popupContent);
+			layer.bindPopup(customPopup,customOptions);
+			
+
 	}
 	
 	

@@ -17,9 +17,9 @@
 <!-- Data -->
 <!--<script src="js/with_date.js"> </script> -->
 
-<!-- <link rel="stylesheet" href="css/leaflet.css" /> -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="css/leaflet.css" /> 
 <link rel="stylesheet" href="css/leaflet-search.css" />
 <link rel="stylesheet" href="css/style.css" />
 <link rel="stylesheet" href="css/L.Control.SlideMenu.css">
@@ -464,12 +464,20 @@ $(document).ready(function(){
 				popupContent += feature.properties.popupContent;
 			}
 
+			var  pic_url='images/test.jpg';
+			var customPopup= "<span style='float:left;width: 50%;'>"+"<img src="+  pic_url   + " height='220px'	;width='250px' />"+"</span>" +"<span style='float:right;width: 50%;'>"+popupContent+"</span>" ;
+			var customOptions =
+        {
+        'maxWidth': '500'
+        }
+		
 			layer.on({
 		        mouseover: highlightDot,
 		        mouseout: resetDotHighlight
 		    });
+			layer.bindPopup(customPopup,customOptions);
+			
 
-			layer.bindPopup(popupContent);
 	}
 	
 	map.addLayer(poly);
