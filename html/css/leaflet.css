@@ -5,8 +5,8 @@
 .leaflet-marker-icon,
 .leaflet-marker-shadow,
 .leaflet-tile-container,
-.leaflet-map-pane svg,
-.leaflet-map-pane canvas,
+.leaflet-pane > svg,
+.leaflet-pane > canvas,
 .leaflet-zoom-box,
 .leaflet-image-layer,
 .leaflet-layer {
@@ -43,17 +43,11 @@
 /* .leaflet-container img: map is broken in FF if you have max-width: 100% on tiles */
 .leaflet-container .leaflet-overlay-pane svg,
 .leaflet-container .leaflet-marker-pane img,
+.leaflet-container .leaflet-shadow-pane img,
 .leaflet-container .leaflet-tile-pane img,
 .leaflet-container img.leaflet-image-layer {
 	max-width: none !important;
-    
 	}
-.leaflet-tile-container img{
-    width: 257px !important;
-    height: 257px !important;
-    
-}
-
 
 .leaflet-container.leaflet-touch-zoom {
 	-ms-touch-action: pan-x pan-y;
@@ -381,6 +375,11 @@
 	margin: 5px -10px 5px -6px;
 	}
 
+/* Default icon URLs */
+.leaflet-default-icon-path {
+	background-image: url(images/marker-icon.png);
+	}
+
 
 /* attribution and scale controls */
 
@@ -462,7 +461,8 @@
 	line-height: 1.4;
 	}
 .leaflet-popup-content p {
-	margin: 18px 0;
+	margin: 20px 0 0 98px;
+    font-size: 18px;
 	}
 .leaflet-popup-tip-container {
 	width: 40px;
@@ -488,6 +488,7 @@
 	}
 .leaflet-popup-content-wrapper,
 .leaflet-popup-tip {
+	width:510px;
 	background: white;
 	color: #333;
 	box-shadow: 0 3px 14px rgba(0,0,0,0.4);
@@ -580,6 +581,12 @@
 
 /* Directions */
 
+.leaflet-tooltip-bottom {
+	margin-top: 6px;
+}
+.leaflet-tooltip-top {
+	margin-top: -6px;
+}
 .leaflet-tooltip-bottom:before,
 .leaflet-tooltip-top:before {
 	left: 50%;
@@ -596,6 +603,12 @@
 	margin-left: -6px;
 	border-bottom-color: #fff;
 	}
+.leaflet-tooltip-left {
+	margin-left: -6px;
+}
+.leaflet-tooltip-right {
+	margin-left: 6px;
+}
 .leaflet-tooltip-left:before,
 .leaflet-tooltip-right:before {
 	top: 50%;
