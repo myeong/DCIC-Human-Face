@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Human Face</title>
+<title>Human Face of Big Data</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta charset="UTF-8">
 
@@ -111,7 +111,7 @@ $(document).ready(function(){
 	// Slider menu 
 	var slideMenu = L.control.slideMenu('',{
 		position: 'topright', 
-		height: '630px', 
+		height: '595px', 
 		width: '330px'
 	}).addTo(map);
 
@@ -212,10 +212,16 @@ $(document).ready(function(){
 	// Year slider
 	var SLIDER_VALUE = 1960;
 	var slider = L.control.slider(function(value) {
+
 		SLIDER_VALUE = value;
-		d3.select("#piie").remove();	
-		$(".menu-year-input").html(value);	
-        
+		$(".menu-year-input").html(value);
+		
+		//pie chart
+	
+		$(".menu-year-input").html(value);
+	
+		d3.select("#pppiiieee").remove();		
+
 		var cc1 = "#0000FF";
 		var cc2 = "#FFFF00";		
 		var cc3 = "#008000";		
@@ -245,8 +251,7 @@ $(document).ready(function(){
 		// seems like it's possible to calculate the number of layers by 
 		// looping though each layer rather than load the JSON file one more 
 		// time... need to see. If so, possible to shrink the code. Not urgent(Myeong)
-		d3.json(geojson_path, function(data) {
-            d3.select("#piie").remove();				
+		d3.json(geojson_path, function(data) {			
 			// var data=g2[0];
 			var length=data.features.length;				
 			var year=SLIDER_VALUE;
@@ -305,16 +310,6 @@ $(document).ready(function(){
 				{ label: 'Removed', count: xro },
 
 			];
-			// Percentage
-			var total=xom+xoa+xor+xft+xro;
-			var pom=Math.floor((xom / total) * 100)
-			var poa=Math.floor((xoa / total) * 100)
-			var por=Math.floor((xor / total) * 100)
-			var pft=Math.floor((xft / total) * 100)
-			var pro=Math.floor((xro / total) * 100)
-			
-			// Percentage array
-			var percentage=[pom,poa,por,pft,pro];
 			
 			var width = 320;
 			var height = 320;
@@ -326,7 +321,7 @@ $(document).ready(function(){
 
 			var svg = d3.select('.menu-pie')
 				.append("svg:svg")
-				.attr("id", "piie")
+				.attr("id", "pppiiieee")
 				.attr('width', width)
 				.attr('height', height)
 				.append('g')
@@ -370,24 +365,18 @@ $(document).ready(function(){
 				.style('fill', color)                                   
 				.style('stroke', color);                                
 
-		legend.append('text')                                     
-						
-		.attr('x', legendRectSize + legendSpacing)              
-		.attr('y', legendRectSize - legendSpacing)
-		.style('fill', 'white')							
-		.text(function(d,i) { return d+":"+ percentage[i]+"%"; });                       	
+			legend.append('text')                                     
+				.attr('x', legendRectSize + legendSpacing)              
+				.attr('y', legendRectSize - legendSpacing)
+				.style('fill', 'white')
+				.text(function(d) { return d; });                       
 		
 		});
 		
 		$(".menu-result").hide();
 		$(".menu-pie").show();
 	
-		
-
-	//pie chart
-
-
-		
+			
 		poly.eachLayer(function(layer) {
 			if (value<1961) {
 				layer.setStyle(c1);
@@ -468,7 +457,6 @@ $(document).ready(function(){
 	
 	// When a polygon is clicked
 	function onEachFeature(feature, layer) {
-			//var div = $('<div style="width: 200px; height: 200px;"></div>')[0];
 			var popupContent = "<p>This parel's ID is " +
 					feature.properties.id + ", and Block number is " + feature.properties.block +"</p>";
 
@@ -477,25 +465,19 @@ $(document).ready(function(){
 			}
 
 			var  pic_url='images/test.jpg';
-			
 			var customPopup= "<span style='float:left;width: 50%;'>"+"<img src="+  pic_url   + " height='220px'	;width='250px' />"+"</span>" +"<span style='float:right;width: 50%;'>"+popupContent+"</span>" ;
-		    
-			
 			var customOptions =
         {
         'maxWidth': '500'
         }
 		
-		
-		
-
 			layer.on({
 		        mouseover: highlightDot,
 		        mouseout: resetDotHighlight
 		    });
-
 			layer.bindPopup(customPopup,customOptions);
 			
+
 	}
 	
 	map.addLayer(poly);
