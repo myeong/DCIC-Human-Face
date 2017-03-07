@@ -137,13 +137,24 @@ body{
 	width: 290px;
 	padding-top: 198px;
 	padding-left: 1px;
-}
 
- .leaflet-popup-content {
-	height:240px;
-	margin: 15px 5px 0 5px;
-	line-height: 1.4;
-  }
+}
+/* Leaflet */
+.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+    background: white;
+    color: #333;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+    height: 270px;
+    width: 600px;
+}
+.leaflet-popup-content {
+    margin: 10px 15px;
+    line-height: 1.4;
+}
+.leaflet-popup-tip-container {
+    width: 1px;
+    height: 1px;
+}
 
 /* Footer */
 
