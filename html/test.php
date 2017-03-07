@@ -176,7 +176,7 @@ $(document).ready(function(){
 		}});
 	searchControl.on('search:locationfound', function(e) {
 		
-		});	
+		
 	
 
 	}).on('search:collapsed', function(e) {
@@ -494,7 +494,7 @@ $(document).ready(function(){
 
 			layer.bindPopup(customPopup,customOptions);
 			
-		};
+		}
 	
 	map.addLayer(poly);
 	
