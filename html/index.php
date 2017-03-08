@@ -176,7 +176,7 @@ $(document).ready(function(){
 		}});
 	searchControl.on('search:locationfound', function(e) {
 		
-		});	
+		
 	
 
 	}).on('search:collapsed', function(e) {
@@ -304,7 +304,7 @@ $(document).ready(function(){
 				{ label: 'Removed', count: xro },
 
 			];
-			// Percentage
+			// Percentage calculation
 			var total=xom+xoa+xor+xft+xro;
 			var pom=Math.floor((xom / total) * 100)
 			var poa=Math.floor((xoa / total) * 100)
@@ -494,7 +494,7 @@ $(document).ready(function(){
 
 			layer.bindPopup(customPopup,customOptions);
 			
-		};
+		}
 	
 	map.addLayer(poly);
 	
