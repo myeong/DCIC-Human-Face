@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Human Face of Big Data</title>
+<title>Human Face</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta charset="UTF-8">
 
@@ -17,9 +17,8 @@
 <!-- Data -->
 <!--<script src="js/with_date.js"> </script> -->
 
-
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="css/leaflet.css" /> 
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"> 
 <link rel="stylesheet" href="css/leaflet-search.css" />
 <link rel="stylesheet" href="css/style.css" />
 <link rel="stylesheet" href="css/L.Control.SlideMenu.css">
@@ -111,13 +110,13 @@ $(document).ready(function(){
 	// Slider menu 
 	var slideMenu = L.control.slideMenu('',{
 		position: 'topright', 
-		height: '595px', 
+		height: '630px', 
 		width: '330px'
 	}).addTo(map);
 
 	slideMenu.setContents('<div id=\'menu_slider\'></div>');
 	
-	//Slider on right
+	//Slider in Slider Menu
 	// slider2 = L.control.slider(function(value) {
 	// }, {
 	// 		max: 1976,
@@ -167,8 +166,7 @@ $(document).ready(function(){
   			map.setView(latlng, zoom);
 			var st_name = latlng.layer.feature.properties.st_name;
 			var blo = latlng.layer.feature.properties.block;
-			
-			var info="   This parcel's block number is " + blo+" at "+st_name ;
+			var info="This parcel's block number is " + blo+" at "+st_name ;
   			
   			$(".menu-result").html(info);
 			
@@ -178,6 +176,7 @@ $(document).ready(function(){
 		}});
 	searchControl.on('search:locationfound', function(e) {
 		
+		});	
 	
 
 	}).on('search:collapsed', function(e) {
@@ -212,16 +211,10 @@ $(document).ready(function(){
 	// Year slider
 	var SLIDER_VALUE = 1960;
 	var slider = L.control.slider(function(value) {
-
 		SLIDER_VALUE = value;
-		$(".menu-year-input").html(value);
-		
-		//pie chart
-	
-		$(".menu-year-input").html(value);
-	
-		d3.select("#pppiiieee").remove();		
-
+		d3.select("#piie").remove();	
+		$(".menu-year-input").html(value);	
+        
 		var cc1 = "#0000FF";
 		var cc2 = "#FFFF00";		
 		var cc3 = "#008000";		
@@ -251,7 +244,8 @@ $(document).ready(function(){
 		// seems like it's possible to calculate the number of layers by 
 		// looping though each layer rather than load the JSON file one more 
 		// time... need to see. If so, possible to shrink the code. Not urgent(Myeong)
-		d3.json(geojson_path, function(data) {			
+		d3.json(geojson_path, function(data) {
+            d3.select("#piie").remove();				
 			// var data=g2[0];
 			var length=data.features.length;				
 			var year=SLIDER_VALUE;
@@ -310,6 +304,16 @@ $(document).ready(function(){
 				{ label: 'Removed', count: xro },
 
 			];
+			// Percentage
+			var total=xom+xoa+xor+xft+xro;
+			var pom=Math.floor((xom / total) * 100)
+			var poa=Math.floor((xoa / total) * 100)
+			var por=Math.floor((xor / total) * 100)
+			var pft=Math.floor((xft / total) * 100)
+			var pro=Math.floor((xro / total) * 100)
+			
+			// Percentage array
+			var percentage=[pom,poa,por,pft,pro];
 			
 			var width = 320;
 			var height = 320;
@@ -321,7 +325,7 @@ $(document).ready(function(){
 
 			var svg = d3.select('.menu-pie')
 				.append("svg:svg")
-				.attr("id", "pppiiieee")
+				.attr("id", "piie")
 				.attr('width', width)
 				.attr('height', height)
 				.append('g')
@@ -368,15 +372,17 @@ $(document).ready(function(){
 			legend.append('text')                                     
 				.attr('x', legendRectSize + legendSpacing)              
 				.attr('y', legendRectSize - legendSpacing)
-				.style('fill', 'white')
-				.text(function(d) { return d; });                       
+				.style('fill', 'white')							
+				.text(function(d,i) { return d+":"+ percentage[i]+"%"; });                       	
 		
 		});
 		
 		$(".menu-result").hide();
 		$(".menu-pie").show();
 	
-			
+		
+
+		//pie chart
 		poly.eachLayer(function(layer) {
 			if (value<1961) {
 				layer.setStyle(c1);
@@ -403,82 +409,92 @@ $(document).ready(function(){
 			};
 			
 		});
-	}, {
-		max: 1976,
-		min: 1960,
-		value: 1960,
-		step:1,
-		size: '250px',
-		orientation:'vertical',
-		id: 'slider',
-		collapsed: false,
-		position: "topleft",
-		syncSlider: true,
-		increment: true
-	}).addTo(map); 
+		}, {
+			max: 1976,
+			min: 1960,
+			value: 1960,
+			step:1,
+			size: '250px',
+			orientation:'vertical',
+			id: 'slider',
+			collapsed: false,
+			position: "topleft",
+			syncSlider: true,
+			increment: true
+		}).addTo(map); 
 	
 
 	
 
 	
-	// Mouse track
-	function highlightDot(e){
-		var layer = e.target;
-		layer.setStyle(hoverColor);
-	}
-
-	function resetDotHighlight(e){
-		var layer = e.target;		
-		if (SLIDER_VALUE<1961) {
-				layer.setStyle(c1);
-
-			}
-		else {
-		// this is the way to access propertis from "event"
-			var properties = layer.feature.properties;
-			if (properties.offer_made > 0) {
-				if (SLIDER_VALUE >= properties.offer_made && SLIDER_VALUE < properties.offer_accepted) {
-					layer.setStyle(c2);
-				} else if (SLIDER_VALUE >= properties.offer_accepted && SLIDER_VALUE < properties.rejected) {
-					layer.setStyle(c3);
-				} else if (SLIDER_VALUE >= properties.rejected && SLIDER_VALUE < properties.final_title) {
-					layer.setStyle(c4);
-				} else if (SLIDER_VALUE >= properties.final_title && SLIDER_VALUE < properties.removed) {
-					layer.setStyle(c5);
-				} else if (SLIDER_VALUE >= properties.removed) {
-					layer.setStyle(c6);
-				}
-			} else {
-				layer.setStyle(c1);
-				}
+		// Mouse track
+		function highlightDot(e){
+			var layer = e.target;
+			layer.setStyle(hoverColor);
 		}
-	}
-	
-	
-	// When a polygon is clicked
-	function onEachFeature(feature, layer) {
-			var popupContent = "<p>This parel's ID is " +
-					feature.properties.id + ", and Block number is " + feature.properties.block +"</p>";
 
+		function resetDotHighlight(e){
+			var layer = e.target;		
+			if (SLIDER_VALUE<1961) {
+					layer.setStyle(c1);
+			}
+			else {
+				// this is the way to access propertis from "event"
+				var properties = layer.feature.properties;
+				if (properties.offer_made > 0) {
+					if (SLIDER_VALUE >= properties.offer_made && SLIDER_VALUE < properties.offer_accepted) {
+						layer.setStyle(c2);
+					} else if (SLIDER_VALUE >= properties.offer_accepted && SLIDER_VALUE < properties.rejected) {
+						layer.setStyle(c3);
+					} else if (SLIDER_VALUE >= properties.rejected && SLIDER_VALUE < properties.final_title) {
+						layer.setStyle(c4);
+					} else if (SLIDER_VALUE >= properties.final_title && SLIDER_VALUE < properties.removed) {
+						layer.setStyle(c5);
+					} else if (SLIDER_VALUE >= properties.removed) {
+						layer.setStyle(c6);
+					}
+				} else {
+				layer.setStyle(c1);
+				}
+			}
+		}
+	
+	
+		// When a polygon is clicked
+		function onEachFeature(feature, layer) {
+			//var div = $('<div style="width: 200px; height: 200px;"></div>')[0];
+			var popupContent = "<p>This parel's ID is " +
+					feature.properties.id + ", and Block number is " + feature.properties.block +
+					"</br>"+"Offer Made Date:"+feature.properties.offer_made+
+					"</br>"+"Offer Accepted Date:"+feature.properties.offer_accepted+
+					"</br>"+"Offer Rejected Date:"+feature.properties.rejected+
+					"</br>"+"Final Title Date:"+feature.properties.final_title+
+					"</br>"+"Removed Date:"+feature.properties.removed+"</p>";
+			
+			console.log(feature.properties);
+			
 			if (feature.properties && feature.properties.popupContent) {
 				popupContent += feature.properties.popupContent;
 			}
 
 			var  pic_url='images/test.jpg';
-			var customPopup= "<span style='float:left;width: 50%;'>"+"<img src="+  pic_url   + " height='220px'	;width='250px' />"+"</span>" +"<span style='float:right;width: 50%;'>"+popupContent+"</span>" ;
+			
+			var customPopup= "<span style='float:left;width: 50%;'>"+"<img src="+  pic_url   + " height='220px'	;width='250px' />"+"</span>" +"<span style='float:right;width: 40%;'>"+popupContent+"</span>" ;
+		    
+
 			var customOptions =
-	        {
-	        'maxWidth': '500'
-	        }
+			{
+			'maxWidth': 'auto'
+			}
 		
 			layer.on({
 		        mouseover: highlightDot,
 		        mouseout: resetDotHighlight
 		    });
+
 			layer.bindPopup(customPopup,customOptions);
 			
-
-	}
+		};
 	
 	map.addLayer(poly);
 	

@@ -5,134 +5,28 @@
 <meta charset="UTF-8">
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
 <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 <script type="text/javascript" src="https://d3js.org/d3.v3.min.js" ></script> 
 <script src="//d3js.org/topojson.v1.min.js"></script>
-<!-- <script src="js/leaflet.ajax.min.js"> </script> -->
-<script src="with_date.js"> </script>
-<link rel="stylesheet" type="text/css" href="stylefull.css" />
-<link rel="stylesheet" href="leaflet-slider.css"/>
-<script src="leaflet-slider.js"></script>
+<script src="js/leaflet-slider.js"></script>
+<script src="js/L.Control.SlideMenu.js"></script>
+<script src="js/leaflet-search.js"></script>
+<script src="js/leaflet.ajax.min.js"></script>
 
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="L.Control.SlideMenu.css">
-<script src="L.Control.SlideMenu.js"></script>
+<!-- Data -->
+<!--<script src="js/with_date.js"> </script> -->
 
-<link rel="stylesheet" href="leaflet.css" />
-<link rel="stylesheet" href="leaflet-search.css" />
-<link rel="stylesheet" href="style.css" />
-<script src="leaflet-search.js"></script>
-
-<style>
-	.leaflet-menu{
-		background-color: #343434;
-	overflow-x:hidden;
-	 overflow-y:hidden;
-	}
-	#menu_slider {
-		height: 66px;
-		margin: 5px;
-		border-bottom: solid 1px #97989A;
-	
-	 
-	}
-	#menu_slider > .leaflet-control-slider {
-		margin: 15px;
-		background-color: #414141;
-		border-radius: 0px;
-		
-	}
-	#menu_slider > div > div > input{
-		background-color: #414141;
-	}
-	#menu_slider p {
-		color: #97989A;
-	}
-	#menu_slider p1 {
-		color: orange;
-	}
-	.menu-year {
-		display: inline-flex;
-		color:  #F6931F;
-	    font-size: 26px;
-	    margin: 10px;
-	}
-	.menu-search-container {
-		position: absolute;
-		top: 100px;
-		left: 0px;
-		width: calc(100% - 10px);
-		margin: 5px;
-		border-bottom: solid 1px #97989A;
-	}
-	.menu-search-text {
-		margin: 10px;
-		margin-left: 20px;
-		font-size: 18px;
-		font-weight: bold;
-	}
-	#menu-search-div > div {
-		width: calc(100% - 20px);
-		height: 33px;
-		border-radius: 0px;
-		box-shadow: 0 0px 0px;
-		margin: 10px;
-
-	}
-	#menu-search-div > div > input {
-		width: calc(100% - 33px);
-		height: 100%;
-		border: 0px;
-		border-radius: 0px;
-		padding: 0px;
-		margin: 0px;
-		padding-left: 10px;
-		background-color: #414141;
-    	color: #97989A;
-	
-	}
-	#menu-search-div > div > .search-tooltip {
-		width: calc(100% - 33px);
-	}
-	#menu-search-div > div > .search-tooltip > li {
-		background-color: #414141;
-    	color: #97989A;
-	}
-	#menu-search-div > div > .search-cancel {
-	    right: 33px;
-	    margin-top: 6px
-	}
-	#menu-search-div > div > .search-button {
-		width: 33px;
-		height: 33px;
-		background: url('images/search-icon.png') center no-repeat #414141;
-		background-size: cover;
-		border-radius: 0px;
-	}
-	.menu-result-container {
-		position: absolute;
-		top: 220px;
-		left: 0px;
-		width: calc(100% - 10px);
-		margin: 5px;
-	}
-	.menu-result {
-		display: none;
-		padding-left: 10px;
-	}
-	.menu-pie {
-		width: 290px;
-		padding-top: 198px;
-		padding-left: 1px;
-		
-	
-		
-	}
-</style>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"> 
+<link rel="stylesheet" href="css/leaflet-search.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/L.Control.SlideMenu.css">
+<link rel="stylesheet" href="css/leaflet-slider.css"/>
 
 <script>
+var geojson_path = "js/with_date.geojson";
+
 $(document).ready(function(){
 		
 	//Color 
@@ -191,28 +85,38 @@ $(document).ready(function(){
 	};	
 
 	var map = L.map('map').setView([35.5861, -82.5554], 17);
-	
-	var poly= L.geoJson([parcels], {
+
+	//loading a GeoJSON file directly from the file 
+	var poly = new L.GeoJSON.AJAX(geojson_path, {
 		style: c1,					
 		onEachFeature: onEachFeature,
 	});
+	// var poly= L.geoJson(polygons, {
+	// 	style: c1,					
+	// 	onEachFeature: onEachFeature,
+	// });
 
 	// load a main layer
 	var baseMap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 
 					{				
 						center:[35.5861, -82.5554],
 					    //Zoom level
-						maxZoom: 19,
-						minZoom: 14,
+						maxZoom: 18,
+						minZoom: 10,
 					});
 
 	map.addLayer(baseMap);
 
 	// Slider menu 
-	var slideMenu = L.control.slideMenu('',{position: 'topright', height: '595px', width: '330px'}).addTo(map);
+	var slideMenu = L.control.slideMenu('',{
+		position: 'topright', 
+		height: '630px', 
+		width: '330px'
+	}).addTo(map);
+
 	slideMenu.setContents('<div id=\'menu_slider\'></div>');
 	
-	//Slider on right
+	//Slider in Slider Menu
 	// slider2 = L.control.slider(function(value) {
 	// }, {
 	// 		max: 1976,
@@ -240,7 +144,7 @@ $(document).ready(function(){
 	var search_box_div = L.DomUtil.create('div', 'menu-search-container');
 	mapbuttons_div.appendChild(search_box_div);
 	var search_box_text = L.DomUtil.create('p', 'menu-search-text', search_box_div);
-	search_box_text.innerHTML = 'ID Search';
+	search_box_text.innerHTML = 'Address';
 	var search_box = L.DomUtil.create('div', 'menu-search', search_box_div);
 	search_box.setAttribute('id', 'menu-search-div');
 	
@@ -252,7 +156,7 @@ $(document).ready(function(){
 		collapsed: false,
 		textErr: 'No data',
 		textCancel: 'Cancel',		
-		textPlaceholder: 'Please enter an ID', 
+		textPlaceholder: 'Please enter a street name', 
 		hideMarkerOnCollapse: true,
 		marker: false,
 		minLength: 0,
@@ -262,8 +166,7 @@ $(document).ready(function(){
   			map.setView(latlng, zoom);
 			var st_name = latlng.layer.feature.properties.st_name;
 			var blo = latlng.layer.feature.properties.block;
-			
-			var info="   This parcel's block number is " + blo+" at "+st_name ;
+			var info="This parcel's block number is " + blo+" at "+st_name ;
   			
   			$(".menu-result").html(info);
 			
@@ -273,6 +176,7 @@ $(document).ready(function(){
 		}});
 	searchControl.on('search:locationfound', function(e) {
 		
+		});	
 	
 
 	}).on('search:collapsed', function(e) {
@@ -294,246 +198,197 @@ $(document).ready(function(){
 	var pie = L.DomUtil.create('div', 'menu-pie');
 	mapbuttons_div.appendChild(pie);
 
-	
-	
-	
 
+	// Loading the Asheville Raster Layer (tilemap)
+	var asheville = L.tileLayer('asheville_tiles/{z}/{x}/{y}.png', {
+		tms: true, 
+		opacity: 0.8, 
+		attribution: ""
+	});
+	map.addLayer(asheville);
+	
 	
 	// Year slider
 	var SLIDER_VALUE = 1960;
 	var slider = L.control.slider(function(value) {
-
-			SLIDER_VALUE = value;
-			$(".menu-year-input").html(value);
-			
-			//pie
-	
-			$(".menu-year-input").html(value);
+		SLIDER_VALUE = value;
+		d3.select("#piie").remove();	
+		$(".menu-year-input").html(value);	
+        
+		var cc1 = "#0000FF";
+		var cc2 = "#FFFF00";		
+		var cc3 = "#008000";		
+		var cc4 = "#FF0000";
+		var cc5 = "#9542F4";
+		var cc6 = "#000000";
+		var cc7 = "#B23EA8";	
 		
-				d3.select("#pppiiieee").remove();
-				
-				var cc1 = "#0000FF";
-				
+		//Offer made
+		var om=[];
+		// Offer accepted
+		var oa=[];
+		// Offer rejected
+		var or=[];
+		//Finial title
+		var ft=[];
+		//Removed
+		var ro=[];
 
-				var cc2 = "#FFFF00";	
+		// Number counter
+		var xom=0;
+		var xoa=0;
+		var xor=0;
+		var xft=0;
+		var xro=0;
 			
-			
-				var cc3 = "#008000";	
-			
-				var cc4 = "#FF0000";	
-			
-				var cc5 = "#9542F4";	
-			
-				var cc6 = "#000000";	
-			
-				var cc7 = "#B23EA8";	
+		// seems like it's possible to calculate the number of layers by 
+		// looping though each layer rather than load the JSON file one more 
+		// time... need to see. If so, possible to shrink the code. Not urgent(Myeong)
+		d3.json(geojson_path, function(data) {
+            d3.select("#piie").remove();				
+			// var data=g2[0];
+			var length=data.features.length;				
+			var year=SLIDER_VALUE;
+	
+			for (var i=0;i<length; i++) {
 				
-					
-					
-					
-					var g2=[parcels];
-					
-				
-					//Offer made
-					var om=[];
-					// Offer accepted
-					var oa=[];
-					// Offer rejected
-					var or=[];
-					//Finial title
-					var ft=[];
-					//Removed
-					var ro=[];
-			
-					// Number counter
-					var xom=0;
-					var xoa=0;
-					var xor=0;
-					var xft=0;
-					var xro=0;
-					
-					
-					d3.json(g2, function() {
-						
-						var data=g2[0];
-						var length=data.features.length;
-						
-						var year=SLIDER_VALUE;
-					
-						
-				
-						for (var i=0;i<length; i++) {
-							
-							om[i]=data.features[i].properties.offer_made;
-				
-							if (om[i]>=year) {
-								om[i]=1;
-								}
-							else {om[i]=0;};
-				
-							xom +=om[i];
-					
-							oa[i]=	data.features[i].properties.offer_accepted;
-				
-							if (oa[i]>=year) {
-								oa[i]=1;
-								}
-							else {oa[i]=0;};
-				
-							xoa +=oa[i];
-						
-							or[i]=	data.features[i].properties.offer_accepted;
-				
-							if (or[i]>=year) {
-								or[i]=1;
-								}
-							else {or[i]=0;};
-				
-							xor +=or[i];
-				
-				
-							ft[i]=data.features[i].properties.final_title;
-							if (ft[i]>=year) {
-								ft[i]=1;
-								}
-							else {ft[i]=0;};
+				om[i]=data.features[i].properties.offer_made;
+	
+				if (om[i]>=year) {
+					om[i]=1;
+				}
+				else {om[i]=0;};
+	
+				xom +=om[i];			
+				oa[i]=	data.features[i].properties.offer_accepted;
+	
+				if (oa[i]>=year) {
+					oa[i]=1;
+					}
+				else {oa[i]=0;};
+	
+				xoa +=oa[i];				
+				or[i]=	data.features[i].properties.offer_accepted;
+	
+				if (or[i]>=year) {
+					or[i]=1;
+					}
+				else {or[i]=0;};
+	
+				xor +=or[i];		
+				ft[i]=data.features[i].properties.final_title;
 
-							xft +=ft[i];
-						
-						
-						
-							ro[i]=data.features[i].properties.final_title;
-							if (ro[i]>=year) {
-								ro[i]=1;
-								}
-							else {ro[i]=0;};
+				if (ft[i]>=year) {
+					ft[i]=1;
+				}
+				else {ft[i]=0;};
 
-							xro +=ro[i];
-						
-						
-						
-						
-						};
-						
-						var dataset=[];
-						dataset = [
-							{ label: 'Offer Made', count: xom },
-							{ label: 'Offer Accepted', count: xoa }, 
-							{ label: 'Offer Rejected', count: xor }, 
-							{ label: 'Final Title', count: xft },
-							{ label: 'Removed', count: xro },
- 
-						];
-						
-						
-						//console.log(xom);
-						//console.log(xoa);
-						//console.log(xor);
-						//console.log(xft);
-						//console.log(xro);
+				xft +=ft[i];
+				ro[i]=data.features[i].properties.final_title;
 
-						
-						
-						var width = 320;
-						var height = 320;
-						var radius = Math.min(width, height) / 2;
-						var donutWidth = 75;
-						var legendRectSize = 18;                                  
-						var legendSpacing = 4; 
+				if (ro[i]>=year) {
+					ro[i]=1;
+					}
+				else {ro[i]=0;};
 
-						 var color = d3.scale.ordinal()
-						.range([cc2,cc3,cc4,cc5,cc6]);
+				xro +=ro[i];
+			
+			};
+			
+			var dataset=[];
+			dataset = [
+				{ label: 'Offer Made', count: xom },
+				{ label: 'Offer Accepted', count: xoa }, 
+				{ label: 'Offer Rejected', count: xor }, 
+				{ label: 'Final Title', count: xft },
+				{ label: 'Removed', count: xro },
 
-				
-				
-						var svg = d3.select('.menu-pie')
-							.append("svg:svg")
-							.attr("id", "pppiiieee")
-							.attr('width', width)
-							.attr('height', height)
-							.append('g')
-							.attr('transform', 'translate(' + (width / 2) + 
-								',' + (height / 2) + ')');
-					
+			];
+			// Percentage
+			var total=xom+xoa+xor+xft+xro;
+			var pom=Math.floor((xom / total) * 100)
+			var poa=Math.floor((xoa / total) * 100)
+			var por=Math.floor((xor / total) * 100)
+			var pft=Math.floor((xft / total) * 100)
+			var pro=Math.floor((xro / total) * 100)
+			
+			// Percentage array
+			var percentage=[pom,poa,por,pft,pro];
+			
+			var width = 320;
+			var height = 320;
+			var radius = Math.min(width, height) / 2;
+			var donutWidth = 75;
+			var legendRectSize = 18;       
+			var legendSpacing = 4; 
+			var color = d3.scale.ordinal().range([cc2,cc3,cc4,cc5,cc6]);
 
-						var arc=d3.svg.arc()
-							.outerRadius(radius)
-							.innerRadius(radius - donutWidth);
-				
-						var pie = d3.layout.pie()
-							.value(function(d) { return d.count; });
+			var svg = d3.select('.menu-pie')
+				.append("svg:svg")
+				.attr("id", "piie")
+				.attr('width', width)
+				.attr('height', height)
+				.append('g')
+				.attr('transform', 'translate(' + (width / 2) + 
+					',' + (height / 2) + ')');
+		
+			var arc=d3.svg.arc()
+				.outerRadius(radius)
+				.innerRadius(radius - donutWidth);
+	
+			var pie = d3.layout.pie()
+				.value(function(d) { return d.count; });
 
-						var path = svg.selectAll('path')
-							.data(pie(dataset))
-							.enter()
-							.append('path')
-							.attr('d', arc)
-							.attr('fill', function(d, i) { 
-								return color(d.data.label);
-							});
-				
-				
+			var path = svg.selectAll('path')
+				.data(pie(dataset))
+				.enter()
+				.append('path')
+				.attr('d', arc)
+				.attr('fill', function(d, i) { 
+					return color(d.data.label);
+				});
+			
+			var legend = svg.selectAll('.legend')                     
+				.data(color.domain())                                   
+				.enter()                                                
+				.append('g')                                            
+				.attr('class', 'legend')                              
+				.attr('transform', function(d, i) {                     
+		
+					var height = legendRectSize + legendSpacing;         
+					var offset =  height * color.domain().length / 2;     
+					var horz = -3 * legendRectSize;                      
+					var vert = i * height - offset+3;                       
+					return 'translate(' + horz + ',' + vert + ')';        
+				});  		  
 
-				
-						var legend = svg.selectAll('.legend')                     
-							.data(color.domain())                                   
-							.enter()                                                
-							.append('g')                                            
-							.attr('class', 'legend')                              
-							.attr('transform', function(d, i) {                     
-					
-								var height = legendRectSize + legendSpacing;         
-								var offset =  height * color.domain().length / 2;     
-								var horz = -3 * legendRectSize;                      
-								var vert = i * height - offset+3;                       
-								return 'translate(' + horz + ',' + vert + ')';        
-							});  		  
+	
+			legend.append('rect')                                     
+				.attr('width', legendRectSize)                          
+				.attr('height', legendRectSize)                         
+				.style('fill', color)                                   
+				.style('stroke', color);                                
 
-				
-						legend.append('rect')                                     
-							.attr('width', legendRectSize)                          
-							.attr('height', legendRectSize)                         
-							.style('fill', color)                                   
-							.style('stroke', color);                                
-          
-						legend.append('text')                                     
-							.attr('x', legendRectSize + legendSpacing)              
-							.attr('y', legendRectSize - legendSpacing)
-							.style('fill', 'white')
-							.text(function(d) { return d; });                       
-					
-					});
-				
-				$(".menu-result").hide();
-				$(".menu-pie").show();
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			poly.eachLayer(function(layer) {
-				if (value<1961) {
-								layer.setStyle(c1);
+			legend.append('text')                                     
+				.attr('x', legendRectSize + legendSpacing)              
+				.attr('y', legendRectSize - legendSpacing)
+				.style('fill', 'white')							
+				.text(function(d,i) { return d+":"+ percentage[i]+"%"; });                       	
+		
+		});
+		
+		$(".menu-result").hide();
+		$(".menu-pie").show();
+	
+		
 
-							}
-				else {
-				
+		//pie chart
+		poly.eachLayer(function(layer) {
+			if (value<1961) {
+				layer.setStyle(c1);
+			}
+			else {
+			
 				// console.log(layer);
 				var properties = layer.feature.properties;
 				if (properties.offer_made > 0) {
@@ -549,87 +404,89 @@ $(document).ready(function(){
 						layer.setStyle(c6);
 					}
 				} else {
-					layer.setStyle(c7);
+					layer.setStyle(c1);
 				}
-				};
-				
-			});
+			};
+			
+		});
 		}, {
-		max: 1976,
-		min: 1960,
-		value: 1960,
-		step:1,
-		size: '250px',
-		orientation:'vertical',
-		id: 'slider',
-		collapsed: false,
-		position: "topleft",
-		syncSlider: true,
-		increment: true
-	}).addTo(map); 
-	
-	
-	
-	
-		
-		
+			max: 1976,
+			min: 1960,
+			value: 1960,
+			step:1,
+			size: '250px',
+			orientation:'vertical',
+			id: 'slider',
+			collapsed: false,
+			position: "topleft",
+			syncSlider: true,
+			increment: true
+		}).addTo(map); 
 	
 
 	
-	// Mouse track
-	function highlightDot(e){
-		var layer = e.target;
-		layer.setStyle(hoverColor);
-	}
 
-	function resetDotHighlight(e){
-		var layer = e.target;		
-		if (SLIDER_VALUE<1961) {
-				layer.setStyle(c1);
-
-			}
-		else {
-		// this is the way to access propertis from "event"
-			var properties = layer.feature.properties;
-			if (properties.offer_made > 0) {
-				if (SLIDER_VALUE >= properties.offer_made && SLIDER_VALUE < properties.offer_accepted) {
-					layer.setStyle(c2);
-				} else if (SLIDER_VALUE >= properties.offer_accepted && SLIDER_VALUE < properties.rejected) {
-					layer.setStyle(c3);
-				} else if (SLIDER_VALUE >= properties.rejected && SLIDER_VALUE < properties.final_title) {
-					layer.setStyle(c4);
-				} else if (SLIDER_VALUE >= properties.final_title && SLIDER_VALUE < properties.removed) {
-					layer.setStyle(c5);
-				} else if (SLIDER_VALUE >= properties.removed) {
-					layer.setStyle(c6);
-				}
-			} else {
-				layer.setStyle(c7);
-				}
+	
+		// Mouse track
+		function highlightDot(e){
+			var layer = e.target;
+			layer.setStyle(hoverColor);
 		}
-	}
-	
-	
-	// When a polygon is clicked
-	function onEachFeature(feature, layer) {
-			var popupContent = "<p>This parel's ID is " +
-					feature.properties.id + ", and Block number is " + feature.properties.block +"</p>";
 
+		function resetDotHighlight(e){
+			var layer = e.target;		
+			if (SLIDER_VALUE<1961) {
+					layer.setStyle(c1);
+			}
+			else {
+				// this is the way to access propertis from "event"
+				var properties = layer.feature.properties;
+				if (properties.offer_made > 0) {
+					if (SLIDER_VALUE >= properties.offer_made && SLIDER_VALUE < properties.offer_accepted) {
+						layer.setStyle(c2);
+					} else if (SLIDER_VALUE >= properties.offer_accepted && SLIDER_VALUE < properties.rejected) {
+						layer.setStyle(c3);
+					} else if (SLIDER_VALUE >= properties.rejected && SLIDER_VALUE < properties.final_title) {
+						layer.setStyle(c4);
+					} else if (SLIDER_VALUE >= properties.final_title && SLIDER_VALUE < properties.removed) {
+						layer.setStyle(c5);
+					} else if (SLIDER_VALUE >= properties.removed) {
+						layer.setStyle(c6);
+					}
+				} else {
+				layer.setStyle(c1);
+				}
+			}
+		}
+	
+	
+		// When a polygon is clicked
+		function onEachFeature(feature, layer) {
+			//var div = $('<div style="width: 200px; height: 200px;"></div>')[0];
+			var popupContent = "<p>This parel's ID is " +
+					feature.properties.id + ", and Block number is " + feature.properties.block +
+					"</br>"+"Offer Made Date:"+feature.properties.offer_made+
+					"</br>"+"Offer Accepted Date:"+feature.properties.offer_accepted+
+					"</br>"+"Offer Rejected Date:"+feature.properties.rejected+
+					"</br>"+"Final Title Date:"+feature.properties.final_title+
+					"</br>"+"Removed Date:"+feature.properties.removed+"</p>";
+			
+			console.log(feature.properties);
+			
 			if (feature.properties && feature.properties.popupContent) {
 				popupContent += feature.properties.popupContent;
 			}
 
 			var  pic_url='images/test.jpg';
-		
-			var customPopup= "<span style='float:left;width: 50%;'>"+"<img src="+  pic_url   + " height='220px'	;width='250px' />"+"</span>" +"<span style='float:right;width: 50%;'>"+popupContent+"</span>" ;
-		    
 			
-			var customOptions =
-        {
-        'maxWidth': '500'
-        }
-		
+			var customPopup= "<span style='float:left;width: 50%;'>"+"<img src="+  pic_url   + " height='220px'	;width='250px' />"+"</span>" +"<span style='float:right;width: 40%;'>"+popupContent+"</span>" ;
+		    
 
+			var customOptions =
+			{
+			'maxWidth': 'auto'
+			}
+		
 			layer.on({
 		        mouseover: highlightDot,
 		        mouseout: resetDotHighlight
@@ -637,13 +494,9 @@ $(document).ready(function(){
 
 			layer.bindPopup(customPopup,customOptions);
 			
-
-	}
-	
-	
+		};
 	
 	map.addLayer(poly);
-	
 	
 });
 				
@@ -663,10 +516,6 @@ $(document).ready(function(){
 				</div>
 
 			</div>
-			
-			
-		
-			
 		</div>
 		
 	</div>
