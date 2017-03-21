@@ -1,10 +1,10 @@
 <?php
 // Connecting, selecting database
-$dbconn = pg_connect("host=localhost dbname=publishing user=www password=foo")
+$dbconn = pg_connect("host=localhost dbname=humanface user=postgres password=dcic2017")
     or die('Could not connect: ' . pg_last_error());
 
 // Performing SQL query
-$query = 'SELECT * FROM authors';
+$query = "SELECT * FROM humanface.parcels";
 $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
 // Printing results in HTML
