@@ -27,6 +27,13 @@ require 'vendor/autoload.php';
 // Include credentials
 require 'credentials.inc.php';
 
+function connect_db(){
+	// Connecting, selecting database
+	$dbconn = pg_connect('host=' . DBHOST . ' dbname=' .DBNAME . ' user=' .DBUSER . ' password=' . DBPASS)
+	    or die('Could not connect: ' . pg_last_error());
+	return $dbconn;
+}
+
 // Start Slim instance
 //-------------------------------
 $app = new \Slim\Slim(array(
@@ -54,20 +61,27 @@ $app->notFound(function () use ($app) {
 
 
 $app->get('/index.html', function () use ($app) {
-  $app->redirect('/main/');
+  	$app->redirect("/");
 });
 
 $app->get('/', function () use ($app) {
-    $app->redirect("index.html");
+    $content['title'] = "Human Face of Big Data";
+    $content['intro'] = <<<HTML
+		<p>Asheville, NC</p>
+HTML;
+	// return $app->response->setBody($response);
+	// Render content with simple bespoke templates
+	$app->view()->setData(array('content' => $content));
+	$app->render('tp_main_map.php');
 });
 
 $app->get('', function () use ($app) {
     $app->redirect("index.html");
 });
 
-$app->get('/main/', function () use ($app) {
+$app->get('/map/', function () use ($app) {
 	
-    $content['title'] = "Main Map";
+    $content['title'] = "Human Face of Big Data";
     $content['intro'] = <<<HTML
 		<p>Asheville, NC</p>
 HTML;
@@ -76,6 +90,25 @@ HTML;
 	$app->view()->setData(array('content' => $content));
 	$app->render('tp_main_map.php');
     
+});
+
+# Data management interface
+$app->get('/data/', function () use ($app) {
+	// Connecting, selecting database
+	$dbconn = connect_db();
+
+	// Performing SQL query
+	$query = "SELECT max(parcel_id) FROM humanface.parcels";
+	$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+
+	$content['title'] = "Data Management";
+    $content['intro'] = "This is an admin interface for data management";
+	
+	$line = pg_fetch_array($result, null, PGSQL_ASSOC);
+	$content['parcel_id'] = $line['max'];
+	
+	$app->view()->setData(array('content' => $content));
+	$app->render('tp_data.php');
 });
 
 $app->run();
