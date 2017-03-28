@@ -40,23 +40,20 @@ $app = new \Slim\Slim(array(
     'debug' => true
 ));
 
-$app->get('/hello/:name', function ($name) {
-    echo "Hello, $name";
-});
-
 // Handle not found
 $app->notFound(function () use ($app) {
 	// Temporarily route /map, /viz to /map.html
 	$actual_link = "$_SERVER[REQUEST_URI]";
-	
+	print($actual_link);
+	exit;
 	// Let's make sure we remove a trailing "/" on any not found paths
     $actual_link = rtrim($actual_link, '/');
         
-	if ($actual_link == "/phppgadmin"){
-		echo "this is phppgadmin";
-	} else {		
-    	$app->redirect('/404.html');
-    }
+	// if ($actual_link == "/phppgadmin"){
+	// 	echo "this is phppgadmin";
+	// } else {		
+ //    	$app->redirect('/404.html');
+ //    }
 });
 
 
@@ -76,7 +73,7 @@ HTML;
 });
 
 $app->get('', function () use ($app) {
-    $app->redirect("index.html");
+    $app->redirect("/");
 });
 
 $app->get('/map/', function () use ($app) {
@@ -105,7 +102,7 @@ $app->get('/data/', function () use ($app) {
     $content['intro'] = "This is an admin interface for data management";
 	
 	$line = pg_fetch_array($result, null, PGSQL_ASSOC);
-	$content['parcel_id'] = $line['max'];
+	$content['parcel_id'] = $line['max'] + 1;
 	
 	$app->view()->setData(array('content' => $content));
 	$app->render('tp_data.php');

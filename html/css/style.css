@@ -184,4 +184,29 @@ body{
 #footer .bft:hover{text-decoration:underline}
 
 
+/* Data management interface */
+.form-horizontal .form-group {
+	margin-right: 0;
+}
 
+body #survey_form {
+	background: white;
+	color: black;
+	padding: 5px 0 0 10px;
+}
+
+.required {
+	color: red;
+}
+
+.building-item,
+.appraisal {
+	border: 1px gray solid;
+	margin: 16px 0 10px 0;
+	padding-top: 8px;
+	border-radius: 6px;
+}
+
+#add_building {
+	margin: 10px 0 5px 15px;
+}
