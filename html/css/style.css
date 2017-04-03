@@ -200,7 +200,8 @@ body #survey_form {
 }
 
 .building-item,
-.appraisal {
+.appraisal,
+#role-events .row {
 	border: 1px gray solid;
 	margin: 16px 0 10px 0;
 	padding-top: 8px;

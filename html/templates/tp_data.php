@@ -147,6 +147,27 @@
 					<label for="owner_name">Owner Name<small class="required">*</small></label>
 					<input type="text" class="form-control" id="owner_name" name="owner_name" placeholder="Name" required minlength="2">
 				</div> 
+				<div class="form-group col-md-4">
+					<label for="is_heir">Heir of an Owner?</label><br>
+					<input type="radio" name="is_heir" value="1" > Yes &nbsp;&nbsp;
+  					<input type="radio" name="is_heir" value="0" checked> No<br>
+				</div> 
+				<div class="form-group col-md-4">
+					<label for="pass_away_date">Date of Passing Away (if so)</label>
+					<input type="date" class="form-control" id="pass_away_date" name="pass_away_date" min="1960-01-01" max="1980-01-01">
+				</div> 
+				<div class="form-group col-md-4">
+					<label for="purchase_price">Purchase Price</label>
+					<input type="number" class="form-control" id="purchase_price" name="purchase_price" placeholder="In dollar">
+				</div> 
+				<div class="form-group col-md-4">
+					<label for="loan_price">Loan Price</label>
+					<input type="number" class="form-control" id="loan_price" name="loan_price" placeholder="In dollar">
+				</div>
+				<div class="form-group col-md-4">
+					<label for="deed_transfer_date">Deed Transfer Date</label>
+					<input type="date" class="form-control" id="deed_transfer_date" name="deed_transfer_date" min="1960-01-01" max="1980-01-01">
+				</div> 
 			</div>
 		</div>
       	<div class="col-md-12">
@@ -217,6 +238,33 @@ $(document).ready(function() {
         	<div class="form-group col-md-4">\
         		<label for="st_name[]">Building Address</label>\
         		<input type="text" class="form-control" name="st_name[]" id="st_name[]" placeholder="e.g., 53 Louis Rd." /> \
+        	</div>\
+        	<div class="form-group col-md-3">\
+        		<label for="apt_no[]">Building Number</label>\
+        		<input type="number" class="form-control" name="apt_no[]" id="apt_no[]" value='+  FieldCount +' /> \
+        	</div>\
+        	<div class="form-group col-md-3">\
+        		<label for="num_rooms[]">Number of Rooms</label>\
+        		<input type="number" class="form-control" name="num_rooms[]" id="num_rooms[]" placeholder="" /> \
+        	</div>\
+        	<div class="form-group col-md-3">\
+        		<label for="area_of_building[]">Area of Building</label>\
+        		<input type="number" class="form-control" name="area_of_building[]" id="area_of_building[]" placeholder="In Sq. Ft." /> \
+        	</div>\
+        	<div class="form-group col-md-3">\
+        		<label for="use_of_building[]">Use of Building</label>\
+        		<input type="number" class="form-control" name="use_of_building[]" id="use_of_building[]" placeholder="Commercial/Residential/..." />\
+        	</div></div></div>');
+		FieldCount++;
+        return false;
+    });
+
+	$("#add_owner").click(function() {
+                
+        $("#role-owners").append('<div class="row col-md-12 owner-item"><div class="form-group col-md-12"> \
+        	<div class="form-group col-md-4">\
+        		<label for="owner_name[]">Building Address</label>\
+        		<input type="text" class="form-control" name="owner_name[]" id="owner_name[]" placeholder="Name" /> \
         	</div>\
         	<div class="form-group col-md-3">\
         		<label for="apt_no[]">Building Number</label>\

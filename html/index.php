@@ -108,5 +108,34 @@ $app->get('/data/', function () use ($app) {
 	$app->render('tp_data.php');
 });
 
+$app->get('/crowd/', function () use ($app) {
+	// Connecting, selecting database
+	$dbconn = connect_db();
+
+	// Performing SQL query
+	$query = "SELECT max(parcel_id) FROM humanface.parcels";
+	$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+	$line = pg_fetch_array($result, null, PGSQL_ASSOC);
+	$content['parcel_id'] = $line['max'] + 1;
+
+	$content['title'] = "Data Management";
+    $content['intro'] = "This is an admin interface for data management";
+	
+	$query = "SELECT type FROM humanface.event_types";
+	$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+
+	$line = pg_fetch_all($result);
+	$event_types = array();
+
+	for ($i=0; $i<sizeof($line); $i++){
+		$event_types[$i] = $line[$i]["type"];
+	}
+	
+	$content['event_types'] = $event_types;
+	
+	$app->view()->setData(array('content' => $content));
+	$app->render('tp_crowdsourcing.php');
+});
+
 $app->run();
 ?>
