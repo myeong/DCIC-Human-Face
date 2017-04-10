@@ -137,5 +137,23 @@ $app->get('/crowd/', function () use ($app) {
 	$app->render('tp_crowdsourcing.php');
 });
 
+$app->post('/input/:parcel_id/', function($pid) use ($app) {
+	$dbconn = connect_db();
+
+	$vars = $app->request->post(); 	
+	$log_time = date_format(date_create(), 'Y-m-d H:i:s');
+
+	echo "<pre>";
+	print_r($vars);
+	echo "</pre>";
+	print($log_time);
+	
+
+});
+
+$app->get('/num/:abc/', function($n) use ($app) {
+	echo $n;
+});
+
 $app->run();
 ?>

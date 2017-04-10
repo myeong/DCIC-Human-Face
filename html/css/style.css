@@ -201,13 +201,40 @@ body #survey_form {
 
 .building-item,
 .appraisal,
-#role-events .row {
+#role-events .row
+ {
 	border: 1px gray solid;
 	margin: 16px 0 10px 0;
-	padding-top: 8px;
+	padding: 8px 0 0 30px;
 	border-radius: 6px;
+}
+
+.person-item {
+	border: 1px gray solid;	
+	border-radius: 6px;
+	padding: 10px 0 0 15px;
 }
 
 #add_building {
 	margin: 10px 0 5px 15px;
 }
+
+.form-footer {
+	height: 35px;
+}
+
+#btnSubmit {
+	font-size: 30px;
+	background: green;
+	padding: 5px 20px 5px 20px;
+}
+
+.btn:hover{
+	color: orange;
+}
+
+#btnSubmit:hover{
+	color: green;
+	background: yellow;
+}
+
