@@ -215,6 +215,8 @@ $app->post('/input/:parcel_id/', function($pid) use ($app) {
 			echo "There's an error in inserting Address 2 data<br />";
 		}
 	}	
+
+	$names = array();
 	
 	// Data into the Events table
 	$i = 1;	
@@ -235,10 +237,10 @@ $app->post('/input/:parcel_id/', function($pid) use ($app) {
 			echo "There's an error in inserting Event data<br />";
 		}
 
-		$event_id = pg_fetch_row($res)[0];
+		$event_id = pg_fetch_row($res)[0];				
 
 		$j = 1;
-		while(isset($vars['person_name-'.strval($i) . '-'. strval($j)])) {			
+		while(isset($vars['person_name-'.strval($i) . '-'. strval($j)])) {					
 			$person = array();	
 			$assoc = array();
 
@@ -261,18 +263,25 @@ $app->post('/input/:parcel_id/', function($pid) use ($app) {
 				// if this person is a new one, need to add both assoc and person entry 
 				else {
 					$person['name'] = pg_escape_string($vars['person_name-'.strval($i) . '-'. strval($j)]);
-					
 
-					$result = pg_query_params('INSERT into humanface.people (person_id, name)'.
-						' VALUES (default, $1) RETURNING person_id', $person);
-					if ($result) {
-						echo "Person <strong>". $person['name']. "</strong> has been successfully logged<br />";
-					} else {
-						echo "There's an error in inserting Person data<br />";
+					// if there are multiple same names in a document, it is regarded as a same person.
+					if (in_array($person['name'], $names)){
+						$assoc['person_id'] = array_search($person['name'],$names);						
+					} 
+					else {					
+
+						$result = pg_query_params('INSERT into humanface.people (person_id, name)'.
+							' VALUES (default, $1) RETURNING person_id', $person);
+						if ($result) {
+							echo "Person <strong>". $person['name']. "</strong> has been successfully logged<br />";
+						} else {
+							echo "There's an error in inserting Person data<br />";
+						}
+
+						$assoc['person_id']  = pg_fetch_row($result)[0];
+						$names[$assoc['person_id']] = $person['name'];
 					}
-
-					$assoc['person_id']  = pg_fetch_row($result)[0];
-
+					
 					$res = pg_query_params('INSERT into humanface.event_people_assoc (id, role, event_id, person_id)'.
 						' VALUES (default, $1, $2, $3) RETURNING id', $assoc);
 					if ($res) {
@@ -301,9 +310,10 @@ $app->get('/list/', function () use ($app) {
 	$dbconn = connect_db();
 
 	// Performing SQL query
-	$query = "SELECT (p.parcel_id, block_no, parcel_no, land_use, t.type, price, response, extra_information, e.date, pp.name, pp.role) " .
+	$query = "SELECT (p.parcel_id, block_no, parcel_no, land_use, t.type, price, response, extra_information, e.date, pp.name, a.role) " .
 						"FROM humanface.parcels as p LEFT JOIN humanface.events as e on p.parcel_id=e.parcel_id " .
-						"LEFT JOIN humanface.people as pp on pp.event_id=e.event_id ". 
+						"LEFT JOIN humanface.event_people_assoc as a on a.event_id=e.event_id ".
+						"LEFT JOIN humanface.people as pp on pp.person_id=a.person_id ". 
 						"LEFT JOIN humanface.event_types as t on t.id=e.type ".
 						"ORDER BY p.block_no";
 	$result = pg_query($dbconn, $query) or die('Query failed: ' . pg_last_error());	

@@ -188,7 +188,7 @@ $(document).ready(function() {
         event_item.find("input[name=event_money-" + (FieldCount-1).toString() + "]").attr('name', 'event_money-' + FieldCount.toString());
         event_item.find("select[name=event_response-" + (FieldCount-1).toString() + "]").attr('name', 'event_response-' + FieldCount.toString());
         event_item.find("input[name=event_extra-" + (FieldCount-1).toString() + "]").attr('name', 'event_extra-' + FieldCount.toString());
-        event_item.find("input[name=person_name-" + (FieldCount-1).toString() + "-1]").attr('name', 'person_name-' + FieldCount.toString() + '-1');
+        event_item.find("select[name=person_name-" + (FieldCount-1).toString() + "-1]").attr('name', 'person_name-' + FieldCount.toString() + '-1');
         event_item.find("select[name=person_role-" + (FieldCount-1).toString() + "-1]").attr('name', 'person_role-' + FieldCount.toString() + '-1');
         
         $("#role-events").append(event_item.html());
