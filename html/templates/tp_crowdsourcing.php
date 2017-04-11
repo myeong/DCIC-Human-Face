@@ -93,7 +93,7 @@ textdomain($domain);
                     </div>
                     <div class="form-group col-md-3">
                         <label for="event_date-1">Event Date</label>
-                        <input type="date" class="form-control" name="event_date-1" /> 
+                        <input type="date" class="form-control" name="event_date-1" min="1960-01-01" max="1980-01-01"/> 
                     </div> 
                     <div class="form-group col-md-3">
                         <label for="event_money-1">Amount of Money Involved</label>
@@ -119,7 +119,15 @@ textdomain($domain);
                         <div class="form-group col-md-12 person-item">                        
                             <div class="form-group col-md-5">     
                                 <label>Name</label>                       
-                                <input type="text" class="form-control" name="person_name-1-1" /> 
+                                <!-- <input type="text" class="form-control" name="person_name-1-1" />  -->
+                                <select data-placeholder="Choose a person..." class="form-control chosen-select" name="person_name-1-1">
+                                    <option value=""></option>
+                                    <?php                                   
+                                        for ($i=0; $i<sizeof($content['people']); $i++){
+                                            echo "<option value=\"" . $content['people_ids'][$i] . '">' . $content['people'][$i] . "</option>";
+                                        }                                
+                                    ?>
+                                </select> 
                             </div>
                             <div class="form-group col-md-5">   
                                 <label>Role</label>
@@ -207,12 +215,26 @@ $(document).ready(function() {
         suffix = item_id.toString() + "-" + person_index.toString();        
         
         // Assign a name of the upcoming input box based on Event Item ID and the Person Item ID.
-        p_item.find("input[name=person_name-1-1]").attr('name', 'person_name-' + suffix);
+        p_item.find("select[name=person_name-1-1]").attr('name', 'person_name-' + suffix);
         p_item.find("select[name=person_role-1-1]").attr('name', 'person_role-' + suffix);
         people_div.find(".people").append(p_item.html());
         
         return false;
     });
+
+    $(".chosen-select").chosen();
+
+    // Allowing a new entry for a person's name
+    $(".chosen-search").find("input").on( "keydown", function (evt) {
+        var stroke;
+        stroke = (_ref = evt.which) != null ? _ref : evt.keyCode;
+        if (stroke == 9 || stroke == 13) { 
+            $('.chosen-select').append('<option value="' + $(this).val() + '" selected="selected">' + $(this).val() + '</option>');
+            $('.chosen-select').trigger('chosen:updated');
+        }
+    });
+    
+
 
 
 });

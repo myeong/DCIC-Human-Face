@@ -121,6 +121,7 @@ $app->get('/crowd/', function () use ($app) {
 	$content['title'] = "Data Management";
     $content['intro'] = "This is an admin interface for data management";
 	
+	// event types
 	$query = "SELECT id, type FROM humanface.event_types";
 	$result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
@@ -133,8 +134,25 @@ $app->get('/crowd/', function () use ($app) {
 		$event_ids[$i] = intval($line[$i]["id"]);
 	}
 	
+
 	$content['event_types'] = $event_types;
 	$content['event_ids'] = $event_ids;
+
+	// pre-load people
+	$query = "SELECT person_id, name FROM humanface.people where name != '';";
+	$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+
+	$line = pg_fetch_all($result);
+	$people = array();
+	$people_ids = array();
+
+	for ($i=0; $i<sizeof($line); $i++){
+		$people[$i] = $line[$i]["name"];
+		$people_ids[$i] = intval($line[$i]["person_id"]);
+	}
+
+	$content['people'] = $people;
+	$content['people_ids'] = $people_ids;
 	
 	$app->view()->setData(array('content' => $content));
 	$app->render('tp_crowdsourcing.php');
@@ -222,24 +240,57 @@ $app->post('/input/:parcel_id/', function($pid) use ($app) {
 		$j = 1;
 		while(isset($vars['person_name-'.strval($i) . '-'. strval($j)])) {			
 			$person = array();	
-			$person['name'] = isset($vars['person_name-'.strval($i) . '-'. strval($j)]) ? pg_escape_string($vars['person_name-'.strval($i) . '-'. strval($j)]) : null;
-			$person['role'] = isset($vars['person_role-'.strval($i) . '-'. strval($j)]) ? $vars['person_role-'.strval($i) . '-'. strval($j)] : null;			
-			$person['event_id'] = $event_id;
-			
-			$res = pg_query_params('INSERT into humanface.people (person_id, name, role, event_id)'.
-				' VALUES (default, $1, $2, $3) RETURNING person_id', $person);
-			if ($res) {
-				echo "Person data are successfully logged<br />";
-			} else {
-				echo "There's an error in inserting Person data<br />";
+			$assoc = array();
+
+			$assoc['role'] = isset($vars['person_role-'.strval($i) . '-'. strval($j)]) ? $vars['person_role-'.strval($i) . '-'. strval($j)] : null;
+			$assoc['event_id'] = $event_id;
+
+			if (isset($vars['person_name-'.strval($i) . '-'. strval($j)])){
+				// if the person is an existing one, just add an association entry
+				if (is_numeric($vars['person_name-'.strval($i) . '-'. strval($j)])){
+					$assoc['person_id'] = intval($vars['person_name-'.strval($i) . '-'. strval($j)]);
+
+					$res = pg_query_params('INSERT into humanface.event_people_assoc (id, role, event_id, person_id)'.
+						' VALUES (default, $1, $2, $3) RETURNING id', $assoc);
+					if ($res) {
+						echo "Association <strong>". strval($assoc['event_id']) ."-".strval($assoc['person_id']). "</strong> has been successfully logged.<br />";
+					} else {
+						echo "There's an error in inserting Association data.<br />";
+					}
+				}
+				// if this person is a new one, need to add both assoc and person entry 
+				else {
+					$person['name'] = pg_escape_string($vars['person_name-'.strval($i) . '-'. strval($j)]);
+					
+
+					$result = pg_query_params('INSERT into humanface.people (person_id, name)'.
+						' VALUES (default, $1) RETURNING person_id', $person);
+					if ($result) {
+						echo "Person <strong>". $person['name']. "</strong> has been successfully logged<br />";
+					} else {
+						echo "There's an error in inserting Person data<br />";
+					}
+
+					$assoc['person_id']  = pg_fetch_row($result)[0];
+
+					$res = pg_query_params('INSERT into humanface.event_people_assoc (id, role, event_id, person_id)'.
+						' VALUES (default, $1, $2, $3) RETURNING id', $assoc);
+					if ($res) {
+						echo "Association <strong>". strval($assoc['event_id']) ."-". strval($assoc['person_id']). "</strong> has been successfully logged.<br />";
+					} else {
+						echo "There's an error in inserting Association data.<br />";
+					}
+				}
 			}
+			
+			
 			$j++;
 		}
 
 		$i++;		
 	}
 
-	echo "<br><br><a href='/crowd'>GO BACK to Data Insertion Interface</a>";
+	echo "<br><br><a href='/crowd'><strong>GO BACK to Data Insertion Interface</strong></a>";
 	
 
 });
@@ -259,7 +310,7 @@ $app->get('/list/', function () use ($app) {
 	// $line = pg_fetch_array($result, null, PGSQL_ASSOC);
 
 
-	echo "<br><a href='/crowd' target='_blank'>GO BACK to Data Insertion Interface</a><br><br>";
+	echo "<br><a href='/crowd' target='_blank'><strong>GO BACK to Data Insertion Interface</strong></a><br><br>";
 
 	echo "<table border=1><tr>
 	<td>Parcel ID (arbitrary)</td>
