@@ -11,6 +11,10 @@ textdomain($domain);
 <div class="container lg-font col-md-12">
 	<form id="survey_form" class="form-horizontal" style="border:0px dotted black;" action="/input/<?php echo $content['parcel_id']; ?>" method="post">
 		
+        <div class="col-md-12" role="address-titlebar"  id="role-address-titlebar">
+            <div class="noti">You can see the current data status at <a href="/list" target='_blank'>this link</a>.</div>
+        </div>
+
 		<div class="col-md-12" role="address-titlebar"  id="role-address-titlebar">
       		<div class="section-title"><h3>1. Basic Information</h3></div>
     	</div>
@@ -46,17 +50,18 @@ textdomain($domain);
                         <label for="st_name_2">Street Name 2</label>
                         <input type="text" class="form-control" id="st_name_2" name="st_name_2" placeholder="e.g., S. French Broad Ave.">
                     </div> 					         			
-        			<div class="form-group col-md-4">
+        			<div class="form-group col-md-4">                        
             			<label for="land_use">Land Use<small class="required">*</small></label>
+                        <input type="hidden" name="land_use" value="">
             			<div class="radio">
-                            <label><input type="radio" name="land_use" value="residential">Residential</label>
+                            <label><input type="radio" name="land_use" value="residential" required>Residential</label>
                         </div>
                         <div class="radio">
-                            <label><input type="radio" name="land_use" value="commercial">Commercial</label>
+                            <label><input type="radio" name="land_use" value="commercial" required>Commercial</label>
                         </div>   
                         <div class="radio">
                             <label><input type="radio" name="land_use" value="other">Other</label>&nbsp;
-                            <input type="text" id="land_use_other" name="land_use">
+                            <input type="text" id="land_use_other" name="land_use_other">
                         </div>                       
                         
         			</div> 
@@ -76,11 +81,12 @@ textdomain($domain);
                 <div class="form-group col-md-12" id="event-item-1"> 
                     <div class="form-group col-md-3">
                         <label for="event_type-1">Event Type</label>
+                        <input type="hidden" name="event_type-1" value="">
                         <select class="form-control" name="event_type-1">
-                            <option selected disabled>Choose an Event Type</option>
+                            <option selected disabled>Choose an Event Type</option>                      
                             <?php
                                 for ($i=0; $i<sizeof($content['event_types']); $i++){
-                                    echo "<option value=\"" . $content['event_types'][$i] . '">' . $content['event_types'][$i] . "</option>";
+                                    echo "<option value=\"" . $content['event_ids'][$i] . '">' . $content['event_types'][$i] . "</option>";
                                 }                                
                             ?>
                         </select> 
@@ -168,6 +174,7 @@ $(document).ready(function() {
         e.preventDefault();
         
         event_item.find("#event-item-" + (FieldCount - 1).toString()).attr('id','event-item-' + FieldCount.toString());
+        event_item.find("input[name=event_type-" + (FieldCount-1).toString() + "]").attr('name', 'event_type-' + FieldCount.toString());
         event_item.find("select[name=event_type-" + (FieldCount-1).toString() + "]").attr('name', 'event_type-' + FieldCount.toString());
         event_item.find("input[name=event_date-" + (FieldCount-1).toString() + "]").attr('name', 'event_date-' + FieldCount.toString());
         event_item.find("input[name=event_money-" + (FieldCount-1).toString() + "]").attr('name', 'event_money-' + FieldCount.toString());
@@ -207,55 +214,10 @@ $(document).ready(function() {
         return false;
     });
 
-	// $("#add_owner").click(function() {
-                
- //        $("#role-owners").append('<div class="row col-md-12 owner-item"><div class="form-group col-md-12"> \
- //        	<div class="form-group col-md-4">\
- //        		<label for="owner_name[]">Building Address</label>\
- //        		<input type="text" class="form-control" name="owner_name[]" id="owner_name[]" placeholder="Name" /> \
- //        	</div>\
- //        	<div class="form-group col-md-3">\
- //        		<label for="apt_no[]">Building Number</label>\
- //        		<input type="number" class="form-control" name="apt_no[]" id="apt_no[]" value='+  FieldCount +' /> \
- //        	</div>\
- //        	<div class="form-group col-md-3">\
- //        		<label for="num_rooms[]">Number of Rooms</label>\
- //        		<input type="number" class="form-control" name="num_rooms[]" id="num_rooms[]" placeholder="" /> \
- //        	</div>\
- //        	<div class="form-group col-md-3">\
- //        		<label for="area_of_building[]">Area of Building</label>\
- //        		<input type="number" class="form-control" name="area_of_building[]" id="area_of_building[]" placeholder="In Sq. Ft." /> \
- //        	</div>\
- //        	<div class="form-group col-md-3">\
- //        		<label for="use_of_building[]">Use of Building</label>\
- //        		<input type="number" class="form-control" name="use_of_building[]" id="use_of_building[]" placeholder="Commercial/Residential/..." />\
- //        	</div></div></div>');
-	// 	FieldCount++;
- //        return false;
- //    });
+
 });
 </script>
 
-<?php
-
-// Printing results in HTML
-	// echo "<table>\n";
-	// while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
-	//     echo "\t<tr>\n";
-	//     foreach ($line as $col_value) {
-	//         echo "\t\t<td>$col_value</td>\n";
-	//     }
-	//     echo "\t</tr>\n";
-	// }
-	// echo "</table>\n";
-
-	// // Free resultset
-	// pg_free_result($result);
-
-	// // Closing connection
-	// pg_close($dbconn);
-
-?>
 
 </body>
 </html>

@@ -121,17 +121,20 @@ $app->get('/crowd/', function () use ($app) {
 	$content['title'] = "Data Management";
     $content['intro'] = "This is an admin interface for data management";
 	
-	$query = "SELECT type FROM humanface.event_types";
+	$query = "SELECT id, type FROM humanface.event_types";
 	$result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
 	$line = pg_fetch_all($result);
 	$event_types = array();
+	$event_ids = array();
 
 	for ($i=0; $i<sizeof($line); $i++){
 		$event_types[$i] = $line[$i]["type"];
+		$event_ids[$i] = intval($line[$i]["id"]);
 	}
 	
 	$content['event_types'] = $event_types;
+	$content['event_ids'] = $event_ids;
 	
 	$app->view()->setData(array('content' => $content));
 	$app->render('tp_crowdsourcing.php');
@@ -146,13 +149,115 @@ $app->post('/input/:parcel_id/', function($pid) use ($app) {
 	echo "<pre>";
 	print_r($vars);
 	echo "</pre>";
-	print($log_time);
+
+	// Data into the Parcels table
+	$parcel = array();
+	
+	$parcel['block_no'] = intval($vars['block_no']);
+	$parcel['parcel_no'] = intval($vars['parcel_no']);
+	$parcel['ward_no'] = intval($vars['ward_no']);
+	$parcel['land_use'] = (!isset($vars['land_use_other']) || $vars['land_use_other'] == "") ? strval($vars['land_use']) : pg_escape_string(strval($vars['land_use_other']));
+
+	$res = pg_query_params('INSERT into humanface.parcels (parcel_id, block_no, parcel_no, ward_no, land_use)'.
+		' VALUES (default, $1, $2, $3, $4) RETURNING parcel_id', $parcel);
+	if ($res) {
+		echo "Parcel data is successfully logged<br />";
+	} else {
+		echo "There's an error in inserting parcel data<br />";
+	}
+
+	$parcel_id = pg_fetch_row($res)[0];
+
+	// Addresses
+
+	// Data into the Events table
+	$i = 1;	
+	while(isset($vars['event_type-'.strval($i)])) {		
+		$event = array();	
+		$event['type'] = isset($vars['event_type-'.strval($i)]) ? intval($vars['event_type-'.strval($i)]) : null;
+		$event['date'] = isset($vars['event_date-'.strval($i)]) ? strval($vars['event_date-'.strval($i)]) : null;
+		$event['price'] = isset($vars['event_money-'.strval($i)]) ? intval($vars['event_money-'.strval($i)]) : null;		
+		$event['response'] = isset($vars['event_response-'.strval($i)]) ? $vars['event_response-'.strval($i)] : null;
+		$event['extra_information'] = isset($vars['event_extra-'.strval($i)]) ? pg_escape_string(strval($vars['event_extra-'.strval($i)])) : null;
+		$event['parcel_id'] = $parcel_id;
+		
+		$res = pg_query_params('INSERT into humanface.events (event_id, type, date, price, response, extra_information, parcel_id)'.
+			' VALUES (default, $1, $2, $3, $4, $5, $6) RETURNING event_id', $event);
+		if ($res) {
+			echo "Event data are successfully logged<br />";
+		} else {
+			echo "There's an error in inserting Event data<br />";
+		}
+
+		$event_id = pg_fetch_row($res)[0];
+
+		$j = 1;
+		while(isset($vars['person_name-'.strval($i) . '-'. strval($j)])) {			
+			$person = array();	
+			$person['name'] = isset($vars['person_name-'.strval($i) . '-'. strval($j)]) ? pg_escape_string($vars['person_name-'.strval($i) . '-'. strval($j)]) : null;
+			$person['role'] = isset($vars['person_role-'.strval($i) . '-'. strval($j)]) ? $vars['person_role-'.strval($i) . '-'. strval($j)] : null;			
+			$person['event_id'] = $event_id;
+			
+			$res = pg_query_params('INSERT into humanface.people (person_id, name, role, event_id)'.
+				' VALUES (default, $1, $2, $3) RETURNING person_id', $person);
+			if ($res) {
+				echo "Person data are successfully logged<br />";
+			} else {
+				echo "There's an error in inserting Person data<br />";
+			}
+			$j++;
+		}
+
+		$i++;		
+	}
+
+	echo "<br><br><a href='/crowd'>GO BACK to Data Insertion Interface</a>";
 	
 
 });
 
-$app->get('/num/:abc/', function($n) use ($app) {
-	echo $n;
+$app->get('/list/', function () use ($app) {
+	// Connecting, selecting database
+	$dbconn = connect_db();
+
+	// Performing SQL query
+	$query = "SELECT (p.parcel_id, block_no, parcel_no, land_use, t.type, price, response, extra_information, e.date, pp.name, pp.role) " .
+						"FROM humanface.parcels as p LEFT JOIN humanface.events as e on p.parcel_id=e.parcel_id " .
+						"LEFT JOIN humanface.people as pp on pp.event_id=e.event_id ". 
+						"LEFT JOIN humanface.event_types as t on t.id=e.type ".
+						"ORDER BY p.block_no";
+	$result = pg_query($dbconn, $query) or die('Query failed: ' . pg_last_error());	
+	// $line = pg_fetch_array($result, null, PGSQL_ASSOC);
+
+
+	echo "<br><a href='/crowd' target='_blank'>GO BACK to Data Insertion Interface</a><br><br>";
+
+	echo "<table border=1><tr>
+	<td>Parcel ID (arbitrary)</td>
+	<td>Block Number</td>
+	<td>Parcel Number</td>
+	<td>Land Use</td>
+	<td>Event Type</td>
+	<td>Money Involved in the Event</td>
+	<td>Response to Event</td>
+	<td>Extra Info about Event</td>
+	<td>Event Date</td>
+	<td>Person Name</td>
+	<td>Person Role</td></tr>";
+	
+	while($line = pg_fetch_row($result)) {
+		echo "<tr>";
+		
+		$text = str_replace(array("(", ")"), "", $line[0]);
+		$elements = str_getcsv($text, ",");	
+
+		foreach ($elements as $key=>$value){			
+			 echo "<td>" . strval($value) . "</td>";
+		}
+		echo "</tr>";		
+	}
+	echo "</table>";
+	
 });
 
 $app->run();

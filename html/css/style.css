@@ -215,10 +215,6 @@ body #survey_form {
 	padding: 10px 0 0 15px;
 }
 
-#add_building {
-	margin: 10px 0 5px 15px;
-}
-
 .form-footer {
 	height: 35px;
 }
@@ -236,5 +232,18 @@ body #survey_form {
 #btnSubmit:hover{
 	color: green;
 	background: yellow;
+}
+
+tr.table-title td{
+	font-style: bold;
+}
+
+.noti {
+	font-size: 15px;
+	font-weight: bold;
+}
+
+#add_event{
+	background-image: linear-gradient(to bottom,blue 0,#5071a9 100%);
 }
 
