@@ -194,6 +194,7 @@ $(document).ready(function() {
         $("#role-events").append(event_item.html());
         person_count[FieldCount]= 1;
 		FieldCount++;
+        $(".chosen-select").chosen();
         return false;
     });
 
@@ -218,19 +219,22 @@ $(document).ready(function() {
         p_item.find("select[name=person_name-1-1]").attr('name', 'person_name-' + suffix);
         p_item.find("select[name=person_role-1-1]").attr('name', 'person_role-' + suffix);
         people_div.find(".people").append(p_item.html());
-        
+        $(".chosen-select").chosen();
         return false;
     });
 
     $(".chosen-select").chosen();
 
     // Allowing a new entry for a person's name
-    $(".chosen-search").find("input").on( "keydown", function (evt) {
+    $(document).on('keydown', ".chosen-search input", function(evt) {
+    // $(".chosen-search").find("input").on( "keydown", function (evt) {        
         var stroke;
         stroke = (_ref = evt.which) != null ? _ref : evt.keyCode;
+
         if (stroke == 9 || stroke == 13) { 
-            $('.chosen-select').append('<option value="' + $(this).val() + '" selected="selected">' + $(this).val() + '</option>');
-            $('.chosen-select').trigger('chosen:updated');
+            console.log($(this));
+            $(this).parents(".chosen-container").prev('.chosen-select').append('<option value="' + $(this).val() + '" selected="selected">' + $(this).val() + '</option>');
+            $(this).parents(".chosen-container").prev('.chosen-select').trigger('chosen:updated');
         }
     });
     
