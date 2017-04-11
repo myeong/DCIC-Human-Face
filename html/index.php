@@ -140,6 +140,7 @@ $app->get('/crowd/', function () use ($app) {
 	$app->render('tp_crowdsourcing.php');
 });
 
+// DB operations for Data Insertion
 $app->post('/input/:parcel_id/', function($pid) use ($app) {
 	$dbconn = connect_db();
 
@@ -169,13 +170,40 @@ $app->post('/input/:parcel_id/', function($pid) use ($app) {
 	$parcel_id = pg_fetch_row($res)[0];
 
 	// Addresses
+	$address = array();	
+	$address['st_num'] = isset($vars['st_num_1']) ? $vars['st_num_1'] : null;
+	$address['st_name'] = isset($vars['st_name_1']) ? $vars['st_name_1'] : null;	
+	$address['parcel_id'] = $parcel_id;
 
+	$res = pg_query_params('INSERT into humanface.addresses (id, st_num, st_name, parcel_id)'.
+		' VALUES (default, $1, $2, $3) RETURNING id', $address);
+	if ($res) {
+		echo "Address data 1 is successfully logged<br />";
+	} else {
+		echo "There's an error in inserting Address 1 data<br />";
+	}
+
+	if ($vars['st_num_2'] != "" || isset($vars['st_num_2'])){
+		$address = array();	
+		$address['st_num'] = isset($vars['st_num_2']) ? $vars['st_num_2'] : null;
+		$address['st_name'] = isset($vars['st_name_2']) ? $vars['st_name_2'] : null;
+		$address['parcel_id'] = $parcel_id;
+
+		$res = pg_query_params('INSERT into humanface.addresses (id, st_num, st_name, parcel_id)'.
+			' VALUES (default, $1, $2, $3) RETURNING id', $address);
+		if ($res) {
+			echo "Address data 2 is successfully logged<br />";
+		} else {
+			echo "There's an error in inserting Address 2 data<br />";
+		}
+	}	
+	
 	// Data into the Events table
 	$i = 1;	
 	while(isset($vars['event_type-'.strval($i)])) {		
 		$event = array();	
-		$event['type'] = isset($vars['event_type-'.strval($i)]) ? intval($vars['event_type-'.strval($i)]) : null;
-		$event['date'] = isset($vars['event_date-'.strval($i)]) ? strval($vars['event_date-'.strval($i)]) : null;
+		$event['type'] = isset($vars['event_type-'.strval($i)]) && $vars['event_type-'.strval($i)] != "" ? intval($vars['event_type-'.strval($i)]) : null;
+		$event['date'] = isset($vars['event_date-'.strval($i)]) && $vars['event_date-'.strval($i)] != "" ? strval($vars['event_date-'.strval($i)]) : null;
 		$event['price'] = isset($vars['event_money-'.strval($i)]) ? intval($vars['event_money-'.strval($i)]) : null;		
 		$event['response'] = isset($vars['event_response-'.strval($i)]) ? $vars['event_response-'.strval($i)] : null;
 		$event['extra_information'] = isset($vars['event_extra-'.strval($i)]) ? pg_escape_string(strval($vars['event_extra-'.strval($i)])) : null;
@@ -216,6 +244,7 @@ $app->post('/input/:parcel_id/', function($pid) use ($app) {
 
 });
 
+// Simple View for the Data in the DB
 $app->get('/list/', function () use ($app) {
 	// Connecting, selecting database
 	$dbconn = connect_db();

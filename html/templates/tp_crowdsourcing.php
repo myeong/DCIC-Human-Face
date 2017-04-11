@@ -34,7 +34,7 @@ textdomain($domain);
             			<label for="ward_no">Ward Number<small class="required">*</small></label>
             			<input type="number" class="form-control" id="ward_no" name="ward_no" placeholder="Type a ward number" required minlength="1">
         			</div>
-        			<div class="form-group col-md-6">
+        			<div class="form-group col-md-4">
             			<label for="st_num_1">Street Number 1<small class="required">*</small></label>
             			<input type="text" class="form-control" id="st_num_1" name="st_num_1" placeholder="e.g., 467-491" required minlength="1">
         			</div> 
@@ -42,7 +42,7 @@ textdomain($domain);
                         <label for="st_name_1">Street Name 1<small class="required">*</small></label>
                         <input type="text" class="form-control" id="st_name_1" name="st_name_1" placeholder="e.g., S. French Broad Ave." required minlength="1">
                     </div> 
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                         <label for="st_num_2">Street Number 2</label>
                         <input type="text" class="form-control" id="st_num_2" name="st_num_2" placeholder="e.g., 467-491">
                     </div> 
