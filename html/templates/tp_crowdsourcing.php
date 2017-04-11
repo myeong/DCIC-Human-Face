@@ -138,6 +138,7 @@ textdomain($domain);
                                     <option value="appraiser">Appraiser</option>
                                     <option value="heir">Heir</option>
                                     <option value="haca">HACA</option>
+                                    <option value="other">Other</option>
                                 </select>
                             </div>
                         </div>
