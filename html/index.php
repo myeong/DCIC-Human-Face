@@ -360,7 +360,7 @@ $app->get('/delete/:id/', function ($id) use ($app) {
 	}
 
 	echo "<br>";
-	print "Deletion for now is prohibited. Contact admin for that."
+	print "Deletion for now is prohibited. Contact admin for that.";
 	exit();
 
 	$query = "DELETE FROM humanface.parcels where parcel_id!='$id'"; 
