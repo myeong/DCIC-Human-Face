@@ -353,9 +353,9 @@ $app->get('/list/', function () use ($app) {
 $app->get('/delete/:id/', function ($id) use ($app) {
 	$dbconn = connect_db();
 
-
+	print_r($id);
 	if ($id == null || $id == 0 || $id == ''){
-		echo "no id input";
+		echo "no id input";	
 		exit();
 	}
 
@@ -367,7 +367,17 @@ $app->get('/delete/:id/', function ($id) use ($app) {
 	    echo $errormessage; 
 	    exit(); 
 	} 
-	printf ("Deleted from the database successfully"); 
+	printf ("Deleted from the parcel table successfully"); 
+
+	$query = "DELETE FROM humanface.addresses where st_num==null"; 
+	$result = pg_query($query); 
+	if (!$result) { 
+	    printf ("ERROR"); 
+	    $errormessage = pg_errormessage($db); 
+	    echo $errormessage; 
+	    exit(); 
+	} 
+	printf ("Deleted from the address table successfully"); 
 	pg_close(); 
 });
 
