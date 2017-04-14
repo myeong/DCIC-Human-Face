@@ -369,7 +369,7 @@ $app->get('/delete/:id/', function ($id) use ($app) {
 	} 
 	printf ("Deleted from the parcel table successfully"); 
 
-	$query = "DELETE FROM humanface.addresses where st_num==null"; 
+	$query = "DELETE FROM humanface.addresses where st_num IS NULL"; 
 	$result = pg_query($query); 
 	if (!$result) { 
 	    printf ("ERROR"); 
