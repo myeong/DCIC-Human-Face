@@ -359,6 +359,10 @@ $app->get('/delete/:id/', function ($id) use ($app) {
 		exit();
 	}
 
+	echo "<br>";
+	print "Deletion for now is prohibited. Contact admin for that."
+	exit();
+
 	$query = "DELETE FROM humanface.parcels where parcel_id!='$id'"; 
 	$result = pg_query($query); 
 	if (!$result) { 
