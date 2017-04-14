@@ -350,5 +350,27 @@ $app->get('/list/', function () use ($app) {
 	
 });
 
+$app->get('/delete/:id/', function ($id) use ($app) {
+	$dbconn = connect_db();
+
+
+	if ($id == null || $id == 0 || $id == ''){
+		echo "no id input";
+		exit();
+	}
+
+	$query = "DELETE FROM humanface.parcels where id!='$id'"; 
+	$result = pg_query($query); 
+	if (!$result) { 
+	    printf ("ERROR"); 
+	    $errormessage = pg_errormessage($db); 
+	    echo $errormessage; 
+	    exit(); 
+	} 
+	printf ("Deleted from the database successfully"); 
+	pg_close(); 
+});
+
+
 $app->run();
 ?>
