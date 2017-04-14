@@ -200,13 +200,50 @@ body #survey_form {
 }
 
 .building-item,
-.appraisal {
+.appraisal,
+#role-events .row
+ {
 	border: 1px gray solid;
 	margin: 16px 0 10px 0;
-	padding-top: 8px;
+	padding: 8px 0 0 30px;
 	border-radius: 6px;
 }
 
-#add_building {
-	margin: 10px 0 5px 15px;
+.person-item {
+	border: 1px gray solid;	
+	border-radius: 6px;
+	padding: 10px 0 0 15px;
 }
+
+.form-footer {
+	height: 35px;
+}
+
+#btnSubmit {
+	font-size: 30px;
+	background: green;
+	padding: 5px 20px 5px 20px;
+}
+
+.btn:hover{
+	color: orange;
+}
+
+#btnSubmit:hover{
+	color: green;
+	background: yellow;
+}
+
+tr.table-title td{
+	font-style: bold;
+}
+
+.noti {
+	font-size: 15px;
+	font-weight: bold;
+}
+
+#add_event{
+	background-image: linear-gradient(to bottom,blue 0,#5071a9 100%);
+}
+
