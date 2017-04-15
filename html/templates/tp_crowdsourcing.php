@@ -145,7 +145,7 @@ textdomain($domain);
                         </div>
                     </div> 
                     
-                    <div class="col-md-11">
+                    <div class="col-md-11 botton-add-people">
                         <button type="button" class="btn btn-primary add_people">+Add a Person Entry</button>
                     </div>
                 </div>
