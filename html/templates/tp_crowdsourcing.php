@@ -137,7 +137,7 @@ textdomain($domain);
                                     <option value="tenant">Tenant</option>
                                     <option value="appraiser">Appraiser</option>
                                     <option value="heir">Heir</option>
-                                    <option value="purchaser">purchaser</option>
+                                    <option value="purchaser">Purchaser</option>
                                     <option value="trustee">Trustee</option>
                                     <option value="other">Other</option>
                                 </select>
