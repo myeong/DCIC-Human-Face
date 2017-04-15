@@ -139,7 +139,7 @@ $app->get('/crowd/', function () use ($app) {
 	$content['event_ids'] = $event_ids;
 
 	// pre-load people
-	$query = "SELECT person_id, name FROM humanface.people where name != '';";
+	$query = "SELECT person_id, name FROM humanface.people where name != '' ORDER BY name;";
 	$result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
 	$line = pg_fetch_all($result);
