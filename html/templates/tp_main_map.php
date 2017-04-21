@@ -374,7 +374,7 @@ $.when(load_data()).done(function() {
 							todnum=todnum+1;
 						case obj[1]:
 							omnum=omnum+1;
-							todum = todum-1;
+							todnum = todnum-1;
 						case obj[2]:
 							apnum=apnum+1;
 							omnum=omnum-1;
