@@ -25,15 +25,39 @@
 <link rel="stylesheet" href="/css/leaflet-slider.css"/>
 
 <script>
-var geojson_path = "/js/with_date.geojson";
+var geojson_path = "js/with_date.geojson";
+var db_data = null;
 
-$(document).ready(function(){
-		
+function getdata(data){
+	db_data = data;
+}
+   
+function load_data() {
+    // NOTE:  This function must return the value 
+    //        from calling the $.ajax() method.
+    return $.ajax({
+        type:"GET",
+        async:true,
+        url:"get.php",
+        dataType:'json',
+        data: {
+        	action: 'all'
+        },
+        error: function(err) {
+        	console.log(err);        	
+        }
+    }).done(function(data){
+    	// console.log(data);
+    	getdata(data);
+    });
+}
+
+$.when(load_data()).done(function() {
+	
 	//Color 
 	var hoverColor = {
 	    fillColor:"#00FF00"
 	};	
-	
 			
 	var c1 = {
 		fillColor: "#0000FF",
@@ -43,58 +67,70 @@ $(document).ready(function(){
 	};	
 
 	var c2 = {
-		fillColor: "#FFFF00",
+		fillColor: "#f00",
 		color: "white",
 		weight: 1,
 		fillOpacity: 1
 	};	
 	
 	var c3 = {
-		fillColor: "#008000",
+		fillColor: "#ff7f00",
 		color: "white",
 		weight: 1,
 		fillOpacity: 1
 	};	
 
 	var c4 = {
-		fillColor: "#FF0000",
+		fillColor: "#ff0",
 		color: "white",
 		weight: 1,
 		fillOpacity: 1
 	};	
 
 	var c5 = {
-		fillColor: "#9542F4",
+		fillColor: "#0f0",
 		color: "white",
 		weight: 1,
 		fillOpacity: 1
 	};	
 
 	var c6 = {
-		fillColor: "#000000",
+		fillColor: "#0ff",
 		color: "white",
 		weight: 1,
 		fillOpacity: 1
 	};	
 	
 	var c7 = {
-		fillColor: "#B23EA8",
+		fillColor: "#8b00ff",
 		color: "white",
 		weight: 1,
 		fillOpacity: 1
 	};	
-
+	
+	var c8 = {
+		fillColor: "#000000",
+		color: "white",
+		weight: 1,
+		fillOpacity: 1
+	};	
+	
+	var highlight = {
+		fillColor: "#fba4f1",
+		color: "#fba4f1",
+		weight: 1,
+		fillOpacity: 1
+	};
+   
 	var map = L.map('map').setView([35.5861, -82.5554], 17);
 
+	
 	//loading a GeoJSON file directly from the file 
 	var poly = new L.GeoJSON.AJAX(geojson_path, {
 		style: c1,					
 		onEachFeature: onEachFeature,
 	});
-	// var poly= L.geoJson(polygons, {
-	// 	style: c1,					
-	// 	onEachFeature: onEachFeature,
-	// });
+
 
 	// load a main layer
 	var baseMap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 
@@ -110,24 +146,12 @@ $(document).ready(function(){
 	// Slider menu 
 	var slideMenu = L.control.slideMenu('',{
 		position: 'topright', 
-		height: '630px', 
-		width: '330px'
+		height: '680px', 
+		width: '355px'
 	}).addTo(map);
 
 	slideMenu.setContents('<div id=\'menu_slider\'></div>');
 	
-	//Slider in Slider Menu
-	// slider2 = L.control.slider(function(value) {
-	// }, {
-	// 		max: 1976,
-	// 		min: 1960,
-	// 		value: 1970,
-	// 		step:1,
-	// 		size: '250px',
-	// 		orientation:'horizontal',
-	// 		id: 'slider2',
-	// 		collapsed: false
-	// 	}).addTo(map); 
 	
 	// Slider menu layout elements
 	var mapbuttons_div = L.DomUtil.get('menu_slider');
@@ -144,184 +168,270 @@ $(document).ready(function(){
 	var search_box_div = L.DomUtil.create('div', 'menu-search-container');
 	mapbuttons_div.appendChild(search_box_div);
 	var search_box_text = L.DomUtil.create('p', 'menu-search-text', search_box_div);
-	search_box_text.innerHTML = 'Address';
+	search_box_text.innerHTML = 'Search';
 	var search_box = L.DomUtil.create('div', 'menu-search', search_box_div);
 	search_box.setAttribute('id', 'menu-search-div');
+	var search_input_1 = L.DomUtil.create('input', 'menu-search-input', search_box);
+	search_input_1.id = 'input-1';
+	search_input_1.type = 'text';
+	search_input_1.placeholder = 'owner_name';
+	var search_input_2 = L.DomUtil.create('input', 'menu-search-input', search_box);
+	search_input_2.id = 'input-2';
+	search_input_2.type = 'text';
+	search_input_2.placeholder = 'st_name';
+	var search_btn = L.DomUtil.create('div', 'menu-search-btn', search_box);
+	search_btn.innerHTML = 'Search';
 	
-	var searchControl = new L.Control.Search({
-		layer: poly,
-		propertyName: 'id',
-		circleLocation: false,
-		container: 'menu-search-div',
-		collapsed: false,
-		textErr: 'No data',
-		textCancel: 'Cancel',		
-		textPlaceholder: 'Please enter a street name', 
-		hideMarkerOnCollapse: true,
-		marker: false,
-		minLength: 0,
-		moveToLocation: function(latlng, title, map) {
+	// Search check
+	search_btn.onclick = function() {
+		//console.log();
+		var owner = $("#input-1").val();
+		var name = $("#input-2").val();
+		var mode;
+		if (owner != '' && name != '') {
+			mode = 'full';
+		} else if (owner != '') {
+			mode = 'owner_name';
+		} else if (name != '') {
+			mode = 'st_name';
+		} else {
+			alert("Empty search!");
+		}
+		$.ajax({
+            type:"GET",
+            async:true,
+            url:"get.php",
+            dataType:'json',
+            data: {
+            	action: 'search',
+            	mode: mode,
+            	st_name: name,
+            	owner_name: owner
+            },
+            error: function(err) {
+            	if (err.responseText == "Zero result") {
+            		$(".menu-result").empty();
+            		$(".menu-result").html("No Data");
+            		$(".menu-result").show();
+            		$(".menu-pie").hide();
+            	}
+            }
+        }).done(function(data){
+        	
+        	parseResult(data);
+        });
+	}
 
-			var zoom = map.getBoundsZoom(latlng.layer.getBounds());
-  			map.setView(latlng, zoom);
-			var st_name = latlng.layer.feature.properties.st_name;
-			var blo = latlng.layer.feature.properties.block;
-			var info="This parcel's block number is " + blo+" at "+st_name ;
-  			
-  			$(".menu-result").html(info);
-			
-			//hide and show
-  			$(".menu-pie").hide();
-  			$(".menu-result").show();
-		}});
-	searchControl.on('search:locationfound', function(e) {
-		
-		
+	// Result Click 
+	function parseResult(data) {
+		$(".menu-result").empty();
+		var frag = "";
+		for (var i = 0; i < data.length; i++) {
+			var index = i + 1;
+			frag += "<div class=\"menu-result-row\" title=\"" + data[i].parcel_no + "," + data[i].block_no +"\">";
+			frag += index + ": " + data[i].st_num + " " + data[i].st_name;
+			frag += "</div>";
+		}
+		$(".menu-result").append(frag);
+		$(".menu-result-row").unbind('click');
+		$(".menu-result-row").on('click', function() {
+			moveToPoly(this.title);
+		})
+		$(".menu-pie").hide();
+  		$(".menu-result").show();
+	}
+
 	
+		//Property Zoom in & Highlight
+ 	function moveToPoly(selector) {
+		var parcel_no = selector.split(',')[0];
+		var block_no = selector.split(',')[1];
+		for (var i = 0; i < poly.getLayers().length; i++) {
+			var temp = poly.getLayers()[i].feature.properties;
+			if (parcel_no == temp.parcel && block_no == temp.block) {
+				var layer = poly.getLayers()[i];
+				layer.setStyle(highlight);
+				map.fitBounds(layer.getBounds());
+			}
+		}
+	}	
+	
+	// Data from database and store in "Poly"
+    function parsePoly(feature, data) {
 
-	}).on('search:collapsed', function(e) {
-			featuresLayer.eachLayer(function(layer) {	//restore feature color
-			featuresLayer.resetStyle(layer);
-		});	
+    	var parcel_num = feature.properties.parcel;
+    	var block_num = feature.properties.block;
+		var zero=String('No data');
+    	//console.log(data);
 		
-	});
-	map.addControl( searchControl );
+		feature.properties['TransferofDeed'] = zero; 
+		feature.properties['OfferMade'] = zero; 
+		feature.properties['Appraisal'] = zero;
+		feature.properties['OfferAccepted'] = zero; 
+		feature.properties['TenantMoved'] = zero; 
+		feature.properties['Awarded'] = zero;
+		feature.properties['EndofCase'] = zero;
+		
+		
+    	for (var i = 0; i< data.length; i++){
+			var type = String(data[i].type);
+    		type = type.replace(/\s+/g, '');
+		 
+    		// console.log(parseInt(data[i].block_no));
+    		if (parseInt(data[i].block_no) == block_num && parseInt(data[i].parcel_no) == parcel_num){
+
+    			if (type) {
+    				if (data[i].date){
+    				feature.properties[type] = String(data[i].date);    					
+    				}
+    			}
+
+    		}
+    	}
+				//console.log(feature.properties);
+    };
 
 	var result_div = L.DomUtil.create('div','menu-result-container');
 	mapbuttons_div.appendChild(result_div);
 	var result_text = L.DomUtil.create('p', 'menu-search-text', result_div);
 	result_text.innerHTML = "Analysis & Results";
-	
-	var result = L.DomUtil.create('p', 'menu-result', result_div);
-	result.innerHTML = "info";
+
+	var result = L.DomUtil.create('div', 'menu-result', result_div);
 	
 	var pie = L.DomUtil.create('div', 'menu-pie');
 	mapbuttons_div.appendChild(pie);
 
-
 	// Loading the Asheville Raster Layer (tilemap)
-	var asheville = L.tileLayer('/asheville_tiles/{z}/{x}/{y}.png', {
+	var asheville = L.tileLayer('asheville_tiles/{z}/{x}/{y}.png', {
 		tms: true, 
 		opacity: 0.8, 
 		attribution: ""
 	});
 	map.addLayer(asheville);
 	
-	
 	// Year slider
-	var SLIDER_VALUE = 1960;
-	var slider = L.control.slider(function(value) {
-		SLIDER_VALUE = value;
+	var SLIDER_VALUE = String(1960);
+	
+	var slider = L.control.slider(function(value,feature) {
+		SLIDER_VALUE = String(value);
+		
+	   
+		// Pie chart
 		d3.select("#piie").remove();	
 		$(".menu-year-input").html(value);	
         
-		var cc1 = "#0000FF";
-		var cc2 = "#FFFF00";		
-		var cc3 = "#008000";		
-		var cc4 = "#FF0000";
-		var cc5 = "#9542F4";
-		var cc6 = "#000000";
-		var cc7 = "#B23EA8";	
+		var cc1 = "#f00";
+		var cc2 = "#ff7f00";		
+		var cc3 = "#ff0";		
+		var cc4 = "#0f0";
+		var cc5 = "#0ff";
+		var cc6 = "#8b00ff";
+		var cc7 = "#000000";
+		var cc8 = "#0000FF";
 		
-		//Offer made
-		var om=[];
-		// Offer accepted
-		var oa=[];
-		// Offer rejected
-		var or=[];
-		//Finial title
-		var ft=[];
-		//Removed
-		var ro=[];
+		//count number
+		//Transfer of Deed
+		var todnum=0; 
+		// Offer Made
+		var omnum=0;
+		// Appraisal
+		var apnum=0;
+		//Offer Accepted
+		var oanum=0;
+		//Tenant Moved
+		var tmnum=0;
+		// Awarded
+		var awnum=0;
+		//End of case
+		var ecnum=0;
+		//No data
+		var ndnum=0;
+		
 
-		// Number counter
-		var xom=0;
-		var xoa=0;
-		var xor=0;
-		var xft=0;
-		var xro=0;
-			
 		// seems like it's possible to calculate the number of layers by 
 		// looping though each layer rather than load the JSON file one more 
 		// time... need to see. If so, possible to shrink the code. Not urgent(Myeong)
-		d3.json(geojson_path, function(data) {
-            d3.select("#piie").remove();				
-			// var data=g2[0];
-			var length=data.features.length;				
-			var year=SLIDER_VALUE;
-	
-			for (var i=0;i<length; i++) {
-				
-				om[i]=data.features[i].properties.offer_made;
-	
-				if (om[i]>=year) {
-					om[i]=1;
-				}
-				else {om[i]=0;};
-	
-				xom +=om[i];			
-				oa[i]=	data.features[i].properties.offer_accepted;
-	
-				if (oa[i]>=year) {
-					oa[i]=1;
-					}
-				else {oa[i]=0;};
-	
-				xoa +=oa[i];				
-				or[i]=	data.features[i].properties.offer_accepted;
-	
-				if (or[i]>=year) {
-					or[i]=1;
-					}
-				else {or[i]=0;};
-	
-				xor +=or[i];		
-				ft[i]=data.features[i].properties.final_title;
-
-				if (ft[i]>=year) {
-					ft[i]=1;
-				}
-				else {ft[i]=0;};
-
-				xft +=ft[i];
-				ro[i]=data.features[i].properties.final_title;
-
-				if (ro[i]>=year) {
-					ro[i]=1;
-					}
-				else {ro[i]=0;};
-
-				xro +=ro[i];
+		
+		
+        d3.select("#piie").remove();
+		
+		var year=[];
+		var name=[];
 			
+
+			for (var i = 0; i < db_data.length; i++) {
+			name[i]=String(db_data[i].type);
+			name[i]=name[i].replace(/\s+/g, '');
+			year[i]=d3.values(db_data[i].date[0])+d3.values(db_data[i].date[1])+d3.values(db_data[i].date[2])+d3.values(db_data[i].date[3]);
+			};
+
+			var obj=['TransferofDeed','OfferMade','Appraisal','OfferAccepted','TenantMoved','Awarded','EndofCase'];
+			
+			for (var i = 0; i < db_data.length; i++) {
+			    if (value>=year[i]){
+					switch (name[i]){
+						case obj[0]:
+							todnum=todnum+1;
+						case obj[1]:
+							omnum=omnum+1;
+							todnum = (todnum >= 1) ? todnum-1 : 0;							
+						case obj[2]:
+							apnum=apnum+1;
+							omnum= (omnum >= 1) ? omnum-1 : 0;
+						case obj[3]:
+							oanum=oanum+1;
+							apnum= (apnum >= 1) ? apnum-1 : 0;
+						case obj[4]:
+							tmnum=tmnum+1;
+							oanum= (oanum >= 1) ? oanum-1 : 0;
+						case obj[5]:
+							awnum=awnum+1;
+							tmnum= (tmnum >= 1) ? tmnum-1 : 0;
+						case obj[6]:
+							ecnum=ecnum+1;
+							awnum= (awnum >= 1) ? awnum-1 : 0;
+					}
+				}
 			};
 			
+
 			var dataset=[];
+			ndnum=936-(todnum+omnum+apnum+oanum+tmnum+awnum+ecnum);
 			dataset = [
-				{ label: 'Offer Made', count: xom },
-				{ label: 'Offer Accepted', count: xoa }, 
-				{ label: 'Offer Rejected', count: xor }, 
-				{ label: 'Final Title', count: xft },
-				{ label: 'Removed', count: xro },
+				{ label: 'Transfer of Deed', count: todnum },
+				{ label: 'Offer Made', count: omnum }, 
+				{ label: 'Appraisal', count: apnum }, 
+				{ label: 'Offer Accepted', count: oanum },
+				{ label: 'Tenant Moved', count: tmnum },
+				{ label: 'Awarded', count: awnum },
+				{ label: 'End of Case', count: ecnum },
+				{ label: 'No data', count: ndnum }
 
 			];
+			
+			
 			// Percentage calculation
-			var total=xom+xoa+xor+xft+xro;
-			var pom=Math.floor((xom / total) * 100)
-			var poa=Math.floor((xoa / total) * 100)
-			var por=Math.floor((xor / total) * 100)
-			var pft=Math.floor((xft / total) * 100)
-			var pro=Math.floor((xro / total) * 100)
+			var total=936;
+			var ptodnum=Math.floor((todnum / total) * 100);
+			var pomnum=Math.floor((omnum / total) * 100);
+			var papnum=Math.floor((apnum / total) * 100);
+			var poanum=Math.floor((oanum / total) * 100);
+			var ptmnum=Math.floor((tmnum / total) * 100);
+			var pawnum=Math.floor((awnum / total) * 100);
+			var pecnum=Math.floor((ecnum / total) * 100);
+			var pndnum=Math.floor((ndnum / total) * 100);
 			
+
 			// Percentage array
-			var percentage=[pom,poa,por,pft,pro];
+			var percentage=[ptodnum,pomnum,papnum,poanum,ptmnum,pawnum,pecnum,pndnum];
 			
-			var width = 320;
-			var height = 320;
+			var width = 340;
+			var height = 340;
 			var radius = Math.min(width, height) / 2;
-			var donutWidth = 75;
+			var donutWidth = 58;
 			var legendRectSize = 18;       
 			var legendSpacing = 4; 
-			var color = d3.scale.ordinal().range([cc2,cc3,cc4,cc5,cc6]);
+			var color = d3.scale.ordinal().range([cc1,cc2,cc3,cc4,cc5,cc6,cc7,cc8]);
 
 			var svg = d3.select('.menu-pie')
 				.append("svg:svg")
@@ -357,7 +467,7 @@ $(document).ready(function(){
 		
 					var height = legendRectSize + legendSpacing;         
 					var offset =  height * color.domain().length / 2;     
-					var horz = -3 * legendRectSize;                      
+					var horz = -3.5 * legendRectSize;                      
 					var vert = i * height - offset+3;                       
 					return 'translate(' + horz + ',' + vert + ')';        
 				});  		  
@@ -375,33 +485,38 @@ $(document).ready(function(){
 				.style('fill', 'white')							
 				.text(function(d,i) { return d+":"+ percentage[i]+"%"; });                       	
 		
-		});
+
 		
 		$(".menu-result").hide();
 		$(".menu-pie").show();
 	
-		
 
-		//pie chart
+
+		//poly color
 		poly.eachLayer(function(layer) {
-			if (value<1961) {
+			if (SLIDER_VALUE<'1961') {
 				layer.setStyle(c1);
 			}
 			else {
 			
 				// console.log(layer);
 				var properties = layer.feature.properties;
-				if (properties.offer_made > 0) {
-					if (value >= properties.offer_made && value < properties.offer_accepted) {
+				if (properties.EndofCase>=properties.Awarded) {
+					if (SLIDER_VALUE >= properties.TransferofDeed && SLIDER_VALUE < properties.OfferMade) {
 						layer.setStyle(c2);
-					} else if (value >= properties.offer_accepted && value < properties.rejected) {
+					} else if (SLIDER_VALUE >= properties.OfferMade && SLIDER_VALUE < properties.Appraisal) {
 						layer.setStyle(c3);
-					} else if (value >= properties.rejected && value < properties.final_title) {
+					} else if (SLIDER_VALUE >= properties.Appraisal && SLIDER_VALUE < properties.OfferAccepted) {
 						layer.setStyle(c4);
-					} else if (value >= properties.final_title && value < properties.removed) {
+					} else if (SLIDER_VALUE >= properties.OfferAccepted && SLIDER_VALUE < properties.TenantMoved) {
 						layer.setStyle(c5);
-					} else if (value >= properties.removed) {
+					} else if (SLIDER_VALUE >= properties.TenantMoved && SLIDER_VALUE < properties.Awarded) {
 						layer.setStyle(c6);
+					} else if (SLIDER_VALUE >= properties.Awarded && SLIDER_VALUE < properties.EndofCase) {
+						layer.setStyle(c7);
+					} 
+					else if (SLIDER_VALUE >= properties.EndofCase) {
+						layer.setStyle(c8);
 					}
 				} else {
 					layer.setStyle(c1);
@@ -424,9 +539,6 @@ $(document).ready(function(){
 		}).addTo(map); 
 	
 
-	
-
-	
 		// Mouse track
 		function highlightDot(e){
 			var layer = e.target;
@@ -434,53 +546,99 @@ $(document).ready(function(){
 		}
 
 		function resetDotHighlight(e){
-			var layer = e.target;		
-			if (SLIDER_VALUE<1961) {
+			
+			var layer = e.target;	
+			// this is the way to access propertis from "event"
+			var properties = layer.feature.properties;
+
+			if (SLIDER_VALUE<'1961') {
 					layer.setStyle(c1);
 			}
+			
 			else {
-				// this is the way to access propertis from "event"
-				var properties = layer.feature.properties;
-				if (properties.offer_made > 0) {
-					if (SLIDER_VALUE >= properties.offer_made && SLIDER_VALUE < properties.offer_accepted) {
+				if (properties.TransferofDeed < properties.OfferMade) {
+				if (SLIDER_VALUE >= properties.TransferofDeed && SLIDER_VALUE < properties.OfferMade) {
 						layer.setStyle(c2);
-					} else if (SLIDER_VALUE >= properties.offer_accepted && SLIDER_VALUE < properties.rejected) {
+					} else if (SLIDER_VALUE >= properties.OfferMade && SLIDER_VALUE < properties.Appraisal) {
 						layer.setStyle(c3);
-					} else if (SLIDER_VALUE >= properties.rejected && SLIDER_VALUE < properties.final_title) {
+					} else if (SLIDER_VALUE >= properties.Appraisal && SLIDER_VALUE < properties.OfferAccepted) {
 						layer.setStyle(c4);
-					} else if (SLIDER_VALUE >= properties.final_title && SLIDER_VALUE < properties.removed) {
+					} else if (SLIDER_VALUE >= properties.OfferAccepted && SLIDER_VALUE < properties.TenantMoved) {
 						layer.setStyle(c5);
-					} else if (SLIDER_VALUE >= properties.removed) {
+					} else if (SLIDER_VALUE >= properties.TenantMoved && SLIDER_VALUE < properties.Awarded) {
 						layer.setStyle(c6);
-					}
-				} else {
+					} else if (SLIDER_VALUE >= properties.Awarded && SLIDER_VALUE < properties.EndofCase) {
+						layer.setStyle(c7);
+					} 
+					else if (SLIDER_VALUE >= properties.EndofCase) {
+						layer.setStyle(c8);
+					}		
+				} 
+				else {
 				layer.setStyle(c1);
 				}
 			}
-		}
-	
-	
+		};
+		
+		
 		// When a polygon is clicked
 		function onEachFeature(feature, layer) {
-			//var div = $('<div style="width: 200px; height: 200px;"></div>')[0];
-			var popupContent = "<p>This parel's ID is " +
-					feature.properties.id + ", and Block number is " + feature.properties.block +
-					"</br>"+"Offer Made Date:"+feature.properties.offer_made+
-					"</br>"+"Offer Accepted Date:"+feature.properties.offer_accepted+
-					"</br>"+"Offer Rejected Date:"+feature.properties.rejected+
-					"</br>"+"Final Title Date:"+feature.properties.final_title+
-					"</br>"+"Removed Date:"+feature.properties.removed+"</p>";
-			
-			//console.log(feature.properties);
-			
-			if (feature.properties && feature.properties.popupContent) {
-				popupContent += feature.properties.popupContent;
-			}
+	
+		    if (db_data){
+		    	parsePoly(feature, db_data);
+		    }
 
-			var  pic_url='/images/test.jpg';
+			var popupContent = "<p>Transfer of Deed:"+feature.properties.TransferofDeed+"</p>"
+					+"<p>Offer Made:"+feature.properties.OfferMade+"</p>"
+					+"<p>Appraisal:"+feature.properties.Appraisal+"</p>"
+					+"<p>Offer Accepted:"+feature.properties.OfferAccepted+"</p>"
+					+"<p>Tenant Moved:"+feature.properties.TenantMoved+"</p>"
+					+"<p>Awarded:"+feature.properties.Awarded+"</p>"
+					+"<p>End of Case:"+feature.properties.EndofCase+"</p>";
 			
-			var customPopup= "<span style='float:left;width: 50%;'>"+"<img src="+  pic_url   + " height='220px'	;width='250px' />"+"</span>" +"<span style='float:right;width: 40%;'>"+popupContent+"</span>" ;
-		    
+			
+			var noData="<p>Sorry, No data</p>";
+			
+			var zero=String('No data');
+
+			//var  pic_url='images/test.jpg';
+			
+			//Popup info
+			var customPopup;
+			
+			if (feature.properties.TransferofDeed == zero && feature.properties.TenantMoved== zero ){
+
+			customPopup= 
+							"<p>"+feature.properties.st_num+" "+feature.properties.st_name+"</p>"
+							+"<div style='float:right;width: 50%;display:inline-flex;'>"
+								+"<div style='margin-left:15px;margin-right:10px;width:20px;'>"
+									+"<div class='circle' style='background-color:#f00;'></div>"
+							+"</div>"
+							+"<div style='width:calc(100% - 45px);line-height:16px;'"
+									+noData
+								+"</div>"
+							+"</div>";
+			}
+			else {
+				customPopup= "<span style='float:left;width: 50%;'>"
+								+"<img src="+  feature.properties.img_path  + " style='width: 100%; max-height: 80%;' />"
+								+"<p>"+feature.properties.st_num+" "+feature.properties.st_name+"</p>"
+							+"</span>" 
+							+"<div style='float:right;width: 50%;display:inline-flex;padding-top:10px;'>"
+								+"<div style='margin-left:15px;margin-right:10px;width:20px;'>"
+									+"<div class='circle' style='background-color:#f00;'></div>"
+									+"<div class='circle' style='background-color:#ff7f00;'></div>"
+									+"<div class='circle' style='background-color:#ff0;'></div>"
+									+"<div class='circle' style='background-color:#0f0;'></div>"
+									+"<div class='circle' style='background-color:#0ff;'></div>"
+									+"<div class='circle' style='background-color:#8b00ff;'></div>"
+									+"<div class='circle' style='background-color:black;'></div>"
+								+"</div>"
+								+"<div style='width:calc(100% - 45px);line-height:16px;'"
+									+popupContent
+								+"</div>"
+							+"</div>" ;
+		    }
 
 			var customOptions =
 			{
@@ -496,9 +654,14 @@ $(document).ready(function(){
 			
 		}
 	
-	map.addLayer(poly);
-	
-});
+		map.addLayer(poly);
+		
+		//database manage button
+		// L.easyButton( '<strong>M</strong>', function(){
+		// 	alert('For administrator only');
+		// 	window.open('../phppgadmin/index.php');
+		// }).addTo(map);
+	});
 				
 </script>
 </head>

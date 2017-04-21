@@ -139,7 +139,7 @@ $app->get('/crowd/', function () use ($app) {
 	$content['event_ids'] = $event_ids;
 
 	// pre-load people
-	$query = "SELECT person_id, name FROM humanface.people where name != '';";
+	$query = "SELECT person_id, name FROM humanface.people where name != '' ORDER BY name;";
 	$result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
 	$line = pg_fetch_all($result);
@@ -350,12 +350,12 @@ $app->get('/list/', function () use ($app) {
 	
 });
 
-$app->get('/delete/:id/', function ($id) use ($app) {
+$app->get('/delete/:block/', function ($block) use ($app) {
 	$dbconn = connect_db();
 
-	print_r($id);
-	if ($id == null || $id == 0 || $id == ''){
-		echo "no id input";	
+	print_r($block);
+	if ($block == null || $block == ''){
+		echo "no block input";	
 		exit();
 	}
 
@@ -363,7 +363,7 @@ $app->get('/delete/:id/', function ($id) use ($app) {
 	print "Deletion for now is prohibited. Contact admin for that.";
 	exit();
 
-	$query = "DELETE FROM humanface.parcels where parcel_id!='$id'"; 
+	$query = "DELETE FROM humanface.parcels where block_no ='$block'"; 
 	$result = pg_query($query); 
 	if (!$result) { 
 	    printf ("ERROR"); 
