@@ -350,20 +350,20 @@ $app->get('/list/', function () use ($app) {
 	
 });
 
-$app->get('/delete/:id/', function ($id) use ($app) {
+$app->get('/delete/:block/', function ($block) use ($app) {
 	$dbconn = connect_db();
 
-	print_r($id);
-	if ($id == null || $id == 0 || $id == ''){
+	print_r($block);
+	if ($id == null = || $id == ''){
 		echo "no id input";	
 		exit();
 	}
 
 	echo "<br>";
-	print "Deletion for now is prohibited. Contact admin for that.";
-	exit();
+	// print "Deletion for now is prohibited. Contact admin for that.";
+	// exit();
 
-	$query = "DELETE FROM humanface.parcels where parcel_id!='$id'"; 
+	$query = "DELETE FROM humanface.parcels where block_no=='$block'"; 
 	$result = pg_query($query); 
 	if (!$result) { 
 	    printf ("ERROR"); 

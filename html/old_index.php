@@ -180,7 +180,7 @@ $(document).ready(function(){
 	
 
 	}).on('search:collapsed', function(e) {
-			featuresLayer.eachLayer(function(layer) {	//restore feature color
+		featuresLayer.eachLayer(function(layer) {	//restore feature color
 			featuresLayer.resetStyle(layer);
 		});	
 		
@@ -384,12 +384,11 @@ $(document).ready(function(){
 
 		//pie chart
 		poly.eachLayer(function(layer) {
+
 			if (value<1961) {
 				layer.setStyle(c1);
 			}
 			else {
-			
-				// console.log(layer);
 				var properties = layer.feature.properties;
 				if (properties.offer_made > 0) {
 					if (value >= properties.offer_made && value < properties.offer_accepted) {
@@ -422,9 +421,6 @@ $(document).ready(function(){
 			syncSlider: true,
 			increment: true
 		}).addTo(map); 
-	
-
-	
 
 	
 		// Mouse track
@@ -459,19 +455,24 @@ $(document).ready(function(){
 			}
 		}
 	
+
+
 	
 		// When a polygon is clicked
 		function onEachFeature(feature, layer) {
+
+			layer.feature.properties.kkk = 1;
+			
+
 			//var div = $('<div style="width: 200px; height: 200px;"></div>')[0];
-			var popupContent = "<p>This parel's ID is " +
+			var popupContent = "<p>This parel's ID is " +			
 					feature.properties.id + ", and Block number is " + feature.properties.block +
+					"</br>"+"test:"+feature.properties.kkk+
 					"</br>"+"Offer Made Date:"+feature.properties.offer_made+
 					"</br>"+"Offer Accepted Date:"+feature.properties.offer_accepted+
 					"</br>"+"Offer Rejected Date:"+feature.properties.rejected+
 					"</br>"+"Final Title Date:"+feature.properties.final_title+
 					"</br>"+"Removed Date:"+feature.properties.removed+"</p>";
-			
-			console.log(feature.properties);
 			
 			if (feature.properties && feature.properties.popupContent) {
 				popupContent += feature.properties.popupContent;
