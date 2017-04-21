@@ -377,10 +377,10 @@ $.when(load_data()).done(function() {
 							todnum = (todnum >= 1) ? todnum-1 : 0;							
 						case obj[2]:
 							apnum=apnum+1;
-							omnum= (omnum >= 1 ?) omnum-1 : 0;
+							omnum= (omnum >= 1) ? omnum-1 : 0;
 						case obj[3]:
 							oanum=oanum+1;
-							apnum= (apnum >= 1 ? apnum-1 : 0;
+							apnum= (apnum >= 1) ? apnum-1 : 0;
 						case obj[4]:
 							tmnum=tmnum+1;
 							oanum= (oanum >= 1) ? oanum-1 : 0;
