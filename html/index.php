@@ -354,8 +354,8 @@ $app->get('/delete/:block/', function ($block) use ($app) {
 	$dbconn = connect_db();
 
 	print_r($block);
-	if ($id == null = || $id == ''){
-		echo "no id input";	
+	if ($block == null = || $block == ''){
+		echo "no block input";	
 		exit();
 	}
 
