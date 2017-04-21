@@ -186,7 +186,7 @@ body{
     background: white;
     color: #333;
     box-shadow: 0 3px 14px rgba(0,0,0,0.4);
-    height: 270px;
+    min-height: 305px;
     width: 600px;
 }
 .leaflet-popup-content {

@@ -27,9 +27,14 @@
 <script>
 var geojson_path = "js/with_date.geojson";
 var db_data = null;
+var image_path = null;
 
 function getdata(data){
 	db_data = data;
+}
+
+function getimagedata(data){
+	image_path = data;
 }
    
 function load_data() {
@@ -52,7 +57,25 @@ function load_data() {
     });
 }
 
-$.when(load_data()).done(function() {
+function get_image_paths() {
+    // NOTE:  This function must return the value 
+    //        from calling the $.ajax() method.
+    return $.ajax({
+        type:"GET",
+        async:true,
+        url:"get_image_paths.php",
+        dataType:'json',        
+        error: function(err) {
+        	console.log(err);        	
+        }
+    }).done(function(data){
+    	// console.log(data);
+    	getimagedata(data);
+    });
+}
+
+
+$.when(load_data(), get_image_paths()).done(function() {
 	
 	//Color 
 	var hoverColor = {
@@ -606,22 +629,38 @@ $.when(load_data()).done(function() {
 			//Popup info
 			var customPopup;
 			
-			if (feature.properties.TransferofDeed == zero && feature.properties.TenantMoved== zero ){
-
-			customPopup= 
-							"<p>"+feature.properties.st_num+" "+feature.properties.st_name+"</p>"
-							+"<div style='float:right;width: 50%;display:inline-flex;'>"
-								+"<div style='margin-left:15px;margin-right:10px;width:20px;'>"
-									+"<div class='circle' style='background-color:#f00;'></div>"
-							+"</div>"
-							+"<div style='width:calc(100% - 45px);line-height:16px;'"
-									+noData
-								+"</div>"
-							+"</div>";
+			var block_parcel = "B" + feature.properties.block + "_P" + feature.properties.parcel;
+			var images = Array();
+			
+			for (var i = 0; i < image_path.length; i++){
+				if (image_path[i].indexOf(block_parcel) !== -1){
+					images.push(image_path[i]);
+				}	
 			}
-			else {
+			
+			if(images.length >0) {
+				block_parcel = "images/properties/" + images[0];
+			} else {
+				block_parcel = "images/properties/default.png"; 
+			}
+
+			console.log(block_parcel);
+			
+			// if (feature.properties.TransferofDeed == zero && feature.properties.TenantMoved== zero ){				
+			// 	customPopup= 
+			// 				"<p>"+feature.properties.st_num+" "+feature.properties.st_name+"</p>"
+			// 				+"<div style='float:right;width: 50%;display:inline-flex;'>"
+			// 					+"<div style='margin-left:15px;margin-right:10px;width:20px;'>"
+			// 						+"<div class='circle' style='background-color:#f00;'></div>"
+			// 				+"</div>"
+			// 				+"<div style='width:calc(100% - 45px);line-height:16px;'"
+			// 						+noData
+			// 					+"</div>"
+			// 				+"</div>";
+			// }
+			// else {
 				customPopup= "<span style='float:left;width: 50%;'>"
-								+"<img src="+  feature.properties.img_path  + " style='width: 100%; max-height: 80%;' />"
+								+"<img src="+  block_parcel  + " style='width: 100%; max-height: 80%;' />"
 								+"<p>"+feature.properties.st_num+" "+feature.properties.st_name+"</p>"
 							+"</span>" 
 							+"<div style='float:right;width: 50%;display:inline-flex;padding-top:10px;'>"
@@ -638,11 +677,11 @@ $.when(load_data()).done(function() {
 									+popupContent
 								+"</div>"
 							+"</div>" ;
-		    }
+		    // }
 
 			var customOptions =
 			{
-			'maxWidth': 'auto'
+				'maxWidth': 'auto'
 			}
 		
 			layer.on({
