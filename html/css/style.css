@@ -11,6 +11,7 @@ html {
 	background-size: cover;
 }
 body{
+	width: 100%;
 	background:#b5d0d0;
 	color:#285585;
 	font-family:Arial;
@@ -42,10 +43,16 @@ body{
 	z-index: 1;
 }
 
+.star{
+  font-size: 4.5em;
+} 
+
 /* SIDEBAR MENU */
 
 #menu_slider {
-	height: 66px;
+	height: 100%;
+    width: 100%;
+    display: block;
 	margin: 5px;
 	border-bottom: solid 1px #97989A; 
 }
@@ -56,6 +63,13 @@ body{
 	
 }
 #menu_slider > div > div > input{
+	width: 90%;
+    height: 33px;
+    font-size: 14px;
+	color:white;
+    padding: 10px;
+    border: 0;
+    margin: 5px;
 	background-color: #414141;
 }
 #menu_slider p {
@@ -69,11 +83,15 @@ body{
 	color:  #F6931F;
     font-size: 26px;
     margin: 10px;
+    width: calc(100% - 20px);
+    border-bottom: solid 1px #97989A;
+    padding-bottom: 10px;
 }
 .menu-search-container {
-	position: absolute;
+/*	position: absolute;
 	top: 100px;
-	left: 0px;
+	left: 0px;*/
+	display: inline-table;
 	width: calc(100% - 10px);
 	margin: 5px;
 	border-bottom: solid 1px #97989A;
@@ -85,12 +103,22 @@ body{
 	font-weight: bold;
 
 }
+.menu-search {
+	margin: 10px;
+}
+.menu-search-btn {
+    background-color: #97989A;
+    text-align: center;
+	font-size:16px;
+    line-height: 30px;
+    color: black;
+}
 #menu-search-div > div {
-	width: calc(100% - 20px);
+	width: calc(100% - 30px);
 	height: 33px;
 	border-radius: 0px;
 	box-shadow: 0 0px 0px;
-	margin: 10px;
+	margin: 4px;
 }
 #menu-search-div > div > input {
 	width: calc(100% - 33px);
@@ -123,20 +151,34 @@ body{
 	border-radius: 0px;
 }
 .menu-result-container {
-	position: absolute;
+/*	position: absolute;
 	top: 220px;
-	left: 0px;
+	left: 0px;*/
 	width: calc(100% - 10px);
 	margin: 5px;
 }
 .menu-result {
+	font-size: 16px;
+	color:white;
 	display: none;
 	padding-left: 10px;
 }
+.menu-result-row {
+	height: 33px;
+    color: #97989A;
+	font-size: 16px;
+    margin: 10px;
+    line-height: 33px;
+    padding-left: 5px;
+}
+.menu-result-row:hover {
+	background-color: #414141;
+}
 .menu-pie {
 	width: 290px;
-	padding-top: 198px;
-	padding-left: 1px;
+	height:340px;
+/*	padding-top: 198px;
+	padding-left: 1px;*/
 
 }
 /* Leaflet */
@@ -148,6 +190,8 @@ body{
     width: 600px;
 }
 .leaflet-popup-content {
+/*	width: calc(100% - 30px);
+    height: calc(100% - 20px);*/
     margin: 10px 15px;
     line-height: 1.4;
 }
@@ -155,7 +199,32 @@ body{
     width: 1px;
     height: 1px;
 }
-
+.circle {
+	position: relative; 
+	border: 2px solid #999; 
+	border-radius: 100%; 
+	width: 15px; 
+	height: 15px;
+	line-height: 15px; 
+	text-align: center; 
+	margin-top: 15px; 
+	background-color: #fff; 
+	z-index: 2;
+}
+.circle:first-child {margin-top: 0;}
+.circle:before {
+	position: absolute; 
+	border: 1px solid #999; 
+	width: 0; 
+	height: 15px; 
+	display: block; 
+	content: ''; 
+	left: 50%; 
+	z-index: 1; 
+	top: -17px; 
+	margin-left: -1px;
+}
+.circle:first-child:before {display: none;}
 /* Footer */
 
 #footer{
@@ -182,6 +251,7 @@ body{
 #footer .bft{text-decoration:none}
 #footer .bft:visited{text-decoration:none}
 #footer .bft:hover{text-decoration:underline}
+
 
 
 /* Data management interface */

@@ -360,8 +360,8 @@ $app->get('/delete/:block/', function ($block) use ($app) {
 	}
 
 	echo "<br>";
-	// print "Deletion for now is prohibited. Contact admin for that.";
-	// exit();
+	print "Deletion for now is prohibited. Contact admin for that.";
+	exit();
 
 	$query = "DELETE FROM humanface.parcels where block_no ='$block'"; 
 	$result = pg_query($query); 
