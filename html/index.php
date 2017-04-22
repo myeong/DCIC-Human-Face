@@ -180,6 +180,9 @@ $app->post('/input/:parcel_id/', function($pid) use ($app) {
 	if ($parcel['parcel_no'] == 0 || $parcels['block_no'] == 0){
 		print ("invalid block or parcel number.. <br>");
 		exit;
+	} else if ($parcel['parcel_no'] == 10 && $parcels['block_no'] == 10){
+		print ("invalid block or parcel number.. contact admin. <br>");
+		exit;
 	}
 
 
