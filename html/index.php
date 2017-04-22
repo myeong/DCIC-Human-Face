@@ -177,6 +177,12 @@ $app->post('/input/:parcel_id/', function($pid) use ($app) {
 	$parcel['ward_no'] = intval($vars['ward_no']);
 	$parcel['land_use'] = (!isset($vars['land_use_other']) || $vars['land_use_other'] == "") ? strval($vars['land_use']) : pg_escape_string(strval($vars['land_use_other']));
 
+	if ($parcel['parcel_no'] == 0 || $parcels['block_no'] == 0){
+		print ("invalid block or parcel number.. <br>");
+		exit;
+	}
+
+
 	$res = pg_query_params('INSERT into humanface.parcels (parcel_id, block_no, parcel_no, ward_no, land_use)'.
 		' VALUES (default, $1, $2, $3, $4) RETURNING parcel_id', $parcel);
 	if ($res) {
@@ -359,9 +365,9 @@ $app->get('/delete/:block/', function ($block) use ($app) {
 		exit();
 	}
 
-	echo "<br>";
-	print "Deletion for now is prohibited. Contact admin for that.";
-	exit();
+	// echo "<br>";
+	// print "Deletion for now is prohibited. Contact admin for that.";
+	// exit();
 
 	$query = "DELETE FROM humanface.parcels where block_no ='$block'"; 
 	$result = pg_query($query); 
