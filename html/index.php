@@ -177,10 +177,10 @@ $app->post('/input/:parcel_id/', function($pid) use ($app) {
 	$parcel['ward_no'] = intval($vars['ward_no']);
 	$parcel['land_use'] = (!isset($vars['land_use_other']) || $vars['land_use_other'] == "") ? strval($vars['land_use']) : pg_escape_string(strval($vars['land_use_other']));
 
-	if ($parcel['parcel_no'] == 0 || $parcels['block_no'] == 0){
+	if ($parcel['parcel_no'] == 0 || $parcel['block_no'] == 0){
 		print ("invalid block or parcel number.. <br>");
 		exit;
-	} else if ($parcel['parcel_no'] == 10 && $parcels['block_no'] == 10){
+	} else if ($parcel['parcel_no'] == 10 && $parcel['block_no'] == 10){
 		print ("invalid block or parcel number.. contact admin. <br>");
 		exit;
 	}
