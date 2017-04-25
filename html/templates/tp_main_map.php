@@ -382,132 +382,132 @@ $.when(load_data(), get_image_paths()).done(function() {
 		var name=[];
 			
 
-			for (var i = 0; i < db_data.length; i++) {
-				name[i]=String(db_data[i].type);
-				name[i]=name[i].replace(/\s+/g, '');
-				year[i]=d3.values(db_data[i].date[0])+d3.values(db_data[i].date[1])+d3.values(db_data[i].date[2])+d3.values(db_data[i].date[3]);
-			};
+		for (var i = 0; i < db_data.length; i++) {
+			name[i]=String(db_data[i].type);
+			name[i]=name[i].replace(/\s+/g, '');
+			year[i]=d3.values(db_data[i].date[0])+d3.values(db_data[i].date[1])+d3.values(db_data[i].date[2])+d3.values(db_data[i].date[3]);
+		};
 
-			var obj=['TransferofDeed','OfferMade','Appraisal','OfferAccepted','TenantMoved','Awarded','EndofCase'];
-			
-			for (var i = 0; i < db_data.length; i++) {
-			    if (value>=year[i]){
-					switch (name[i]){
-						case obj[0]:
-							todnum=todnum+1;
-						case obj[1]:
-							omnum=omnum+1;
-							// todnum = (todnum >= 1) ? todnum-1 : 0;							
-						case obj[2]:
-							apnum=apnum+1;
-							// omnum= (omnum >= 1) ? omnum-1 : 0;
-						case obj[3]:
-							oanum=oanum+1;
-							// apnum= (apnum >= 1) ? apnum-1 : 0;
-						case obj[4]:
-							tmnum=tmnum+1;
-							// oanum= (oanum >= 1) ? oanum-1 : 0;
-						case obj[5]:
-							awnum=awnum+1;
-							// tmnum= (tmnum >= 1) ? tmnum-1 : 0;
-						case obj[6]:
-							ecnum=ecnum+1;
-							// awnum= (awnum >= 1) ? awnum-1 : 0;
-					}
+		var obj=['TransferofDeed','OfferMade','Appraisal','OfferAccepted','TenantMoved','Awarded','EndofCase'];
+		
+		for (var i = 0; i < db_data.length; i++) {
+		    if (value>=year[i]){
+				switch (name[i]){
+					case obj[0]:
+						todnum=todnum+1;
+					case obj[1]:
+						omnum=omnum+1;
+						// todnum = (todnum >= 1) ? todnum-1 : 0;							
+					case obj[2]:
+						apnum=apnum+1;
+						// omnum= (omnum >= 1) ? omnum-1 : 0;
+					case obj[3]:
+						oanum=oanum+1;
+						// apnum= (apnum >= 1) ? apnum-1 : 0;
+					case obj[4]:
+						tmnum=tmnum+1;
+						// oanum= (oanum >= 1) ? oanum-1 : 0;
+					case obj[5]:
+						awnum=awnum+1;
+						// tmnum= (tmnum >= 1) ? tmnum-1 : 0;
+					case obj[6]:
+						ecnum=ecnum+1;
+						// awnum= (awnum >= 1) ? awnum-1 : 0;
 				}
-			};
-			
-
-			var dataset=[];
-			ndnum=936-(todnum+omnum+apnum+oanum+tmnum+awnum+ecnum);
-			dataset = [
-				{ label: 'Transfer of Deed', count: todnum },
-				{ label: 'Offer Made', count: omnum }, 
-				{ label: 'Appraisal', count: apnum }, 
-				{ label: 'Offer Accepted', count: oanum },
-				{ label: 'Tenant Moved', count: tmnum },
-				{ label: 'Awarded', count: awnum },
-				{ label: 'End of Case', count: ecnum },
-				{ label: 'No data', count: ndnum }
-
-			];
-			
-			
-			// Percentage calculation
-			var total=936;
-			var ptodnum=Math.floor((todnum / total) * 100);
-			var pomnum=Math.floor((omnum / total) * 100);
-			var papnum=Math.floor((apnum / total) * 100);
-			var poanum=Math.floor((oanum / total) * 100);
-			var ptmnum=Math.floor((tmnum / total) * 100);
-			var pawnum=Math.floor((awnum / total) * 100);
-			var pecnum=Math.floor((ecnum / total) * 100);
-			var pndnum=Math.floor((ndnum / total) * 100);
-			
-
-			// Percentage array
-			var percentage=[ptodnum,pomnum,papnum,poanum,ptmnum,pawnum,pecnum,pndnum];
-			
-			var width = 340;
-			var height = 340;
-			var radius = Math.min(width, height) / 2;
-			var donutWidth = 58;
-			var legendRectSize = 18;       
-			var legendSpacing = 4; 
-			var color = d3.scale.ordinal().range([cc1,cc2,cc3,cc4,cc5,cc6,cc7,cc8]);
-
-			var svg = d3.select('.menu-pie')
-				.append("svg:svg")
-				.attr("id", "piie")
-				.attr('width', width)
-				.attr('height', height)
-				.append('g')
-				.attr('transform', 'translate(' + (width / 2) + 
-					',' + (height / 2) + ')');
+			}
+		};
 		
-			var arc=d3.svg.arc()
-				.outerRadius(radius)
-				.innerRadius(radius - donutWidth);
+
+		var dataset=[];
+		ndnum=936-(todnum+omnum+apnum+oanum+tmnum+awnum+ecnum);
+		dataset = [
+			{ label: 'Transfer of Deed', count: todnum },
+			{ label: 'Offer Made', count: omnum }, 
+			{ label: 'Appraisal', count: apnum }, 
+			{ label: 'Offer Accepted', count: oanum },
+			{ label: 'Tenant Moved', count: tmnum },
+			{ label: 'Awarded', count: awnum },
+			{ label: 'End of Case', count: ecnum },
+			{ label: 'No data', count: ndnum }
+
+		];
+		
+		
+		// Percentage calculation
+		var total=936;
+		var ptodnum=Math.floor((todnum / total) * 100);
+		var pomnum=Math.floor((omnum / total) * 100);
+		var papnum=Math.floor((apnum / total) * 100);
+		var poanum=Math.floor((oanum / total) * 100);
+		var ptmnum=Math.floor((tmnum / total) * 100);
+		var pawnum=Math.floor((awnum / total) * 100);
+		var pecnum=Math.floor((ecnum / total) * 100);
+		var pndnum=Math.floor((ndnum / total) * 100);
+		
+
+		// Percentage array
+		var percentage=[ptodnum,pomnum,papnum,poanum,ptmnum,pawnum,pecnum,pndnum];
+		
+		var width = 340;
+		var height = 340;
+		var radius = Math.min(width, height) / 2;
+		var donutWidth = 58;
+		var legendRectSize = 18;       
+		var legendSpacing = 4; 
+		var color = d3.scale.ordinal().range([cc1,cc2,cc3,cc4,cc5,cc6,cc7,cc8]);
+
+		var svg = d3.select('.menu-pie')
+			.append("svg:svg")
+			.attr("id", "piie")
+			.attr('width', width)
+			.attr('height', height)
+			.append('g')
+			.attr('transform', 'translate(' + (width / 2) + 
+				',' + (height / 2) + ')');
 	
-			var pie = d3.layout.pie()
-				.value(function(d) { return d.count; });
+		var arc=d3.svg.arc()
+			.outerRadius(radius)
+			.innerRadius(radius - donutWidth);
 
-			var path = svg.selectAll('path')
-				.data(pie(dataset))
-				.enter()
-				.append('path')
-				.attr('d', arc)
-				.attr('fill', function(d, i) { 
-					return color(d.data.label);
-				});
-			
-			var legend = svg.selectAll('.legend')                     
-				.data(color.domain())                                   
-				.enter()                                                
-				.append('g')                                            
-				.attr('class', 'legend')                              
-				.attr('transform', function(d, i) {                     
+		var pie = d3.layout.pie()
+			.value(function(d) { return d.count; });
+
+		var path = svg.selectAll('path')
+			.data(pie(dataset))
+			.enter()
+			.append('path')
+			.attr('d', arc)
+			.attr('fill', function(d, i) { 
+				return color(d.data.label);
+			});
 		
-					var height = legendRectSize + legendSpacing;         
-					var offset =  height * color.domain().length / 2;     
-					var horz = -3.5 * legendRectSize;                      
-					var vert = i * height - offset+3;                       
-					return 'translate(' + horz + ',' + vert + ')';        
-				});  		  
-
+		var legend = svg.selectAll('.legend')                     
+			.data(color.domain())                                   
+			.enter()                                                
+			.append('g')                                            
+			.attr('class', 'legend')                              
+			.attr('transform', function(d, i) {                     
 	
-			legend.append('rect')                                     
-				.attr('width', legendRectSize)                          
-				.attr('height', legendRectSize)                         
-				.style('fill', color)                                   
-				.style('stroke', color);                                
+				var height = legendRectSize + legendSpacing;         
+				var offset =  height * color.domain().length / 2;     
+				var horz = -3.5 * legendRectSize;                      
+				var vert = i * height - offset+3;                       
+				return 'translate(' + horz + ',' + vert + ')';        
+			});  		  
 
-			legend.append('text')                                     
-				.attr('x', legendRectSize + legendSpacing)              
-				.attr('y', legendRectSize - legendSpacing)
-				.style('fill', 'white')							
-				.text(function(d,i) { return d+":"+ percentage[i]+"%"; });                       	
-		
+
+		legend.append('rect')                                     
+			.attr('width', legendRectSize)                          
+			.attr('height', legendRectSize)                         
+			.style('fill', color)                                   
+			.style('stroke', color);                                
+
+		legend.append('text')                                     
+			.attr('x', legendRectSize + legendSpacing)              
+			.attr('y', legendRectSize - legendSpacing)
+			.style('fill', 'white')							
+			.text(function(d,i) { return d+":"+ percentage[i]+"%"; });                       	
+	
 
 		
 		$(".menu-result").hide();
@@ -588,33 +588,33 @@ $.when(load_data(), get_image_paths()).done(function() {
 
 			if (SLIDER_VALUE == 1960){
 				layer.setStyle(c1);
-			} else {
-		
-				if (SLIDER_VALUE >=todmax && SLIDER_VALUE <= ommax){
-				layer.setStyle(c2);}
-									
-				if (SLIDER_VALUE >= ommax && SLIDER_VALUE <= apmax){
-									layer.setStyle(c3);}
-									
-				if (SLIDER_VALUE >= apmax && SLIDER_VALUE <= oamax){
-									layer.setStyle(c4);}
-				
-				
-				if (SLIDER_VALUE >= oamax && SLIDER_VALUE <= tmmax){
-									layer.setStyle(c5);}
-									
-									
-				if (SLIDER_VALUE >= tmmax && SLIDER_VALUE <= awmax){
-									layer.setStyle(c6);}
-
-				if (SLIDER_VALUE >= awmax && SLIDER_VALUE <= ecmax){
-									layer.setStyle(c7);}
-									
-		        if (SLIDER_VALUE >= ecmax) {
-									layer.setStyle(c8);}
+			} 
+			else if (SLIDER_VALUE >=todmax && SLIDER_VALUE <= ommax){
+				layer.setStyle(c2);
+			} 
+			else if (SLIDER_VALUE >= ommax && SLIDER_VALUE <= apmax){
+				layer.setStyle(c3);
 			}
+			else if (SLIDER_VALUE >= apmax && SLIDER_VALUE <= oamax){
+				layer.setStyle(c4);
+			}			
+			else if (SLIDER_VALUE >= oamax && SLIDER_VALUE <= tmmax){
+				layer.setStyle(c5);
+			}					
+			else if (SLIDER_VALUE >= tmmax && SLIDER_VALUE <= awmax){
+				layer.setStyle(c6);
+			}
+			else if (SLIDER_VALUE >= awmax && SLIDER_VALUE <= ecmax){
+				layer.setStyle(c7);
+			}					
+	        else if (SLIDER_VALUE >= ecmax) {
+	        	layer.setStyle(c8);
+	        } 
+	        else {
+	        	layer.setStyle(c1);
+	        }
 						
-			});
+		});
 		}, {
 			max: 1976,
 			min: 1960,
@@ -698,25 +698,25 @@ $.when(load_data(), get_image_paths()).done(function() {
 
 			if (SLIDER_VALUE == 1960){
 				layer.setStyle(c1);
-			} else if (SLIDER_VALUE >=todmax && SLIDER_VALUE <= ommax){
+			} 
+			else if (SLIDER_VALUE >=todmax && SLIDER_VALUE <= ommax){
 				layer.setStyle(c2);
-			} else if (SLIDER_VALUE >= ommax && SLIDER_VALUE <= apmax){
-								layer.setStyle(c3);}
-								
+			} 
+			else if (SLIDER_VALUE >= ommax && SLIDER_VALUE <= apmax){
+				layer.setStyle(c3);
+			}
 			else if (SLIDER_VALUE >= apmax && SLIDER_VALUE <= oamax){
-								layer.setStyle(c4);}
-			
-			
+				layer.setStyle(c4);
+			}			
 			else if (SLIDER_VALUE >= oamax && SLIDER_VALUE <= tmmax){
-								layer.setStyle(c5);}
-								
-								
+				layer.setStyle(c5);
+			}					
 			else if (SLIDER_VALUE >= tmmax && SLIDER_VALUE <= awmax){
-								layer.setStyle(c6);}
-
+				layer.setStyle(c6);
+			}
 			else if (SLIDER_VALUE >= awmax && SLIDER_VALUE <= ecmax){
-								layer.setStyle(c7);}
-								
+				layer.setStyle(c7);
+			}					
 	        else if (SLIDER_VALUE >= ecmax) {
 	        	layer.setStyle(c8);
 	        } 
