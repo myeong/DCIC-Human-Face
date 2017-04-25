@@ -145,7 +145,7 @@ $.when(load_data(), get_image_paths()).done(function() {
 		fillOpacity: 1
 	};
    
-	var map = L.map('map').setView([35.5861, -82.5554], 17);
+	var map = L.map('map').setView([35.5811, -82.5574], 16);
 
 	
 	//loading a GeoJSON file directly from the file 
@@ -529,6 +529,8 @@ $.when(load_data(), get_image_paths()).done(function() {
 			if(isNaN(todmax)){
 				todmax=20000;
 			}
+
+
 			
 			//Offer Made
 			var om=[properties.OfferMade];
@@ -585,13 +587,6 @@ $.when(load_data(), get_image_paths()).done(function() {
 				ecmax=20000;
 			};
 
-			console.log(todmax);
-			console.log(ommax);
-			console.log(apmax);
-			console.log(oamax);
-			console.log(tmmax);
-			console.log(awmax);
-			console.log(ecmax);
 
 			if (SLIDER_VALUE == 1960){
 				layer.setStyle(c1);
