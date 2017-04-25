@@ -696,7 +696,7 @@ $.when(load_data(), get_image_paths()).done(function() {
 				ecmax=20000;
 			};
 
-			if (SLIDER_VALUE >= 1960){
+			if (SLIDER_VALUE == 1960){
 				layer.setStyle(c1);
 			} else {
 				
