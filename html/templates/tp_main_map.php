@@ -696,9 +696,12 @@ $.when(load_data(), get_image_paths()).done(function() {
 				ecmax=20000;
 			};
 
-			if (SLIDER_VALUE >= 1960){
+			if (SLIDER_VALUE == 1960){
 				layer.setStyle(c1);
 			} else {
+				if (SLIDER_VALUE == 1960){
+					layer.setStyle(c1);
+				} 
 				
 				if (SLIDER_VALUE >=todmax && SLIDER_VALUE <= ommax){
 					layer.setStyle(c2);
