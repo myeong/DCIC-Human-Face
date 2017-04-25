@@ -698,33 +698,32 @@ $.when(load_data(), get_image_paths()).done(function() {
 
 			if (SLIDER_VALUE == 1960){
 				layer.setStyle(c1);
-			} else {
-				
-				if (SLIDER_VALUE >=todmax && SLIDER_VALUE <= ommax){
-					layer.setStyle(c2);
-				}
-									
-				if (SLIDER_VALUE >= ommax && SLIDER_VALUE <= apmax){
-									layer.setStyle(c3);}
-									
-				if (SLIDER_VALUE >= apmax && SLIDER_VALUE <= oamax){
-									layer.setStyle(c4);}
-				
-				
-				if (SLIDER_VALUE >= oamax && SLIDER_VALUE <= tmmax){
-									layer.setStyle(c5);}
-									
-									
-				if (SLIDER_VALUE >= tmmax && SLIDER_VALUE <= awmax){
-									layer.setStyle(c6);}
+			} else if (SLIDER_VALUE >=todmax && SLIDER_VALUE <= ommax){
+				layer.setStyle(c2);
+			} else if (SLIDER_VALUE >= ommax && SLIDER_VALUE <= apmax){
+								layer.setStyle(c3);}
+								
+			else if (SLIDER_VALUE >= apmax && SLIDER_VALUE <= oamax){
+								layer.setStyle(c4);}
+			
+			
+			else if (SLIDER_VALUE >= oamax && SLIDER_VALUE <= tmmax){
+								layer.setStyle(c5);}
+								
+								
+			else if (SLIDER_VALUE >= tmmax && SLIDER_VALUE <= awmax){
+								layer.setStyle(c6);}
 
-				if (SLIDER_VALUE >= awmax && SLIDER_VALUE <= ecmax){
-									layer.setStyle(c7);}
-									
-		        if (SLIDER_VALUE >= ecmax) {
-		        	layer.setStyle(c8);
-		        }
-		    }
+			else if (SLIDER_VALUE >= awmax && SLIDER_VALUE <= ecmax){
+								layer.setStyle(c7);}
+								
+	        else if (SLIDER_VALUE >= ecmax) {
+	        	layer.setStyle(c8);
+	        } 
+	        else {
+	        	layer.setStyle(c1);
+	        }
+		    
 	    
 		};
 		
