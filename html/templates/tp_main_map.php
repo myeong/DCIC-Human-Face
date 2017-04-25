@@ -517,36 +517,100 @@ $.when(load_data(), get_image_paths()).done(function() {
 
 		//poly color
 		poly.eachLayer(function(layer) {
-			if (SLIDER_VALUE<'1961') {
-				layer.setStyle(c1);
+			SLIDER_VALUE=parseInt(SLIDER_VALUE);
+
+			var properties = layer.feature.properties;	
+			
+				//TransferofDeed
+			var tod = [properties.TransferofDeed];
+			tod= tod.filter(function(e) { return e !== 'No data' });
+			tod=parseInt(tod);
+			var todmax = Math.max(tod);
+			if(isNaN(todmax)){
+				todmax=20000;
 			}
-			else {
 			
-				// console.log(layer);
-				var properties = layer.feature.properties;
-				if (properties.EndofCase>=properties.Awarded) {
-					if (SLIDER_VALUE >= properties.TransferofDeed && SLIDER_VALUE < properties.OfferMade) {
-						layer.setStyle(c2);
-					} else if (SLIDER_VALUE >= properties.OfferMade && SLIDER_VALUE < properties.Appraisal) {
-						layer.setStyle(c3);
-					} else if (SLIDER_VALUE >= properties.Appraisal && SLIDER_VALUE < properties.OfferAccepted) {
-						layer.setStyle(c4);
-					} else if (SLIDER_VALUE >= properties.OfferAccepted && SLIDER_VALUE < properties.TenantMoved) {
-						layer.setStyle(c5);
-					} else if (SLIDER_VALUE >= properties.TenantMoved && SLIDER_VALUE < properties.Awarded) {
-						layer.setStyle(c6);
-					} else if (SLIDER_VALUE >= properties.Awarded && SLIDER_VALUE < properties.EndofCase) {
-						layer.setStyle(c7);
-					} 
-					else if (SLIDER_VALUE >= properties.EndofCase) {
-						layer.setStyle(c8);
-					}
-				} else {
-					layer.setStyle(c1);
-				}
+			//Offer Made
+			var om=[properties.OfferMade];
+			om= om.filter(function(e) { return e !== 'No data' });
+			om=parseInt(om);
+			var ommax = Math.max(om);
+			if(isNaN(ommax)){
+				ommax=20000;
+			}
+			
+			//Appraisal
+			var ap=[properties.Appraisal];
+			ap= ap.filter(function(e) { return e !== 'No data' });
+			ap=parseInt(ap);
+			var apmax = Math.max(ap);
+			if(isNaN(apmax)){
+				apmax=20000;
+			}
+			
+			//OfferAccepted
+			var oa=[properties.OfferAccepted];
+			oa= oa.filter(function(e) { return e !== 'No data' });
+			oa=parseInt(oa);
+			var oamax = Math.max(oa);
+			if(isNaN(oamax)){
+				oamax=20000;
+			}
+			
+			//TenantMoved
+			var tm=[properties.TenantMoved];
+			tm= tm.filter(function(e) { return e !== 'No data' });
+			tm=parseInt(tm);
+			var tmmax = Math.max(tm);
+			if(isNaN(tmmax)){
+				tmmax=20000;
+			}
+			
+			//Awarded
+			var aw=[properties.Awarded];
+			aw= aw.filter(function(e) { return e !== 'No data' });
+			aw=parseInt(aw);
+			var awmax = Math.max(aw);
+			if(isNaN(awmax)){
+				awmax=20000;
+			}
+			
+			//EndofCase
+			var ec=[properties.EndofCase];
+			ec= ec.filter(function(e) { return e !== 'No data' });
+			ec=parseInt(ec);
+			
+			var ecmax = Math.max(ec);
+			if(isNaN(ecmax)){
+				ecmax=20000;
 			};
+		//console.log(ecmax);
+
+		
+			if (SLIDER_VALUE >=todmax && SLIDER_VALUE <= ommax){
+			layer.setStyle(c2);}
+								
+			if (SLIDER_VALUE >= ommax && SLIDER_VALUE <= apmax){
+								layer.setStyle(c3);}
+								
+			if (SLIDER_VALUE >= apmax && SLIDER_VALUE <= oamax){
+								layer.setStyle(c4);}
 			
-		});
+			
+			if (SLIDER_VALUE >= oamax && SLIDER_VALUE <= tmmax){
+								layer.setStyle(c5);}
+								
+								
+			if (SLIDER_VALUE >= tmmax && SLIDER_VALUE <= awmax){
+								layer.setStyle(c6);}
+
+			if (SLIDER_VALUE >= awmax && SLIDER_VALUE <= ecmax){
+								layer.setStyle(c7);}
+								
+	        if (SLIDER_VALUE >= ecmax) {
+								layer.setStyle(c8);}
+						
+			});
 		}, {
 			max: 1976,
 			min: 1960,
@@ -560,7 +624,6 @@ $.when(load_data(), get_image_paths()).done(function() {
 			syncSlider: true,
 			increment: true
 		}).addTo(map); 
-	
 
 		// Mouse track
 		function highlightDot(e){
@@ -574,33 +637,90 @@ $.when(load_data(), get_image_paths()).done(function() {
 			// this is the way to access propertis from "event"
 			var properties = layer.feature.properties;
 
-			if (SLIDER_VALUE<'1961') {
-					layer.setStyle(c1);
+			//TransferofDeed
+			var tod = [properties.TransferofDeed];
+			tod=parseInt(tod);
+			var todmax = Math.max(tod);
+				if(isNaN(todmax)){
+			todmax=20000;
 			}
 			
-			else {
-				if (properties.TransferofDeed < properties.OfferMade) {
-				if (SLIDER_VALUE >= properties.TransferofDeed && SLIDER_VALUE < properties.OfferMade) {
-						layer.setStyle(c2);
-					} else if (SLIDER_VALUE >= properties.OfferMade && SLIDER_VALUE < properties.Appraisal) {
-						layer.setStyle(c3);
-					} else if (SLIDER_VALUE >= properties.Appraisal && SLIDER_VALUE < properties.OfferAccepted) {
-						layer.setStyle(c4);
-					} else if (SLIDER_VALUE >= properties.OfferAccepted && SLIDER_VALUE < properties.TenantMoved) {
-						layer.setStyle(c5);
-					} else if (SLIDER_VALUE >= properties.TenantMoved && SLIDER_VALUE < properties.Awarded) {
-						layer.setStyle(c6);
-					} else if (SLIDER_VALUE >= properties.Awarded && SLIDER_VALUE < properties.EndofCase) {
-						layer.setStyle(c7);
-					} 
-					else if (SLIDER_VALUE >= properties.EndofCase) {
-						layer.setStyle(c8);
-					}		
-				} 
-				else {
-				layer.setStyle(c1);
-				}
+			//Offer Made
+			var om=[properties.OfferMade];
+			om=parseInt(om);
+			var ommax = Math.max(om);
+			if(isNaN(ommax)){
+				ommax=20000;
 			}
+			
+			//Appraisal
+			var ap=[properties.Appraisal];
+			ap=parseInt(ap);
+			var apmax = Math.max(ap);
+				if(isNaN(apmax)){
+			apmax=20000;
+			}
+			
+			//OfferAccepted
+			var oa=[properties.OfferAccepted];
+			oa=parseInt(oa);
+			var oamax = Math.max(oa);
+				if(isNaN(oamax)){
+			oamax=20000;
+			}
+			
+			//TenantMoved
+			var tm=[properties.TenantMoved];
+			tm=parseInt(tm);
+			var tmmax = Math.max(tm);
+			if(isNaN(tmmax)){
+				tmmax=20000;
+			}
+			
+			//Awarded
+			var aw=[properties.Awarded];
+			aw=parseInt(aw);
+			var awmax = Math.max(aw);
+			if(isNaN(awmax)){
+				awmax=20000;
+			}
+			
+			//EndofCase
+			var ec=[properties.EndofCase];
+			ec=parseInt(ec);
+			var ecmax = Math.max(ec);
+			if(isNaN(ecmax)){
+				ecmax=20000;
+			};
+
+			if (SLIDER_VALUE>=1960){
+				layer.setStyle(c1);
+			}
+			
+			if (SLIDER_VALUE >=todmax && SLIDER_VALUE <= ommax){
+				layer.setStyle(c2);
+			}
+								
+			if (SLIDER_VALUE >= ommax && SLIDER_VALUE <= apmax){
+								layer.setStyle(c3);}
+								
+			if (SLIDER_VALUE >= apmax && SLIDER_VALUE <= oamax){
+								layer.setStyle(c4);}
+			
+			
+			if (SLIDER_VALUE >= oamax && SLIDER_VALUE <= tmmax){
+								layer.setStyle(c5);}
+								
+								
+			if (SLIDER_VALUE >= tmmax && SLIDER_VALUE <= awmax){
+								layer.setStyle(c6);}
+
+			if (SLIDER_VALUE >= awmax && SLIDER_VALUE <= ecmax){
+								layer.setStyle(c7);}
+								
+	        if (SLIDER_VALUE >= ecmax) {
+	        	layer.setStyle(c8);
+	        }
 		};
 		
 		
@@ -643,8 +763,6 @@ $.when(load_data(), get_image_paths()).done(function() {
 			} else {
 				block_parcel = "images/properties/default.png"; 
 			}
-
-			console.log(block_parcel);
 			
 			// if (feature.properties.TransferofDeed == zero && feature.properties.TenantMoved== zero ){				
 			// 	customPopup= 
