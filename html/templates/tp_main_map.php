@@ -383,9 +383,9 @@ $.when(load_data(), get_image_paths()).done(function() {
 			
 
 			for (var i = 0; i < db_data.length; i++) {
-			name[i]=String(db_data[i].type);
-			name[i]=name[i].replace(/\s+/g, '');
-			year[i]=d3.values(db_data[i].date[0])+d3.values(db_data[i].date[1])+d3.values(db_data[i].date[2])+d3.values(db_data[i].date[3]);
+				name[i]=String(db_data[i].type);
+				name[i]=name[i].replace(/\s+/g, '');
+				year[i]=d3.values(db_data[i].date[0])+d3.values(db_data[i].date[1])+d3.values(db_data[i].date[2])+d3.values(db_data[i].date[3]);
 			};
 
 			var obj=['TransferofDeed','OfferMade','Appraisal','OfferAccepted','TenantMoved','Awarded','EndofCase'];
@@ -397,22 +397,22 @@ $.when(load_data(), get_image_paths()).done(function() {
 							todnum=todnum+1;
 						case obj[1]:
 							omnum=omnum+1;
-							todnum = (todnum >= 1) ? todnum-1 : 0;							
+							// todnum = (todnum >= 1) ? todnum-1 : 0;							
 						case obj[2]:
 							apnum=apnum+1;
-							omnum= (omnum >= 1) ? omnum-1 : 0;
+							// omnum= (omnum >= 1) ? omnum-1 : 0;
 						case obj[3]:
 							oanum=oanum+1;
-							apnum= (apnum >= 1) ? apnum-1 : 0;
+							// apnum= (apnum >= 1) ? apnum-1 : 0;
 						case obj[4]:
 							tmnum=tmnum+1;
-							oanum= (oanum >= 1) ? oanum-1 : 0;
+							// oanum= (oanum >= 1) ? oanum-1 : 0;
 						case obj[5]:
 							awnum=awnum+1;
-							tmnum= (tmnum >= 1) ? tmnum-1 : 0;
+							// tmnum= (tmnum >= 1) ? tmnum-1 : 0;
 						case obj[6]:
 							ecnum=ecnum+1;
-							awnum= (awnum >= 1) ? awnum-1 : 0;
+							// awnum= (awnum >= 1) ? awnum-1 : 0;
 					}
 				}
 			};
