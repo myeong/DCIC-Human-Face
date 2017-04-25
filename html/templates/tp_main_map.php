@@ -587,30 +587,32 @@ $.when(load_data(), get_image_paths()).done(function() {
 		//console.log(ecmax);
 
 			if (SLIDER_VALUE == 1960){
-			layer.setStyle(c1);}
+				layer.setStyle(c1);
+			} else {
 		
-			if (SLIDER_VALUE >=todmax && SLIDER_VALUE <= ommax){
-			layer.setStyle(c2);}
-								
-			if (SLIDER_VALUE >= ommax && SLIDER_VALUE <= apmax){
-								layer.setStyle(c3);}
-								
-			if (SLIDER_VALUE >= apmax && SLIDER_VALUE <= oamax){
-								layer.setStyle(c4);}
-			
-			
-			if (SLIDER_VALUE >= oamax && SLIDER_VALUE <= tmmax){
-								layer.setStyle(c5);}
-								
-								
-			if (SLIDER_VALUE >= tmmax && SLIDER_VALUE <= awmax){
-								layer.setStyle(c6);}
+				if (SLIDER_VALUE >=todmax && SLIDER_VALUE <= ommax){
+				layer.setStyle(c2);}
+									
+				if (SLIDER_VALUE >= ommax && SLIDER_VALUE <= apmax){
+									layer.setStyle(c3);}
+									
+				if (SLIDER_VALUE >= apmax && SLIDER_VALUE <= oamax){
+									layer.setStyle(c4);}
+				
+				
+				if (SLIDER_VALUE >= oamax && SLIDER_VALUE <= tmmax){
+									layer.setStyle(c5);}
+									
+									
+				if (SLIDER_VALUE >= tmmax && SLIDER_VALUE <= awmax){
+									layer.setStyle(c6);}
 
-			if (SLIDER_VALUE >= awmax && SLIDER_VALUE <= ecmax){
-								layer.setStyle(c7);}
-								
-	        if (SLIDER_VALUE >= ecmax) {
-								layer.setStyle(c8);}
+				if (SLIDER_VALUE >= awmax && SLIDER_VALUE <= ecmax){
+									layer.setStyle(c7);}
+									
+		        if (SLIDER_VALUE >= ecmax) {
+									layer.setStyle(c8);}
+			}
 						
 			});
 		}, {
@@ -643,8 +645,8 @@ $.when(load_data(), get_image_paths()).done(function() {
 			var tod = [properties.TransferofDeed];
 			tod=parseInt(tod);
 			var todmax = Math.max(tod);
-				if(isNaN(todmax)){
-			todmax=20000;
+			if(isNaN(todmax)){
+				todmax=20000;
 			}
 			
 			//Offer Made
@@ -697,32 +699,33 @@ $.when(load_data(), get_image_paths()).done(function() {
 
 			if (SLIDER_VALUE == 1960){
 				layer.setStyle(c1);
-			}
+			} else {
 			
-			if (SLIDER_VALUE >=todmax && SLIDER_VALUE <= ommax){
-				layer.setStyle(c2);
-			}
-								
-			if (SLIDER_VALUE >= ommax && SLIDER_VALUE <= apmax){
-								layer.setStyle(c3);}
-								
-			if (SLIDER_VALUE >= apmax && SLIDER_VALUE <= oamax){
-								layer.setStyle(c4);}
-			
-			
-			if (SLIDER_VALUE >= oamax && SLIDER_VALUE <= tmmax){
-								layer.setStyle(c5);}
-								
-								
-			if (SLIDER_VALUE >= tmmax && SLIDER_VALUE <= awmax){
-								layer.setStyle(c6);}
+				if (SLIDER_VALUE >=todmax && SLIDER_VALUE <= ommax){
+					layer.setStyle(c2);
+				}
+									
+				if (SLIDER_VALUE >= ommax && SLIDER_VALUE <= apmax){
+									layer.setStyle(c3);}
+									
+				if (SLIDER_VALUE >= apmax && SLIDER_VALUE <= oamax){
+									layer.setStyle(c4);}
+				
+				
+				if (SLIDER_VALUE >= oamax && SLIDER_VALUE <= tmmax){
+									layer.setStyle(c5);}
+									
+									
+				if (SLIDER_VALUE >= tmmax && SLIDER_VALUE <= awmax){
+									layer.setStyle(c6);}
 
-			if (SLIDER_VALUE >= awmax && SLIDER_VALUE <= ecmax){
-								layer.setStyle(c7);}
-								
-	        if (SLIDER_VALUE >= ecmax) {
-	        	layer.setStyle(c8);
-	        }
+				if (SLIDER_VALUE >= awmax && SLIDER_VALUE <= ecmax){
+									layer.setStyle(c7);}
+									
+		        if (SLIDER_VALUE >= ecmax) {
+		        	layer.setStyle(c8);
+		        }
+		    }
 		};
 		
 		
@@ -763,7 +766,7 @@ $.when(load_data(), get_image_paths()).done(function() {
 			if(images.length >0) {
 				block_parcel = "images/properties/" + images[0];
 			} else {
-				block_parcel = "images/properties/default.png"; 
+				block_parcel = "images/default_image.jpg"; 
 			}
 			
 			// if (feature.properties.TransferofDeed == zero && feature.properties.TenantMoved== zero ){				
