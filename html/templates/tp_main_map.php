@@ -584,7 +584,14 @@ $.when(load_data(), get_image_paths()).done(function() {
 			if(isNaN(ecmax)){
 				ecmax=20000;
 			};
-		//console.log(ecmax);
+
+			console.log(todmax);
+			console.log(ommax);
+			console.log(apmax);
+			console.log(oamax);
+			console.log(tmmax);
+			console.log(awmax);
+			console.log(ecmax);
 
 			if (SLIDER_VALUE == 1960){
 				layer.setStyle(c1);
