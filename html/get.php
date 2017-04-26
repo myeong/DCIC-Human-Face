@@ -1,7 +1,8 @@
 <?php
 
 ini_set('display_errors', 1);
-$connect = pg_connect("host=localhost port=5432 dbname=humanface user=postgres password=dcic2017");
+require 'credentials.inc.php';
+$connect = pg_connect('host=' . DBHOST . ' dbname=' .DBNAME . ' user=' .DBUSER . ' password=' . DBPASS);
 
 if (!$connect){
 	die("Error in connection!");
@@ -56,13 +57,14 @@ if ($action=="search") {
 	// 		LEFT JOIN humanface.event_types d ON c.type=d.id
 	// 		ORDER BY c.date DESC;";
 	
-	$sql = "SELECT DISTINCT on (p.parcel_no, p.block_no, t.type) 
-				a.st_num,a.st_name, p.parcel_no,p.block_no,e.date,t.type
-	 		FROM humanface.events as e 
+	$sql = "SELECT DISTINCT on (p.parcel_no, p.block_no, t.type, e.date) 
+				a.st_num,a.st_name,p.parcel_no,p.block_no,e.date,e.response,t.type
+	 		FROM humanface.events e
 	 		LEFT JOIN humanface.addresses a on a.parcel_id=e.parcel_id
 	 		LEFT JOIN humanface.parcels p on  e.parcel_id=p.parcel_id
 	 		LEFT JOIN humanface.event_types t ON e.type=t.id
-	 		WHERE e.date IS NOT NULL and e.type IS NOT NULL;";
+	 		WHERE e.date IS NOT NULL and e.type IS NOT NULL
+	 		ORDER BY e.date ASC;";
 
 } else {
 	die("Error: action=invalid");
@@ -96,7 +98,8 @@ if ($rows == 0) {
 				"parcel_no"=> $row['parcel_no'],
 				"block_no"=> $row['block_no'],
 				"date"=> $row['date'],
-				"type" => $row['type']		
+				"type" => $row['type'],
+				"response" => $row['response']		
 				
 			);
 			$datas[] = $data;

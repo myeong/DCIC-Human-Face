@@ -145,15 +145,13 @@ $.when(load_data(), get_image_paths()).done(function() {
 		fillOpacity: 1
 	};
    
-	var map = L.map('map').setView([35.5811, -82.5574], 16);
+	var map = L.map('map').setView([35.5811, -82.5560], 16);
 
-	
 	//loading a GeoJSON file directly from the file 
 	var poly = new L.GeoJSON.AJAX(geojson_path, {
 		style: c1,					
 		onEachFeature: onEachFeature,
 	});
-
 
 	// load a main layer
 	var baseMap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 
@@ -169,7 +167,7 @@ $.when(load_data(), get_image_paths()).done(function() {
 	// Slider menu 
 	var slideMenu = L.control.slideMenu('',{
 		position: 'topright', 
-		height: '680px', 
+		height: '700px', 
 		width: '355px'
 	}).addTo(map);
 
@@ -278,41 +276,49 @@ $.when(load_data(), get_image_paths()).done(function() {
 			}
 		}
 	}	
+
 	
 	// Data from database and store in "Poly"
+	// Event data's structure look like this (two-dimensional array):
+	// 		Array[index] {event_type, date}
     function parsePoly(feature, data) {
 
     	var parcel_num = feature.properties.parcel;
     	var block_num = feature.properties.block;
 		var zero=String('No data');
-    	//console.log(data);
+
+    	var events = [];
+    	var index = 0;
+
+		feature.properties['events'] = zero; 
+
 		
-		feature.properties['TransferofDeed'] = zero; 
-		feature.properties['OfferMade'] = zero; 
-		feature.properties['Appraisal'] = zero;
-		feature.properties['OfferAccepted'] = zero; 
-		feature.properties['TenantMoved'] = zero; 
-		feature.properties['Awarded'] = zero;
-		feature.properties['EndofCase'] = zero;
-		
-		
+		// Search gthough Data
     	for (var i = 0; i< data.length; i++){
 			var type = String(data[i].type);
-    		type = type.replace(/\s+/g, '');
+    		// type = type.replace(/\s+/g, '');
+
+    		// Only taking the first token for the array. (e.g., Transfer of Deed --> transfer)
+    		type = type.split(" ")[0];
 		 
-    		// console.log(parseInt(data[i].block_no));
     		if (parseInt(data[i].block_no) == block_num && parseInt(data[i].parcel_no) == parcel_num){
-
-    			if (type) {
-    				if (data[i].date){
-    				feature.properties[type] = String(data[i].date);    					
-    				}
+    			if (type && data[i].date){					
+					var obj = {};
+					obj[type] = data[i].date;
+					if (type == "Decision"){
+						obj["response"] = data[i].response.replace(/\s+/g, '');;
+					}
+					events.push(obj);    				
     			}
+    		}    		
 
-    		}
     	}
-				//console.log(feature.properties);
+    	// console.log(events);
+
+    	if (events.length >0) feature.properties['events'] = events;
     };
+
+
 
 	var result_div = L.DomUtil.create('div','menu-result-container');
 	mapbuttons_div.appendChild(result_div);
@@ -529,8 +535,6 @@ $.when(load_data(), get_image_paths()).done(function() {
 			if(isNaN(todmax)){
 				todmax=20000;
 			}
-
-
 			
 			//Offer Made
 			var om=[properties.OfferMade];
@@ -591,34 +595,33 @@ $.when(load_data(), get_image_paths()).done(function() {
 			if (SLIDER_VALUE == 1960){
 				layer.setStyle(c1);
 			} 
-			else if (SLIDER_VALUE >=todmax && SLIDER_VALUE <= ommax){
-				layer.setStyle(c2);
-			} 
-			else if (SLIDER_VALUE >= ommax && SLIDER_VALUE <= apmax){
-				layer.setStyle(c3);
-			}
-			else if (SLIDER_VALUE >= apmax && SLIDER_VALUE <= oamax){
-				layer.setStyle(c4);
-			}			
-			else if (SLIDER_VALUE >= oamax && SLIDER_VALUE <= tmmax){
-				layer.setStyle(c5);
-			}					
-			else if (SLIDER_VALUE >= tmmax && SLIDER_VALUE <= awmax){
-				layer.setStyle(c6);
-			}
-			else if (SLIDER_VALUE >= awmax && SLIDER_VALUE <= ecmax){
-				layer.setStyle(c7);
-			}					
-	        else if (SLIDER_VALUE >= ecmax) {
-	        	layer.setStyle(c8);
-	        } 
-	        else {
-	        	layer.setStyle(c1);
-	        }
+			else {
+				if (SLIDER_VALUE >=todmax && SLIDER_VALUE <= ommax){
+					layer.setStyle(c2);
+				} 
+				if (SLIDER_VALUE >= ommax && SLIDER_VALUE <= apmax){
+					layer.setStyle(c3);
+				}
+				if (SLIDER_VALUE >= apmax && SLIDER_VALUE <= oamax){
+					layer.setStyle(c4);
+				}			
+				if (SLIDER_VALUE >= oamax && SLIDER_VALUE <= tmmax){
+					layer.setStyle(c5);
+				}					
+				if (SLIDER_VALUE >= tmmax && SLIDER_VALUE <= awmax){
+					layer.setStyle(c6);
+				}
+				if (SLIDER_VALUE >= awmax && SLIDER_VALUE <= ecmax){
+					layer.setStyle(c7);
+				}					
+		        if (SLIDER_VALUE >= ecmax) {
+		        	layer.setStyle(c8);
+		        } 
+		    }
 						
 		});
 		}, {
-			max: 1976,
+			max: 1978,
 			min: 1960,
 			value: 1960,
 			step:1,
@@ -662,16 +665,16 @@ $.when(load_data(), get_image_paths()).done(function() {
 			var ap=[properties.Appraisal];
 			ap=parseInt(ap);
 			var apmax = Math.max(ap);
-				if(isNaN(apmax)){
-			apmax=20000;
+			if(isNaN(apmax)){
+				apmax=20000;
 			}
 			
 			//OfferAccepted
 			var oa=[properties.OfferAccepted];
 			oa=parseInt(oa);
 			var oamax = Math.max(oa);
-				if(isNaN(oamax)){
-			oamax=20000;
+			if(isNaN(oamax)){
+				oamax=20000;
 			}
 			
 			//TenantMoved
@@ -727,34 +730,80 @@ $.when(load_data(), get_image_paths()).done(function() {
 	        }
 		    
 	    
-		};
-		
+		}
 		
 		// When a polygon is clicked
 		function onEachFeature(feature, layer) {
 	
+			
 		    if (db_data){
-		    	parsePoly(feature, db_data);
+		    	parsePoly(feature, db_data);		    	
 		    }
+			
+		    var popupContent = "";
+		    var circles = "";
+		    
+		    
+		    if (feature.properties.events == "No data"){
+		    	popupContent = "<p>No Data</p>";
+		    } else {		    	
+			    for (var i=0; i<feature.properties.events.length; i++){		    	
+			    	popupContent += "<p>";
 
-			var popupContent = "<p>Transfer of Deed:"+feature.properties.TransferofDeed+"</p>"
-					+"<p>Offer Made:"+feature.properties.OfferMade+"</p>"
-					+"<p>Appraisal:"+feature.properties.Appraisal+"</p>"
-					+"<p>Offer Accepted:"+feature.properties.OfferAccepted+"</p>"
-					+"<p>Tenant Moved:"+feature.properties.TenantMoved+"</p>"
-					+"<p>Awarded:"+feature.properties.Awarded+"</p>"
-					+"<p>End of Case:"+feature.properties.EndofCase+"</p>";
-			
-			
+			    	for (var key in feature.properties.events[i]){
+			    		var type = "";
+			    		var circle = "";
+
+				    	switch(key) {
+						    case "Transfer":
+						        type = "Transfer of Deed";
+						        circle = "<div class='circle' style='background-color:#f00;'></div>";
+						        break;
+						    case "Offer":
+						        type = "Offer Made";
+						        circle = "<div class='circle' style='background-color:#ff7f00;'></div>";
+						        break;
+						    case "Appraisal":
+						    	type = key;
+						        circle = "<div class='circle' style='background-color:#ff0;'></div>";
+						        break;
+						    case "Decision":
+						        type = "Decision for the Offer (" + feature.properties.events[i].response + ")" ;
+						        circle = "<div class='circle' style='background-color:#0f0;'></div>";
+						        break;
+						    case "Tenant":
+						        type = "Tenant Moved";
+						        circle = "<div class='circle' style='background-color:#0ff;'></div>";
+						        break;
+						    case "Awarded":
+						    	type = key;
+						    	circle = "<div class='circle' style='background-color:#8b00ff;'></div>";
+						    	break;
+						    case "End":
+						        type = "End of Case";
+						        circle = "<div class='circle' style='background-color:black;'></div>";
+						        break;						    
+						    default:
+						        continue;
+						}
+						
+			    		popupContent += type + ": " + feature.properties.events[i][key] + "</p>";
+			    		circles += circle;
+			    		
+			    	}	    	
+			    	
+			    }
+			}
+
+			// console.log(popupContent);		    
+
 			var noData="<p>Sorry, No data</p>";
 			
 			var zero=String('No data');
 
 			//var  pic_url='images/test.jpg';
 			
-			//Popup info
-			var customPopup;
-			
+			//Popup info			
 			var block_parcel = "B" + feature.properties.block + "_P" + feature.properties.parcel;
 			var images = Array();
 			
@@ -770,42 +819,23 @@ $.when(load_data(), get_image_paths()).done(function() {
 				block_parcel = "images/default_image.jpg"; 
 			}
 			
-			// if (feature.properties.TransferofDeed == zero && feature.properties.TenantMoved== zero ){				
-			// 	customPopup= 
-			// 				"<p>"+feature.properties.st_num+" "+feature.properties.st_name+"</p>"
-			// 				+"<div style='float:right;width: 50%;display:inline-flex;'>"
-			// 					+"<div style='margin-left:15px;margin-right:10px;width:20px;'>"
-			// 						+"<div class='circle' style='background-color:#f00;'></div>"
-			// 				+"</div>"
-			// 				+"<div style='width:calc(100% - 45px);line-height:16px;'"
-			// 						+noData
-			// 					+"</div>"
-			// 				+"</div>";
-			// }
-			// else {
-				customPopup= "<span style='float:left;width: 50%;'>"
+			var customPopup= "<span style='float:left;width: 50%;'>"
 								+"<img src="+  block_parcel  + " style='width: 100%; max-height: 80%;' />"
 								+"<p>"+feature.properties.st_num+" "+feature.properties.st_name+"</p>"
 							+"</span>" 
 							+"<div style='float:right;width: 50%;display:inline-flex;padding-top:10px;'>"
 								+"<div style='margin-left:15px;margin-right:10px;width:20px;'>"
-									+"<div class='circle' style='background-color:#f00;'></div>"
-									+"<div class='circle' style='background-color:#ff7f00;'></div>"
-									+"<div class='circle' style='background-color:#ff0;'></div>"
-									+"<div class='circle' style='background-color:#0f0;'></div>"
-									+"<div class='circle' style='background-color:#0ff;'></div>"
-									+"<div class='circle' style='background-color:#8b00ff;'></div>"
-									+"<div class='circle' style='background-color:black;'></div>"
+									+circles
 								+"</div>"
 								+"<div style='width:calc(100% - 45px);line-height:16px;'"
 									+popupContent
 								+"</div>"
 							+"</div>" ;
-		    // }
 
 			var customOptions =
 			{
-				'maxWidth': 'auto'
+				'maxWidth': 'auto',
+				'className': 'map-pop-up'
 			}
 		
 			layer.on({
@@ -814,7 +844,10 @@ $.when(load_data(), get_image_paths()).done(function() {
 		    });
 
 			layer.bindPopup(customPopup,customOptions);
+
 			
+			// jQuery(".map-pop-up .leaflet-popup-content-wrapper").height(num_items * 14);
+
 		}
 	
 		map.addLayer(poly);
@@ -824,7 +857,7 @@ $.when(load_data(), get_image_paths()).done(function() {
 		// 	alert('For administrator only');
 		// 	window.open('../phppgadmin/index.php');
 		// }).addTo(map);
-	});
+});
 				
 </script>
 </head>
