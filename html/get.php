@@ -57,14 +57,14 @@ if ($action=="search") {
 	// 		LEFT JOIN humanface.event_types d ON c.type=d.id
 	// 		ORDER BY c.date DESC;";
 	
-	$sql = "SELECT DISTINCT on (p.parcel_no, p.block_no, t.type, e.date) 
-				a.st_num,a.st_name,p.parcel_no,p.block_no,e.date,e.response,t.type
+	$sql = "SELECT DISTINCT on (p.parcel_no, p.block_no, t.type, e.date, t.id) 
+				a.st_num,a.st_name,p.parcel_no,p.block_no,e.date,e.response,t.type,t.id
 	 		FROM humanface.events e
 	 		LEFT JOIN humanface.addresses a on a.parcel_id=e.parcel_id
 	 		LEFT JOIN humanface.parcels p on  e.parcel_id=p.parcel_id
 	 		LEFT JOIN humanface.event_types t ON e.type=t.id
 	 		WHERE e.date IS NOT NULL and e.type IS NOT NULL
-	 		ORDER BY e.date ASC;";
+	 		ORDER BY e.date ASC, t.id ASC;";
 
 } else {
 	die("Error: action=invalid");

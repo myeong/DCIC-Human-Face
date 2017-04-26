@@ -187,7 +187,7 @@ body{
     color: #333;
     box-shadow: 0 3px 14px rgba(0,0,0,0.4);
     min-height: 355px;
-    width: 600px;
+    width: 640px;
 }
 .leaflet-popup-content {
 /*	width: calc(100% - 30px);
