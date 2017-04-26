@@ -179,8 +179,13 @@ body{
 	height:340px;
 /*	padding-top: 198px;
 	padding-left: 1px;*/
-
 }
+
+.date-list{
+	color:purple;
+	font-weight: 500;
+}
+
 /* Leaflet */
 .leaflet-popup-content-wrapper, .leaflet-popup-tip {
     background: white;

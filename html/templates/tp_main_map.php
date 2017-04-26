@@ -499,7 +499,7 @@ $.when(load_data(), get_image_paths()).done(function() {
 			.attr('x', legendRectSize + legendSpacing)              
 			.attr('y', legendRectSize - legendSpacing)
 			.style('fill', 'white')							
-			.text(function(d,i) { return d+":"+ percentage[i]+"%"; });                       	
+			.text(function(d,i) { return d+": "+ percentage[i]+"%"; });                       	
 
 
 		//poly color
@@ -661,27 +661,27 @@ $.when(load_data(), get_image_paths()).done(function() {
 			    	switch(key) {
 					    case "Transfer":
 					        type = "Transfer of Deed";
-					        circle = "<div class='circle' style='background-color:#f00;'></div>";
+					        circle = "<div class='circle' style='background-color:#8b00ff;'></div>";
 					        break;
 					    case "Offer":
 					        type = "Offer Made";
-					        circle = "<div class='circle' style='background-color:#ff7f00;'></div>";
+					        circle = "<div class='circle' style='background-color:#f00;'></div>";
 					        break;
 					    case "Appraisal":
 					    	type = key;
-					        circle = "<div class='circle' style='background-color:#ff0;'></div>";
+					        circle = "<div class='circle' style='background-color:#ff7f00;'></div>";
 					        break;
 					    case "Decision":
 					        type = "Decision for the Offer (" + feature.properties.events[i].response + ")" ;
-					        circle = "<div class='circle' style='background-color:#0f0;'></div>";
+					        circle = "<div class='circle' style='background-color:#ff0;'></div>";
 					        break;
 					    case "Tenant":
 					        type = "Tenant Moved";
-					        circle = "<div class='circle' style='background-color:#0ff;'></div>";
+					        circle = "<div class='circle' style='background-color:#0f0;'></div>";
 					        break;
 					    case "Awarded":
 					    	type = key;
-					    	circle = "<div class='circle' style='background-color:#8b00ff;'></div>";
+					    	circle = "<div class='circle' style='background-color:#0ff;'></div>";
 					    	break;
 					    case "End":
 					        type = "End of Case";
@@ -691,7 +691,7 @@ $.when(load_data(), get_image_paths()).done(function() {
 					        continue;
 					}
 					
-		    		popupContent += type + ": " + feature.properties.events[i][key] + "</p>";
+		    		popupContent += type + ": <span class='date-list'>" + feature.properties.events[i][key] + "</span></p>";
 		    		circles += circle;
 		    		
 		    	}	    	
