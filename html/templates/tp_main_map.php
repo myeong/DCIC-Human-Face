@@ -79,63 +79,65 @@ $.when(load_data(), get_image_paths()).done(function() {
 	
 	//Color 
 	var hoverColor = {
-	    fillColor:"#00FF00"
+	    fillColor:"#ffffb3",
+	    color: "#FF69B4",
+	    weight: 4
 	};	
 			
 	var c1 = {
 		fillColor: "#0000FF",
 		color: "white",
 		weight: 1,
-		fillOpacity: 1
+		fillOpacity: 0.7
 	};	
 
 	var c2 = {
 		fillColor: "#f00",
 		color: "white",
 		weight: 1,
-		fillOpacity: 1
+		fillOpacity: 0.7
 	};	
 	
 	var c3 = {
 		fillColor: "#ff7f00",
 		color: "white",
 		weight: 1,
-		fillOpacity: 1
+		fillOpacity: 0.7
 	};	
 
 	var c4 = {
 		fillColor: "#ff0",
 		color: "white",
 		weight: 1,
-		fillOpacity: 1
+		fillOpacity: 0.7
 	};	
 
 	var c5 = {
 		fillColor: "#0f0",
 		color: "white",
 		weight: 1,
-		fillOpacity: 1
+		fillOpacity: 0.7
 	};	
 
 	var c6 = {
 		fillColor: "#0ff",
 		color: "white",
 		weight: 1,
-		fillOpacity: 1
+		fillOpacity: 0.7
 	};	
 	
 	var c7 = {
 		fillColor: "#8b00ff",
 		color: "white",
 		weight: 1,
-		fillOpacity: 1
+		fillOpacity: 0.7
 	};	
 	
 	var c8 = {
 		fillColor: "#000000",
 		color: "white",
 		weight: 1,
-		fillOpacity: 1
+		fillOpacity: 0.7
 	};	
 	
 	var highlight = {
@@ -298,7 +300,7 @@ $.when(load_data(), get_image_paths()).done(function() {
 			var type = String(data[i].type);
     		// type = type.replace(/\s+/g, '');
 
-    		// Only taking the first token for the array. (e.g., Transfer of Deed --> transfer)
+    		// Only taking the first token for the array. (e.g., Transfer of Deed --> Transfer)
     		type = type.split(" ")[0];
 		 
     		if (parseInt(data[i].block_no) == block_num && parseInt(data[i].parcel_no) == parcel_num){
@@ -310,23 +312,19 @@ $.when(load_data(), get_image_paths()).done(function() {
 					}
 					events.push(obj);    				
     			}
-    		}    		
+    		}
 
     	}
-    	// console.log(events);
-
     	if (events.length >0) feature.properties['events'] = events;
     };
 
-
-
-	var result_div = L.DomUtil.create('div','menu-result-container');
+	var result_div = L.DomUtil.create('div','menu-result-container');	
 	mapbuttons_div.appendChild(result_div);
+
 	var result_text = L.DomUtil.create('p', 'menu-search-text', result_div);
 	result_text.innerHTML = "Analysis & Results";
 
-	var result = L.DomUtil.create('div', 'menu-result', result_div);
-	
+	var result = L.DomUtil.create('div', 'menu-result', result_div);	
 	var pie = L.DomUtil.create('div', 'menu-pie');
 	mapbuttons_div.appendChild(pie);
 
@@ -339,14 +337,17 @@ $.when(load_data(), get_image_paths()).done(function() {
 	map.addLayer(asheville);
 	
 	// Year slider
-	var SLIDER_VALUE = String(1960);
+	var SLIDER_VALUE = String(1959);
 	
-	var slider = L.control.slider(function(value,feature) {
+	// console.log(db_data);
+	// When slider value is changed
+	var slider = L.control.slider(function(value,feature) {		
 		SLIDER_VALUE = String(value);
-		
-	   
+
 		// Pie chart
 		d3.select("#piie").remove();	
+
+		// Set the year following the slidebar value.
 		$(".menu-year-input").html(value);	
         
 		var cc1 = "#f00";
@@ -357,103 +358,90 @@ $.when(load_data(), get_image_paths()).done(function() {
 		var cc6 = "#8b00ff";
 		var cc7 = "#000000";
 		var cc8 = "#0000FF";
-		
-		//count number
-		//Transfer of Deed
-		var todnum=0; 
-		// Offer Made
-		var omnum=0;
-		// Appraisal
-		var apnum=0;
-		//Offer Accepted
-		var oanum=0;
-		//Tenant Moved
-		var tmnum=0;
-		// Awarded
-		var awnum=0;
-		//End of case
-		var ecnum=0;
-		//No data
-		var ndnum=0;
-		
-
+	
 		// seems like it's possible to calculate the number of layers by 
-		// looping though each layer rather than load the JSON file one more 
-		// time... need to see. If so, possible to shrink the code. Not urgent(Myeong)
-		
-		
-        d3.select("#piie").remove();
-		
-		var year=[];
-		var name=[];
-			
+		// looping though each layer rather than loading the JSON file one more 
+		// time... need to see. If so, possible to shrink the code. Not urgent(Myeong)	
 
-		for (var i = 0; i < db_data.length; i++) {
-			name[i]=String(db_data[i].type);
-			name[i]=name[i].replace(/\s+/g, '');
-			year[i]=d3.values(db_data[i].date[0])+d3.values(db_data[i].date[1])+d3.values(db_data[i].date[2])+d3.values(db_data[i].date[3]);
-		};
+		// d3.select("#piie").remove();
+		
+		var type_count = Array();
 
-		var obj=['TransferofDeed','OfferMade','Appraisal','OfferAccepted','TenantMoved','Awarded','EndofCase'];
+		type_count["no_data"] = 0;
+		type_count["offer"] = 0;
+		type_count["transfer"] = 0;
+		type_count["appraisal"] = 0;
+		type_count["decision"] = 0;
+		type_count["tenant"] = 0;
+		type_count["awarded"] = 0;
+		type_count["end"] = 0;
+
 		
 		for (var i = 0; i < db_data.length; i++) {
-		    if (value>=year[i]){
-				switch (name[i]){
-					case obj[0]:
-						todnum=todnum+1;
-					case obj[1]:
-						omnum=omnum+1;
-						// todnum = (todnum >= 1) ? todnum-1 : 0;							
-					case obj[2]:
-						apnum=apnum+1;
-						// omnum= (omnum >= 1) ? omnum-1 : 0;
-					case obj[3]:
-						oanum=oanum+1;
-						// apnum= (apnum >= 1) ? apnum-1 : 0;
-					case obj[4]:
-						tmnum=tmnum+1;
-						// oanum= (oanum >= 1) ? oanum-1 : 0;
-					case obj[5]:
-						awnum=awnum+1;
-						// tmnum= (tmnum >= 1) ? tmnum-1 : 0;
-					case obj[6]:
-						ecnum=ecnum+1;
-						// awnum= (awnum >= 1) ? awnum-1 : 0;
+			name=String(db_data[i].type);
+			name=name.split(" ")[0];
+			year= db_data[i].date.split("-")[0];
+
+			if (value >= year){
+				switch (name){
+					case "Transfer":
+						type_count["transfer"] += 1;						
+						break;
+					case "Offer":
+						type_count["offer"] += 1;						
+						break;
+					case "Appraisal":
+						type_count["appraisal"] += 1;						
+						break;
+					case "Tenant":
+						type_count["tenant"] += 1;						
+						break;
+					case "Awarded":
+						type_count["awarded"] += 1;						
+						break;
+					case "End":
+						type_count["end"] += 1;						
+						break;
+					case "Decision":
+						type_count["decision"] += 1;
+						break;
 				}
 			}
-		};
-		
 
-		var dataset=[];
-		ndnum=936-(todnum+omnum+apnum+oanum+tmnum+awnum+ecnum);
-		dataset = [
-			{ label: 'Transfer of Deed', count: todnum },
-			{ label: 'Offer Made', count: omnum }, 
-			{ label: 'Appraisal', count: apnum }, 
-			{ label: 'Offer Accepted', count: oanum },
-			{ label: 'Tenant Moved', count: tmnum },
-			{ label: 'Awarded', count: awnum },
-			{ label: 'End of Case', count: ecnum },
-			{ label: 'No data', count: ndnum }
+		}		
 
+		var total = 936;
+		type_count["no_data"] = 936 - (type_count["transfer"] + type_count["offer"]
+									+ type_count["appraisal"] + type_count["tenant"]
+									+ type_count["awarded"] + type_count["end"]
+									+ type_count["decision"]);
+
+		var dataset = [			
+			{ label: 'Offer Made', count: type_count["offer"] }, 
+			{ label: 'Appraisal', count: type_count["appraisal"] }, 
+			{ label: 'Decision for Offer', count: type_count["decision"] },
+			{ label: 'Tenant Moved', count: type_count["tenant"] },
+			{ label: 'Awarded', count: type_count["awarded"] },
+			{ label: 'Transfer of Deed', count: type_count["transfer"] },
+			{ label: 'End of Case', count: type_count["end"] },
+			{ label: 'No data', count: type_count["no_data"] }
 		];
-		
-		
-		// Percentage calculation
-		var total=936;
-		var ptodnum=Math.floor((todnum / total) * 100);
-		var pomnum=Math.floor((omnum / total) * 100);
-		var papnum=Math.floor((apnum / total) * 100);
-		var poanum=Math.floor((oanum / total) * 100);
-		var ptmnum=Math.floor((tmnum / total) * 100);
-		var pawnum=Math.floor((awnum / total) * 100);
-		var pecnum=Math.floor((ecnum / total) * 100);
-		var pndnum=Math.floor((ndnum / total) * 100);
-		
 
-		// Percentage array
-		var percentage=[ptodnum,pomnum,papnum,poanum,ptmnum,pawnum,pecnum,pndnum];
-		
+		for (var key in type_count){
+			type_count[key] = Math.floor((type_count[key] / total) * 100);
+		}		
+
+		var percentage = [
+			type_count["offer"], 
+			type_count["appraisal"],
+			type_count["decision"],
+			type_count["tenant"],
+			type_count["awarded"],
+			type_count["transfer"],
+			type_count["end"],
+			type_count["no_data"]
+		]
+
 		var width = 340;
 		var height = 340;
 		var radius = Math.min(width, height) / 2;
@@ -492,8 +480,7 @@ $.when(load_data(), get_image_paths()).done(function() {
 			.enter()                                                
 			.append('g')                                            
 			.attr('class', 'legend')                              
-			.attr('transform', function(d, i) {                     
-	
+			.attr('transform', function(d, i) {    	
 				var height = legendRectSize + legendSpacing;         
 				var offset =  height * color.domain().length / 2;     
 				var horz = -3.5 * legendRectSize;                      
@@ -513,350 +500,264 @@ $.when(load_data(), get_image_paths()).done(function() {
 			.attr('y', legendRectSize - legendSpacing)
 			.style('fill', 'white')							
 			.text(function(d,i) { return d+":"+ percentage[i]+"%"; });                       	
-	
-
-		
-		$(".menu-result").hide();
-		$(".menu-pie").show();
-	
 
 
 		//poly color
 		poly.eachLayer(function(layer) {
 			SLIDER_VALUE=parseInt(SLIDER_VALUE);
 
-			var properties = layer.feature.properties;	
-			
-				//TransferofDeed
-			var tod = [properties.TransferofDeed];
-			tod= tod.filter(function(e) { return e !== 'No data' });
-			tod=parseInt(tod);
-			var todmax = Math.max(tod);
-			if(isNaN(todmax)){
-				todmax=20000;
-			}
-			
-			//Offer Made
-			var om=[properties.OfferMade];
-			om= om.filter(function(e) { return e !== 'No data' });
-			om=parseInt(om);
-			var ommax = Math.max(om);
-			if(isNaN(ommax)){
-				ommax=20000;
-			}
-			
-			//Appraisal
-			var ap=[properties.Appraisal];
-			ap= ap.filter(function(e) { return e !== 'No data' });
-			ap=parseInt(ap);
-			var apmax = Math.max(ap);
-			if(isNaN(apmax)){
-				apmax=20000;
-			}
-			
-			//OfferAccepted
-			var oa=[properties.OfferAccepted];
-			oa= oa.filter(function(e) { return e !== 'No data' });
-			oa=parseInt(oa);
-			var oamax = Math.max(oa);
-			if(isNaN(oamax)){
-				oamax=20000;
-			}
-			
-			//TenantMoved
-			var tm=[properties.TenantMoved];
-			tm= tm.filter(function(e) { return e !== 'No data' });
-			tm=parseInt(tm);
-			var tmmax = Math.max(tm);
-			if(isNaN(tmmax)){
-				tmmax=20000;
-			}
-			
-			//Awarded
-			var aw=[properties.Awarded];
-			aw= aw.filter(function(e) { return e !== 'No data' });
-			aw=parseInt(aw);
-			var awmax = Math.max(aw);
-			if(isNaN(awmax)){
-				awmax=20000;
-			}
-			
-			//EndofCase
-			var ec=[properties.EndofCase];
-			ec= ec.filter(function(e) { return e !== 'No data' });
-			ec=parseInt(ec);
-			
-			var ecmax = Math.max(ec);
-			if(isNaN(ecmax)){
-				ecmax=20000;
-			};
+			var properties = layer.feature.properties;				
 
-
-			if (SLIDER_VALUE == 1960){
+			if (properties.events == "No data"){
 				layer.setStyle(c1);
 			} 
 			else {
-				if (SLIDER_VALUE >=todmax && SLIDER_VALUE <= ommax){
-					layer.setStyle(c2);
-				} 
-				if (SLIDER_VALUE >= ommax && SLIDER_VALUE <= apmax){
-					layer.setStyle(c3);
-				}
-				if (SLIDER_VALUE >= apmax && SLIDER_VALUE <= oamax){
-					layer.setStyle(c4);
-				}			
-				if (SLIDER_VALUE >= oamax && SLIDER_VALUE <= tmmax){
-					layer.setStyle(c5);
-				}					
-				if (SLIDER_VALUE >= tmmax && SLIDER_VALUE <= awmax){
-					layer.setStyle(c6);
-				}
-				if (SLIDER_VALUE >= awmax && SLIDER_VALUE <= ecmax){
-					layer.setStyle(c7);
-				}					
-		        if (SLIDER_VALUE >= ecmax) {
-		        	layer.setStyle(c8);
-		        } 
-		    }
-						
-		});
-		}, {
-			max: 1978,
-			min: 1960,
-			value: 1960,
-			step:1,
-			size: '250px',
-			orientation:'vertical',
-			id: 'slider',
-			collapsed: false,
-			position: "topleft",
-			syncSlider: true,
-			increment: true
-		}).addTo(map); 
+				var key = "";
+				var year = 0;				
+				var found = false;
 
-		// Mouse track
-		function highlightDot(e){
-			var layer = e.target;
-			layer.setStyle(hoverColor);
-		}
-
-		function resetDotHighlight(e){
-			var layer = e.target;	
-			// this is the way to access propertis from "event"
-			var properties = layer.feature.properties;
-
-			//TransferofDeed
-			var tod = [properties.TransferofDeed];
-			tod=parseInt(tod);
-			var todmax = Math.max(tod);
-			if(isNaN(todmax)){
-				todmax=20000;
-			}
-			
-			//Offer Made
-			var om=[properties.OfferMade];
-			om=parseInt(om);
-			var ommax = Math.max(om);
-			if(isNaN(ommax)){
-				ommax=20000;
-			}
-			
-			//Appraisal
-			var ap=[properties.Appraisal];
-			ap=parseInt(ap);
-			var apmax = Math.max(ap);
-			if(isNaN(apmax)){
-				apmax=20000;
-			}
-			
-			//OfferAccepted
-			var oa=[properties.OfferAccepted];
-			oa=parseInt(oa);
-			var oamax = Math.max(oa);
-			if(isNaN(oamax)){
-				oamax=20000;
-			}
-			
-			//TenantMoved
-			var tm=[properties.TenantMoved];
-			tm=parseInt(tm);
-			var tmmax = Math.max(tm);
-			if(isNaN(tmmax)){
-				tmmax=20000;
-			}
-			
-			//Awarded
-			var aw=[properties.Awarded];
-			aw=parseInt(aw);
-			var awmax = Math.max(aw);
-			if(isNaN(awmax)){
-				awmax=20000;
-			}
-			
-			//EndofCase
-			var ec=[properties.EndofCase];
-			ec=parseInt(ec);
-			var ecmax = Math.max(ec);
-			if(isNaN(ecmax)){
-				ecmax=20000;
-			};
-
-			if (SLIDER_VALUE == 1960){
-				layer.setStyle(c1);
-			} 
-			else if (SLIDER_VALUE >=todmax && SLIDER_VALUE <= ommax){
-				layer.setStyle(c2);
-			} 
-			else if (SLIDER_VALUE >= ommax && SLIDER_VALUE <= apmax){
-				layer.setStyle(c3);
-			}
-			else if (SLIDER_VALUE >= apmax && SLIDER_VALUE <= oamax){
-				layer.setStyle(c4);
-			}			
-			else if (SLIDER_VALUE >= oamax && SLIDER_VALUE <= tmmax){
-				layer.setStyle(c5);
-			}					
-			else if (SLIDER_VALUE >= tmmax && SLIDER_VALUE <= awmax){
-				layer.setStyle(c6);
-			}
-			else if (SLIDER_VALUE >= awmax && SLIDER_VALUE <= ecmax){
-				layer.setStyle(c7);
-			}					
-	        else if (SLIDER_VALUE >= ecmax) {
-	        	layer.setStyle(c8);
-	        } 
-	        else {
-	        	layer.setStyle(c1);
-	        }
-		    
-	    
-		}
-		
-		// When a polygon is clicked
-		function onEachFeature(feature, layer) {
-	
-			
-		    if (db_data){
-		    	parsePoly(feature, db_data);		    	
-		    }
-			
-		    var popupContent = "";
-		    var circles = "";
-		    
-		    
-		    if (feature.properties.events == "No data"){
-		    	popupContent = "<p>No Data</p>";
-		    } else {		    	
-			    for (var i=0; i<feature.properties.events.length; i++){		    	
-			    	popupContent += "<p>";
-
-			    	for (var key in feature.properties.events[i]){
-			    		var type = "";
-			    		var circle = "";
-
-				    	switch(key) {
-						    case "Transfer":
-						        type = "Transfer of Deed";
-						        circle = "<div class='circle' style='background-color:#f00;'></div>";
-						        break;
-						    case "Offer":
-						        type = "Offer Made";
-						        circle = "<div class='circle' style='background-color:#ff7f00;'></div>";
-						        break;
-						    case "Appraisal":
-						    	type = key;
-						        circle = "<div class='circle' style='background-color:#ff0;'></div>";
-						        break;
-						    case "Decision":
-						        type = "Decision for the Offer (" + feature.properties.events[i].response + ")" ;
-						        circle = "<div class='circle' style='background-color:#0f0;'></div>";
-						        break;
-						    case "Tenant":
-						        type = "Tenant Moved";
-						        circle = "<div class='circle' style='background-color:#0ff;'></div>";
-						        break;
-						    case "Awarded":
-						    	type = key;
-						    	circle = "<div class='circle' style='background-color:#8b00ff;'></div>";
-						    	break;
-						    case "End":
-						        type = "End of Case";
-						        circle = "<div class='circle' style='background-color:black;'></div>";
-						        break;						    
-						    default:
-						        continue;
+				for (var i=0; i<properties.events.length; i++) {
+					for (var k in properties.events[i]){
+						year = parseInt(properties.events[i][k].split("-")[0]);
+						if (SLIDER_VALUE >= year){
+							key = k;
+							found=true;
+							break;
 						}
-						
-			    		popupContent += type + ": " + feature.properties.events[i][key] + "</p>";
-			    		circles += circle;
-			    		
-			    	}	    	
-			    	
-			    }
+					}			
+				}
+				if (!found){
+					layer.setStyle(c1);
+				}
+
+				switch (key){
+					case "Transfer":
+						layer.setStyle(c7);						
+						break;
+					case "Offer":
+						layer.setStyle(c2);
+						break;
+					case "Appraisal":
+						layer.setStyle(c3);
+						break;
+					case "Decision":
+						layer.setStyle(c4);
+						break;
+					case "Tenant":
+						layer.setStyle(c5);
+						break;
+					case "Awarded":
+						layer.setStyle(c6);
+						break;
+					case "End":
+						layer.setStyle(c8);
+						break;
+					// default:
+					// 	layer.setStyle(c1);
+					
+				}
+
+			}	
+		});	
+
+	}, {
+		max: 1978,
+		min: 1959,
+		value: 1959,
+		step:1,
+		size: '250px',
+		orientation:'vertical',
+		id: 'slider',
+		collapsed: false,
+		position: "topleft",
+		syncSlider: true,
+		increment: true
+	}).addTo(map); 
+
+	// Mouse track
+	function highlightDot(e){
+		var layer = e.target;
+		layer.setStyle(hoverColor);
+	}
+
+	function resetDotHighlight(e){
+		var layer = e.target;
+		var properties = layer.feature.properties;
+
+		if (properties.events == "No data"){
+				layer.setStyle(c1);
+		} 
+		else {
+			var key = "";
+			var year = 0;				
+			var found = false;
+
+			for (var i=0; i<properties.events.length; i++) {
+				for (var k in properties.events[i]){
+					year = parseInt(properties.events[i][k].split("-")[0]);
+					if (SLIDER_VALUE >= year){
+						key = k;
+						found=true;
+						break;
+					}
+				}			
+			}
+			if (!found){
+				layer.setStyle(c1);
 			}
 
-			// console.log(popupContent);		    
-
-			var noData="<p>Sorry, No data</p>";
-			
-			var zero=String('No data');
-
-			//var  pic_url='images/test.jpg';
-			
-			//Popup info			
-			var block_parcel = "B" + feature.properties.block + "_P" + feature.properties.parcel;
-			var images = Array();
-			
-			for (var i = 0; i < image_path.length; i++){
-				if (image_path[i].indexOf(block_parcel) !== -1){
-					images.push(image_path[i]);
-				}	
+			switch (key){
+				case "Transfer":
+					layer.setStyle(c7);						
+					break;
+				case "Offer":
+					layer.setStyle(c2);
+					break;
+				case "Appraisal":
+					layer.setStyle(c3);
+					break;
+				case "Decision":
+					layer.setStyle(c4);
+					break;
+				case "Tenant":
+					layer.setStyle(c5);
+					break;
+				case "Awarded":
+					layer.setStyle(c6);
+					break;
+				case "End":
+					layer.setStyle(c8);
+					break;
+				// default:
+				// 	layer.setStyle(c1);
+				
 			}
-			
-			if(images.length >0) {
-				block_parcel = "images/properties/" + images[0];
-			} else {
-				block_parcel = "images/default_image.jpg"; 
-			}
-			
-			var customPopup= "<span style='float:left;width: 50%;'>"
-								+"<img src="+  block_parcel  + " style='width: 100%; max-height: 80%;' />"
-								+"<p>"+feature.properties.st_num+" "+feature.properties.st_name+"</p>"
-							+"</span>" 
-							+"<div style='float:right;width: 50%;display:inline-flex;padding-top:10px;'>"
-								+"<div style='margin-left:15px;margin-right:10px;width:20px;'>"
-									+circles
-								+"</div>"
-								+"<div style='width:calc(100% - 45px);line-height:16px;'"
-									+popupContent
-								+"</div>"
-							+"</div>" ;
-
-			var customOptions =
-			{
-				'maxWidth': 'auto',
-				'className': 'map-pop-up'
-			}
-		
-			layer.on({
-		        mouseover: highlightDot,
-		        mouseout: resetDotHighlight
-		    });
-
-			layer.bindPopup(customPopup,customOptions);
-
-			
-			// jQuery(".map-pop-up .leaflet-popup-content-wrapper").height(num_items * 14);
 
 		}
+    
+	}
 	
-		map.addLayer(poly);
+	// When a polygon is clicked
+	function onEachFeature(feature, layer) {
+
+	    if (db_data){
+	    	parsePoly(feature, db_data);		    	
+	    }
 		
-		//database manage button
-		// L.easyButton( '<strong>M</strong>', function(){
-		// 	alert('For administrator only');
-		// 	window.open('../phppgadmin/index.php');
-		// }).addTo(map);
+	    var popupContent = "";
+	    var circles = "";
+	    
+	    
+	    if (feature.properties.events == "No data"){
+	    	popupContent = "<p>No Data</p>";
+	    } else {		    	
+		    for (var i=0; i<feature.properties.events.length; i++){		    	
+		    	popupContent += "<p>";
+
+		    	for (var key in feature.properties.events[i]){
+		    		var type = "";
+		    		var circle = "";
+
+			    	switch(key) {
+					    case "Transfer":
+					        type = "Transfer of Deed";
+					        circle = "<div class='circle' style='background-color:#f00;'></div>";
+					        break;
+					    case "Offer":
+					        type = "Offer Made";
+					        circle = "<div class='circle' style='background-color:#ff7f00;'></div>";
+					        break;
+					    case "Appraisal":
+					    	type = key;
+					        circle = "<div class='circle' style='background-color:#ff0;'></div>";
+					        break;
+					    case "Decision":
+					        type = "Decision for the Offer (" + feature.properties.events[i].response + ")" ;
+					        circle = "<div class='circle' style='background-color:#0f0;'></div>";
+					        break;
+					    case "Tenant":
+					        type = "Tenant Moved";
+					        circle = "<div class='circle' style='background-color:#0ff;'></div>";
+					        break;
+					    case "Awarded":
+					    	type = key;
+					    	circle = "<div class='circle' style='background-color:#8b00ff;'></div>";
+					    	break;
+					    case "End":
+					        type = "End of Case";
+					        circle = "<div class='circle' style='background-color:black;'></div>";
+					        break;						    
+					    default:
+					        continue;
+					}
+					
+		    		popupContent += type + ": " + feature.properties.events[i][key] + "</p>";
+		    		circles += circle;
+		    		
+		    	}	    	
+		    	
+		    }
+		}
+
+		// console.log(popupContent);		    
+
+		var noData="<p>Sorry, No data</p>";
+		
+		var zero=String('No data');
+
+		//var  pic_url='images/test.jpg';
+		
+		//Popup info			
+		var block_parcel = "B" + feature.properties.block + "_P" + feature.properties.parcel;
+		var images = Array();
+		
+		for (var i = 0; i < image_path.length; i++){
+			if (image_path[i].indexOf(block_parcel) !== -1){
+				images.push(image_path[i]);
+			}	
+		}
+		
+		if(images.length >0) {
+			block_parcel = "images/properties/" + images[0];
+		} else {
+			block_parcel = "images/default_image.jpg"; 
+		}
+		
+		var customPopup= "<span style='float:left;width: 50%;'>"
+							+"<img src="+  block_parcel  + " style='width: 100%; max-height: 80%;' />"
+							+"<p>"+feature.properties.st_num+" "+feature.properties.st_name+"</p>"
+						+"</span>" 
+						+"<div style='float:right;width: 50%;display:inline-flex;padding-top:10px;'>"
+							+"<div style='margin-left:15px;margin-right:10px;width:20px;'>"
+								+circles
+							+"</div>"
+							+"<div style='width:calc(100% - 45px);line-height:16px;'"
+								+popupContent
+							+"</div>"
+						+"</div>" ;
+
+		var customOptions =
+		{
+			'maxWidth': 'auto',
+			'className': 'map-pop-up'
+		}
+	
+		layer.on({
+	        mouseover: highlightDot,
+	        mouseout: resetDotHighlight
+	    });
+
+		layer.bindPopup(customPopup,customOptions);
+
+	}
+	
+	map.addLayer(poly);
+		
+	//database manage button
+	// L.easyButton( '<strong>M</strong>', function(){
+	// 	alert('For administrator only');
+	// 	window.open('../phppgadmin/index.php');
+	// }).addTo(map);
 });
 				
 </script>
