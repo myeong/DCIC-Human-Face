@@ -93,7 +93,7 @@ textdomain($domain);
                     </div>
                     <div class="form-group col-md-3">
                         <label for="event_date-1">Event Date</label>
-                        <input type="date" class="form-control" name="event_date-1" min="1960-01-01" max="1980-01-01"/> 
+                        <input type="date" class="form-control" name="event_date-1" min="1910-01-01" max="1980-01-01"/> 
                     </div> 
                     <div class="form-group col-md-3">
                         <label for="event_money-1">Amount of Money Involved</label>
