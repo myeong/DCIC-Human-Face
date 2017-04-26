@@ -521,40 +521,40 @@ $.when(load_data(), get_image_paths()).done(function() {
 						year = parseInt(properties.events[i][k].split("-")[0]);
 						if (SLIDER_VALUE >= year){
 							key = k;
-							found=true;
+							found=true;	
 							break;
 						}
-					}			
+					}					
 				}
 				if (!found){
 					layer.setStyle(c1);
-				}
-
-				switch (key){
-					case "Transfer":
-						layer.setStyle(c7);						
-						break;
-					case "Offer":
-						layer.setStyle(c2);
-						break;
-					case "Appraisal":
-						layer.setStyle(c3);
-						break;
-					case "Decision":
-						layer.setStyle(c4);
-						break;
-					case "Tenant":
-						layer.setStyle(c5);
-						break;
-					case "Awarded":
-						layer.setStyle(c6);
-						break;
-					case "End":
-						layer.setStyle(c8);
-						break;
-					// default:
-					// 	layer.setStyle(c1);
-					
+				} else {
+					switch (key){
+						case "Transfer":
+							layer.setStyle(c7);						
+							break;
+						case "Offer":
+							layer.setStyle(c2);
+							break;
+						case "Appraisal":
+							layer.setStyle(c3);
+							break;
+						case "Decision":
+							layer.setStyle(c4);
+							break;
+						case "Tenant":
+							layer.setStyle(c5);
+							break;
+						case "Awarded":
+							layer.setStyle(c6);
+							break;
+						case "End":
+							layer.setStyle(c8);
+							break;
+						// default:
+						// 	layer.setStyle(c1);
+						
+					}
 				}
 
 			}	
@@ -597,40 +597,40 @@ $.when(load_data(), get_image_paths()).done(function() {
 					year = parseInt(properties.events[i][k].split("-")[0]);
 					if (SLIDER_VALUE >= year){
 						key = k;
-						found=true;
+						found=true;						
 						break;
 					}
-				}			
+				}				
 			}
 			if (!found){
 				layer.setStyle(c1);
-			}
-
-			switch (key){
-				case "Transfer":
-					layer.setStyle(c7);						
-					break;
-				case "Offer":
-					layer.setStyle(c2);
-					break;
-				case "Appraisal":
-					layer.setStyle(c3);
-					break;
-				case "Decision":
-					layer.setStyle(c4);
-					break;
-				case "Tenant":
-					layer.setStyle(c5);
-					break;
-				case "Awarded":
-					layer.setStyle(c6);
-					break;
-				case "End":
-					layer.setStyle(c8);
-					break;
-				// default:
-				// 	layer.setStyle(c1);
-				
+			} else {
+				switch (key){
+					case "Transfer":
+						layer.setStyle(c7);						
+						break;
+					case "Offer":
+						layer.setStyle(c2);
+						break;
+					case "Appraisal":
+						layer.setStyle(c3);
+						break;
+					case "Decision":
+						layer.setStyle(c4);
+						break;
+					case "Tenant":
+						layer.setStyle(c5);
+						break;
+					case "Awarded":
+						layer.setStyle(c6);
+						break;
+					case "End":
+						layer.setStyle(c8);
+						break;
+					// default:
+					// 	layer.setStyle(c1);
+					
+				}
 			}
 
 		}
