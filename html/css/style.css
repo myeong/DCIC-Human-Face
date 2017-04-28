@@ -191,7 +191,7 @@ body{
     background: white;
     color: #333;
     box-shadow: 0 3px 14px rgba(0,0,0,0.4);
-    min-height: 355px;
+    min-height: 488px;
     width: 640px;
 }
 .leaflet-popup-content {
@@ -230,6 +230,40 @@ body{
 	margin-left: -1px;
 }
 .circle:first-child:before {display: none;}
+
+.thumb-images img {
+	max-height: 40px;	
+	border: 1px solid mediumpurple;	
+	cursor: pointer;
+}
+div.thumb-images{
+	float: left;
+	margin-top:10px;
+	margin-bottom: 5px;
+}
+
+.popup-title p{
+	font-size: 20px;
+    color: rebeccapurple;
+    font-weight: 500;    
+}
+
+.popup-table{
+	height: 320px;
+}
+
+.img-cont {
+	float:left;
+	width: 50%;
+}
+
+.img-cont img{
+	/*max-height: 199px;*/
+	max-width: 280px;
+	border: 2px solid gray;	
+}
+
+
 /* Footer */
 
 #footer{

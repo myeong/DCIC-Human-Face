@@ -722,19 +722,39 @@ $.when(load_data(), get_image_paths()).done(function() {
 		} else {
 			block_parcel = "images/default_image.jpg"; 
 		}
+
+		var address = (feature.properties.st_num == null ? "" : feature.properties.st_num) + " "+
+					(feature.properties.st_name == null ? "" : feature.properties.st_name);
 		
-		var customPopup= "<span style='float:left;width: 50%;'>"
-							+"<img src="+  block_parcel  + " style='width: 100%; max-height: 80%;' />"
-							+"<p>"+feature.properties.st_num+" "+feature.properties.st_name+"</p>"
-						+"</span>" 
-						+"<div style='float:right;width: 50%;display:inline-flex;padding-top:10px;'>"
-							+"<div style='margin-left:15px;margin-right:10px;width:20px;'>"
-								+circles
-							+"</div>"
-							+"<div style='width:calc(100% - 45px);line-height:16px;'"
-								+popupContent
-							+"</div>"
-						+"</div>" ;
+		var container = $('<div />');
+
+		container.on('click', '.img-click', function() {				
+		    $(".img-cont").html("<img src='" + $(this)[0].currentSrc + "' />");
+		});
+
+		var customPopup= "<div class='popup-title'>" +"<p>"+address+"</p></div>"  
+						+"<div class='popup-table'>"
+							+"<div class='img-cont'>"
+								+"<img src='"+  block_parcel  + "' />"
+								
+							+"</div>" 
+							+"<div class='date-cont'style='float:right;width: 50%;display:inline-flex;padding-top:10px;height:250px;'>"
+								+"<div style='margin-left:15px;margin-right:10px;width:20px;'>"
+									+circles
+								+"</div>"
+								+"<div style='width:calc(100% - 45px);line-height:16px;'"
+									+popupContent
+								+"</div>"
+							+"</div>" 
+						+"</div>"
+						+"<div class='thumb-images'>";
+
+		for (var i = 0; i<images.length; i++){			
+			customPopup += "<img class='img-click' src='images/properties/" + images[i] + "'/>";
+		}
+		customPopup += "</div>";
+
+		container.html(customPopup);
 
 		var customOptions =
 		{
@@ -747,8 +767,7 @@ $.when(load_data(), get_image_paths()).done(function() {
 	        mouseout: resetDotHighlight
 	    });
 
-		layer.bindPopup(customPopup,customOptions);
-
+		layer.bindPopup(container[0],customOptions);		
 	}
 	
 	map.addLayer(poly);
