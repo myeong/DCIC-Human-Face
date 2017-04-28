@@ -192,7 +192,7 @@ body{
     color: #333;
     box-shadow: 0 3px 14px rgba(0,0,0,0.4);
     min-height: 488px;
-    width: 640px;
+    width: 770px;
 }
 .leaflet-popup-content {
 /*	width: calc(100% - 30px);
@@ -254,13 +254,28 @@ div.thumb-images{
 
 .img-cont {
 	float:left;
-	width: 50%;
+	/*width: 50%;*/
 }
 
 .img-cont img{
 	/*max-height: 199px;*/
 	max-width: 280px;
 	border: 2px solid gray;	
+}
+
+.people {
+	float: right;
+}
+
+.role {
+	font-weight: 600;
+    color: blue;
+    text-transform: capitalize;
+}
+
+.name {
+	padding-left: 10px;
+    font-size: 14px;
 }
 
 

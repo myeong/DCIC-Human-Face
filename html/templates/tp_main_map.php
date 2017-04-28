@@ -197,11 +197,11 @@ $.when(load_data(), get_image_paths()).done(function() {
 	var search_input_1 = L.DomUtil.create('input', 'menu-search-input', search_box);
 	search_input_1.id = 'input-1';
 	search_input_1.type = 'text';
-	search_input_1.placeholder = 'owner_name';
+	search_input_1.placeholder = 'Person Name';
 	var search_input_2 = L.DomUtil.create('input', 'menu-search-input', search_box);
 	search_input_2.id = 'input-2';
 	search_input_2.type = 'text';
-	search_input_2.placeholder = 'st_name';
+	search_input_2.placeholder = 'Street Name';
 	var search_btn = L.DomUtil.create('div', 'menu-search-btn', search_box);
 	search_btn.innerHTML = 'Search';
 	
@@ -249,10 +249,15 @@ $.when(load_data(), get_image_paths()).done(function() {
 	function parseResult(data) {
 		$(".menu-result").empty();
 		var frag = "";
-		for (var i = 0; i < data.length; i++) {
-			var index = i + 1;
+		var index = 0;
+		for (var i = 0; i < data.length; i++) {				
+			var snum = data[i].st_num.trim();
+			var sname = data[i].st_name.trim();
+
+			if (snum == "" && sname == "") continue;
+			index = index+1;
 			frag += "<div class=\"menu-result-row\" title=\"" + data[i].parcel_no + "," + data[i].block_no +"\">";
-			frag += index + ": " + data[i].st_num + " " + data[i].st_name;
+			frag += String(index) + ": " + snum + " " + sname;
 			frag += "</div>";
 		}
 		$(".menu-result").append(frag);
@@ -636,6 +641,41 @@ $.when(load_data(), get_image_paths()).done(function() {
 		}
     
 	}
+
+	function get_people_names(block, parcel) {
+	    return $.ajax({
+	        type:"GET",
+	        async:true,
+	        url:"get.php",
+	        dataType:'json',
+	        data: {
+            	action: 'owner',
+            	parcel: parcel,
+            	block: block
+            },
+	        error: function(err) {            	
+            }
+        }).done(function(data){   
+        	$("div.people").empty();  
+        	var names = "";
+        	var role = "";
+
+        	for (var i=0; i<data.length; i++){
+        		if (data[i].name==null || data[i].role==null) continue;
+        		if (data[i].name.trim()=="Redevelopment Commission of the City") continue;
+
+        		if (role != data[i].role){
+        			names += "<div class='role'>" +data[i].role+ "</div>";
+        			role = data[i].role;
+        		}
+
+        		names += "<div class='name'>" + data[i].name + "</div>";
+        	}        	
+        	$("div.people").html(names);
+        	$("div.people").show();
+        });
+	}
+
 	
 	// When a polygon is clicked
 	function onEachFeature(feature, layer) {
@@ -698,17 +738,27 @@ $.when(load_data(), get_image_paths()).done(function() {
 		    	
 		    }
 		}
-
-		// console.log(popupContent);		    
-
-		var noData="<p>Sorry, No data</p>";
 		
+
+		var parcel_num = feature.properties.parcel;
+    	var block_num = feature.properties.block;
+    	
+    	layer.on('click', function (e) {
+	      // e = event
+	       get_people_names (block_num, parcel_num);
+	      // You can make your ajax call declaration here
+	      //$.ajax(... 
+	    });
+
+   		get_people_names (block_num, parcel_num);
+
+
+
+		var noData="<p>Sorry, No data</p>";		
 		var zero=String('No data');
-
-		//var  pic_url='images/test.jpg';
-		
+				
 		//Popup info			
-		var block_parcel = "B" + feature.properties.block + "_P" + feature.properties.parcel;
+		var block_parcel = "B" + block_num + "_P" + parcel_num;
 		var images = Array();
 		
 		for (var i = 0; i < image_path.length; i++){
@@ -732,20 +782,21 @@ $.when(load_data(), get_image_paths()).done(function() {
 		    $(".img-cont").html("<img src='" + $(this)[0].currentSrc + "' />");
 		});
 
-		var customPopup= "<div class='popup-title'>" +"<p>"+address+"</p></div>"  
+		var customPopup= "<div class='popup-title'>" +"<p>"+address+"</p></div>"  						
 						+"<div class='popup-table'>"
 							+"<div class='img-cont'>"
 								+"<img src='"+  block_parcel  + "' />"
 								
 							+"</div>" 
-							+"<div class='date-cont'style='float:right;width: 50%;display:inline-flex;padding-top:10px;height:250px;'>"
+							+"<div class='date-cont'style='width: 40%;display:inline-flex;padding-top:10px;height:250px;'>"
 								+"<div style='margin-left:15px;margin-right:10px;width:20px;'>"
 									+circles
 								+"</div>"
-								+"<div style='width:calc(100% - 45px);line-height:16px;'"
+								+"<div style='width:100%;line-height:16px;'"
 									+popupContent
 								+"</div>"
-							+"</div>" 
+							+"</div>"
+							+"<div class='people' style='width:20%;'></div>" 
 						+"</div>"
 						+"<div class='thumb-images'>";
 
@@ -768,6 +819,7 @@ $.when(load_data(), get_image_paths()).done(function() {
 	    });
 
 		layer.bindPopup(container[0],customOptions);		
+
 	}
 	
 	map.addLayer(poly);
