@@ -271,6 +271,7 @@ div.thumb-images{
 	font-weight: 600;
     color: blue;
     text-transform: capitalize;
+    padding-top: 5px;
 }
 
 .name {
