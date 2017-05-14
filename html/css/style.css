@@ -232,7 +232,7 @@ body{
 .circle:first-child:before {display: none;}
 
 .thumb-images img {
-	max-height: 40px;	
+	max-height: 34px;	
 	border: 1px solid mediumpurple;	
 	cursor: pointer;
 }
