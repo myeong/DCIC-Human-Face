@@ -75,7 +75,7 @@ HTML;
 $app->get('', function () use ($app) {
     $app->redirect("/");
 });
-
+	
 $app->get('/map/', function () use ($app) {
 	
     $content['title'] = "Human Face of Big Data";

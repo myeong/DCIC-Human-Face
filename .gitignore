@@ -100,7 +100,7 @@ ENV/
 GIS/parcels
 GIS/Asheville_map/new_Asheville_map3.tif*
 
-html/images/properties/*.png
+html/images/properties/*
 html/credentials.inc.php
 
 !README.md

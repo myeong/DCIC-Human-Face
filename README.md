@@ -37,11 +37,23 @@ Slack is a team-based chattinng tool. We will use a Slack channel for quick comm
 
 ### Participants
 - Shiyun Chen (shiyunchen1993@gmail.com)
-- Alicia Galler (alicia.d.geller@gmail.com)
 - Rajesh Gnanasekaran (rgnanase@umd.edu) 
-- Hardik Jhaveri (hardikjhaveri93@gmail.com)
 - Edel Spencer (espence2@umd.edu)
 - David Yuheng Zhang (yzhang63@umd.edu)
-- Myeong Lee (Project Manager)
+- Simmi Pastakia (simmi.p106@gmail.com) 
+- Tanya Sehgal (tans1127@gmail.com) 
+- Alisha Gonsalves (alisha27@terpmail.umd.edu) 
+- Richard Bool (boolrichard@gmail.com) 
+- Riss Hardcastle (jadoreliser@gmail.com) 
+- Jhon Dela Cruz (jhonrommel_delacruz@yahoo.com)
+- Justin Hsieh (justhsiehh@gmail.com)
+- Hyeong-Gi Hong (hyeonghong90@gmail.com)
+- Lauren Schirle (lschirle@umd.edu) 
+- Shishiri Nganyone (snganyon@terpmail.umd.edu)
+- Myeong Lee (Project Lead, Ph.D. Student)
 - Dr. Richard Marciano (Director of DCIC)
 
+
+### Alumni
+- Alicia Galler (alicia.d.geller@gmail.com)
+- Hardik Jhaveri (hardikjhaveri93@gmail.com)
