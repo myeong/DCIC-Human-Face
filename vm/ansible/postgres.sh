@@ -99,3 +99,8 @@ date > "$PROVISIONED_ON"
 echo "Successfully created PostgreSQL dev virtual machine."
 echo ""
 print_db_usage
+
+psql -U $APP_DB_USER -h localhost $APP_DB_NAME < /var/www/db_dump/20170531.sql
+echo "$APP_DB_NAME was successfully imported to the PostgreSQL."
+
+service apache2 restart

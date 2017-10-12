@@ -14,9 +14,14 @@ This folder has a Vagrantfile and Ansible scripts that automatically install PHP
 # Quickstart
 
 1. Launch and configure the virtual machine by running the following command
-
+For Windows user,
 	```
-	cd vm/basic 	# Go to the folder where Vagrantfile and other configuration files are located.
+	cd vm/windows 	# Go to the folder where Vagrantfile and other configuration files are located.
+	vagrant up		# Run the Vagrantfile.
+	```
+For Mac user,
+	```
+	cd vm/mac 	# Go to the folder where Vagrantfile and other configuration files are located.
 	vagrant up		# Run the Vagrantfile.
 	```
 2. Open browser and go to location `http://192.168.33.12`
