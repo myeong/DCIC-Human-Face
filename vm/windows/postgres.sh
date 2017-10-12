@@ -39,6 +39,23 @@ print_db_usage () {
 
 export DEBIAN_FRONTEND=noninteractive
 
+apt-get -y install libselinux1
+apt-get -y install policykit-1
+apt-get -y install policycoreutils
+apt-get -y install gettext
+apt-get -y install apache2
+apt-get -y install php5
+apt-get -y install php5-mcrypt
+apt-get -y install php5-pgsql
+apt-get -y install php5-gd
+apt-get -y install php5-tidy
+apt-get -y install php-pear
+echo "Apache and PHP installed."
+
+service apache2 start
+sudo rm /var/www/html/index.html
+service apache2 restart
+
 PROVISIONED_ON=/etc/vm_provision_on_timestamp
 if [ -f "$PROVISIONED_ON" ]
 then
@@ -100,25 +117,8 @@ echo "Successfully created PostgreSQL dev virtual machine."
 echo ""
 print_db_usage
 
-apt-get -y install libselinux1
-apt-get -y install policykit-1
-apt-get -y install policycoreutils
-apt-get -y install gettext
-apt-get -y install apache2
-apt-get -y install php5
-apt-get -y install php5-mcrypt
-apt-get -y install php5-pgsql
-apt-get -y install php5-gd
-apt-get -y install php5-tidy
-apt-get -y install php-pear
-echo "Apache and PHP installed."
-
 psql -U $APP_DB_USER -h localhost $APP_DB_NAME < /var/www/db_dump/20170531.sql
 echo "$APP_DB_NAME was successfully imported to the PostgreSQL."
 
-service apache2 start
 
-sudo rm /var/www/html/index.html
-
-service apache2 restart
 
