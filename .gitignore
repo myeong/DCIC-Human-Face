@@ -4,6 +4,7 @@ __pycache__/
 *$py.class
 
 vm/basic/.vagrant
+vm/windows/.vagrant
 vm/.vagrant
 
 # C extensions
