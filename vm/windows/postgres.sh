@@ -99,3 +99,23 @@ date > "$PROVISIONED_ON"
 echo "Successfully created PostgreSQL dev virtual machine."
 echo ""
 print_db_usage
+
+apt-get install libselinux1
+apt-get install policykit-1
+apt-get install policycoreutils
+apt-get install gettext
+apt-get install apache2
+apt-get install php5
+apt-get install php5-mcrypt
+apt-get install php5-pgsql
+apt-get install php5-gd
+apt-get install php5-tidy
+apt-get install php-pear
+echo "Apache and PHP installed."
+
+psql -U $APP_DB_USER -h localhost $APP_DB_NAME < /var/www/db_dump/20170531.sql
+echo "$APP_DB_NAME was successfully imported to the PostgreSQL."
+
+service apache2 restart
+
+
