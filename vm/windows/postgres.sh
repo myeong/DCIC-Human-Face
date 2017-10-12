@@ -116,6 +116,9 @@ echo "Apache and PHP installed."
 psql -U $APP_DB_USER -h localhost $APP_DB_NAME < /var/www/db_dump/20170531.sql
 echo "$APP_DB_NAME was successfully imported to the PostgreSQL."
 
-service apache2 restart
+service apache2 start
 
+sudo rm /var/www/html/index.html
+
+service apache2 restart
 
