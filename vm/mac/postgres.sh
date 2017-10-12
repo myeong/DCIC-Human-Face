@@ -43,7 +43,6 @@ export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get -y upgrade
 
-# Installing important software
 apt-get -y install libselinux1
 apt-get -y install policykit-1
 apt-get -y install policycoreutils
@@ -81,7 +80,6 @@ then
   wget --quiet -O - https://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | apt-key add -
 fi
 
-
 apt-get -y install "postgresql-$PG_VERSION" "postgresql-contrib-$PG_VERSION"
 
 PG_CONF="/etc/postgresql/$PG_VERSION/main/postgresql.conf"
@@ -98,6 +96,7 @@ echo "host    all             all             all                     md5" >> "$
 echo "client_encoding = utf8" >> "$PG_CONF"
 
 # Restart so that all new config is loaded:
+service postgresql start
 service postgresql restart
 
 cat << EOF | su - postgres -c psql
@@ -119,9 +118,7 @@ echo "Successfully created PostgreSQL dev virtual machine."
 echo ""
 print_db_usage
 
+service postgresql restart
+
 psql -U $APP_DB_USER -h localhost $APP_DB_NAME < /var/www/db_dump/20170531.sql
 echo "$APP_DB_NAME was successfully imported to the PostgreSQL."
-
-
-
-

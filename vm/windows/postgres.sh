@@ -80,10 +80,6 @@ then
   wget --quiet -O - https://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | apt-key add -
 fi
 
-# Update package list and upgrade all packages
-apt-get update
-apt-get -y upgrade
-
 apt-get -y install "postgresql-$PG_VERSION" "postgresql-contrib-$PG_VERSION"
 
 PG_CONF="/etc/postgresql/$PG_VERSION/main/postgresql.conf"
@@ -100,6 +96,7 @@ echo "host    all             all             all                     md5" >> "$
 echo "client_encoding = utf8" >> "$PG_CONF"
 
 # Restart so that all new config is loaded:
+service postgresql start
 service postgresql restart
 
 cat << EOF | su - postgres -c psql
@@ -120,6 +117,8 @@ date > "$PROVISIONED_ON"
 echo "Successfully created PostgreSQL dev virtual machine."
 echo ""
 print_db_usage
+
+service postgresql restart
 
 psql -U $APP_DB_USER -h localhost $APP_DB_NAME < /var/www/db_dump/20170531.sql
 echo "$APP_DB_NAME was successfully imported to the PostgreSQL."
