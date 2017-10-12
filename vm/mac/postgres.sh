@@ -39,6 +39,10 @@ print_db_usage () {
 
 export DEBIAN_FRONTEND=noninteractive
 
+# Update package list and upgrade all packages
+apt-get update
+apt-get -y upgrade
+
 # Installing important software
 apt-get -y install libselinux1
 apt-get -y install policykit-1
@@ -77,9 +81,6 @@ then
   wget --quiet -O - https://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | apt-key add -
 fi
 
-# Update package list and upgrade all packages
-apt-get update
-apt-get -y upgrade
 
 apt-get -y install "postgresql-$PG_VERSION" "postgresql-contrib-$PG_VERSION"
 
