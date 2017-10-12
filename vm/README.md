@@ -6,9 +6,9 @@ Myeong Lee (myeong@umd.edu)
 This folder has a Vagrantfile and Ansible scripts that automatically install PHP, PostgreSQL, Git, Apache, and other needed packages on Ubuntu Trusty for developing a Human Face of Big Data platform. If you see any problems, contact Myeong Lee. 
 
 # Requirements
-	- Virtualbox (>= 5.1)
-	- Vagrant (>= 1.8)
-	- Ansible (>= 2.0)
+	- Virtualbox 5.1.6
+	- Vagrant 1.8.6
+	- Ansible 2.1.x (only for Mac or Linux. On Windows, you cannot run Ansible.)
 	- Python (2.x)
 
 # Quickstart
