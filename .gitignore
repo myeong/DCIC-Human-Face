@@ -6,6 +6,8 @@ __pycache__/
 vm/basic/.vagrant
 vm/windows/.vagrant
 vm/.vagrant
+vm/mac/.vagrant
+vm/ansible/.vagrant
 
 # C extensions
 *.so
