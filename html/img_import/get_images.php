@@ -1,7 +1,7 @@
 <?php
 
 ini_set('display_errors', 1);
-require 'credentials.inc.php';
+require '../credentials.inc.php';
 $conn = pg_connect('host=' . DBHOST . ' dbname=' .DBNAME . ' user=' .DBUSER . ' password=' . DBPASS);
 
 if (!$conn){
