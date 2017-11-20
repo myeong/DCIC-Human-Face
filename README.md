@@ -37,14 +37,12 @@ Slack is a team-based chattinng tool. We will use a Slack channel for quick comm
 
 ### Participants
 - Shiyun Chen (shiyunchen1993@gmail.com)
-- Rajesh Gnanasekaran (rgnanase@umd.edu) 
 - Edel Spencer (espence2@umd.edu)
 - David Yuheng Zhang (yzhang63@umd.edu)
 - Simmi Pastakia (simmi.p106@gmail.com) 
 - Tanya Sehgal (tans1127@gmail.com) 
 - Alisha Gonsalves (alisha27@terpmail.umd.edu) 
 - Richard Bool (boolrichard@gmail.com) 
-- Riss Hardcastle (jadoreliser@gmail.com) 
 - Jhon Dela Cruz (jhonrommel_delacruz@yahoo.com)
 - Justin Hsieh (justhsiehh@gmail.com)
 - Hyeong-Gi Hong (hyeonghong90@gmail.com)
@@ -57,3 +55,4 @@ Slack is a team-based chattinng tool. We will use a Slack channel for quick comm
 ### Alumni
 - Alicia Galler (alicia.d.geller@gmail.com)
 - Hardik Jhaveri (hardikjhaveri93@gmail.com)
+- Rajesh Gnanasekaran (rgnanase@umd.edu) 
