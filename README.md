@@ -47,6 +47,7 @@ Slack is a team-based chattinng tool. We will use a Slack channel for quick comm
 - Lauren Schirle (lschirle@umd.edu) 
 - Shishiri Nganyone (snganyon@terpmail.umd.edu)
 - Kiri Houpt (kiri.houpt@gmail.com)
+- Prasad Patwardhan (ppatwardhan829@gmail.com)
 - Christina Hall (hall.christina96@gmail.com)
 - Myeong Lee (Project Lead, Ph.D. Student)
 - Dr. Richard Marciano (Director of DCIC)
