@@ -107,3 +107,5 @@ html/images/properties/*.tar.gz
 html/credentials.inc.php
 
 !README.md
+
+python/data/transcription.csv
