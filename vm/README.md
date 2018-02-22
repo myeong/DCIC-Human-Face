@@ -19,11 +19,14 @@ For Windows user,
 	cd vm/windows 	# Go to the folder where Vagrantfile and other configuration files are located.
 	vagrant up		# Run the Vagrantfile.
 	```
+
 For Mac user,
+
 	```
 	cd vm/mac 	# Go to the folder where Vagrantfile and other configuration files are located.
 	vagrant up		# Run the Vagrantfile.
 	```
+	
 2. Open browser and go to location `http://192.168.33.12`
 
 If the URL does not work check `vm/basic/Vagrantfile` and check file Vagrant configuration.
