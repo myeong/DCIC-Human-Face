@@ -1,0 +1,43 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+
+  config.vm.define "human_face" do |human_face|
+
+    human_face.vm.boot_timeout = 600
+
+    human_face.vm.box = "box-cutter/ubuntu1404"
+    #human_face.vm.box_url = "https://a7240500425256e5d77a-9064bd741f55664f44e550bdad2949f9.ssl.cf5.rackcdn.com/govready-centos-6.5-x86_64-noX-apache+php-0.2.1-server-0.8.1.box"
+
+    #human_face.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
+    config.vm.hostname = "virtualbox"
+
+    # network config
+    human_face.vm.network :private_network, ip: "192.168.33.12"
+    human_face.vm.network :forwarded_port, guest: 80, host: 8081
+    human_face.vm.network :forwarded_port, id: 'ssh', guest: 22, host: 2322, auto_correct: false,  d: "ssh"
+
+    # Sync overall cloudstart directory on host machine with "/vagrant" directory on guest machine
+    human_face.vm.synced_folder "../../html", "/var/www/html", group: "www-data", owner: "www-data", create: true
+    human_face.vm.synced_folder "../../scripts", "/opt/scripts", group: "www-data", owner: "www-data", create: true
+    human_face.vm.synced_folder "../../db_dump", "/var/www/db_dump", group: "www-data", owner: "www-data", create: true
+    
+    # Launch virtualbox GUI window
+    human_face.vm.provider "virtualbox" do |v|
+      v.gui = false
+      v.memory = 1024
+    end
+  end
+
+  # Run our ansible modules
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "playbook.yml"
+    ansible.sudo = true
+  end
+
+  config.vm.provision :shell, :path => "postgres.sh" 
+end
