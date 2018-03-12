@@ -109,3 +109,4 @@ html/credentials.inc.php
 !README.md
 
 python/data/transcription.csv
+python/Output/*.csv
