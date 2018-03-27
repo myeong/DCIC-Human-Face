@@ -129,8 +129,6 @@ function load_data() {
 			// }
     	});
 
-    	console.log(img_path);
-
     	// get_image_paths(data);
     	getdata(data);
     });
@@ -187,7 +185,6 @@ function load_data() {
 //     	getimagedata(data);
 //     });
 // }
-
 
 $.when(load_data()).done(function() {
 
@@ -270,8 +267,6 @@ $.when(load_data()).done(function() {
 		style: c1,					
 		onEachFeature: onEachFeature,
 	});
-
-
 
 	// load a main layer
 	var baseMap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 
@@ -936,19 +931,9 @@ $.when(load_data()).done(function() {
 			for (var i = 0; i<img_path[block_num][parcel_num].length; i++){			
 			customPopup += "<img class='img-click' src='" + img_path[block_num][parcel_num][i] + "'/>";
 			}
-		}	
-
-		// if (img_path[value.block_no][value.parcel_no] != null){
-		// 		for (var i = 0; i<img_path[value.block_no][value.parcel_no].length; i++){			
-		// 			console.log(value.block_no + " " + value.parcel_no);
-		// 			console.log(img_path[value.block_no][value.parcel_no][i]);
-		// 			console.log();
-		// 		}
-		// 	}
-		
+		}		
 		customPopup += "</div>";
 		
-
 		container.html(customPopup);
 
 		var customOptions =
