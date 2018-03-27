@@ -57,10 +57,7 @@ apt-get -y install php-pear
 echo "Apache and PHP installed."
 
 service apache2 start
-if [ -f "/var/www/html/index.html" ]
-then 
-  sudo rm /var/www/html/index.html
-fi
+sudo rm /var/www/html/index.html
 service apache2 restart
 
 PROVISIONED_ON=/etc/vm_provision_on_timestamp

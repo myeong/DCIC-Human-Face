@@ -100,6 +100,7 @@ ENV/
 
 
 .DS_Store
+.vagrant
 GIS/parcels
 GIS/Asheville_map/new_Asheville_map3.tif*
 
@@ -107,3 +108,7 @@ html/images/properties/*.tar.gz
 html/credentials.inc.php
 
 !README.md
+
+python/data/transcription.csv
+python/Output/*.csv
+python/output/*.csv
