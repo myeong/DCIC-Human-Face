@@ -27,17 +27,15 @@
 <script>
 var geojson_path = "js/with_date.geojson";
 var db_data = null;
-var img_path = [];
-
+var image_path = null;
 
 function getdata(data){
 	db_data = data;
-	// console.log(db_data[0].image_path);
 }
 
-// function getimagedata(data){
-// 	image_path = data;
-// }
+function getimagedata(data){
+	image_path = data;
+}
    
 function load_data() {
     // NOTE:  This function must return the value 
@@ -55,144 +53,30 @@ function load_data() {
         }
     }).done(function(data){
     	// console.log(data);
-
-    	$.each(data, function(i, value){
-    		if (value.image_path != null){
-	    		if (!(value.block_no in img_path)){
-	    			img_path[value.block_no] = [];
-	    		}
-	    		if (!(value.parcel_no in img_path[value.block_no])){
-	    			img_path[value.block_no][value.parcel_no] = [];
-	    		}
-	    		if (img_path[value.block_no][value.parcel_no].indexOf(value.image_path) == -1 && 
-	    			(typeof(value.image_path) != "undefined")){
-	    			img_path[value.block_no][value.parcel_no].push(value.image_path);
-	    		}
-    		}
-
-    		// if (!(value.block_no in img_path)){
-    		// 	img_path[value.block_no] = [];
-    		// 	img_path[value.block_no][value.parcel_no] = [];
-    		// 	if (img_path[value.block_no][value.parcel_no].indexOf(value.image_path) == -1 && 
-    		// 		(value.image_path != null || typeof(value.image_path) != "undefined")){
-    		// 		img_path[value.block_no][value.parcel_no].push(value.image_path);
-    		// 	}
-    		// }
-    		// else if (!(value.parcel_no in img_path[value.block_no])){
-    		// 	img_path[value.block_no][value.parcel_no] = [];
-    		// 	if (img_path[value.block_no][value.parcel_no].indexOf(value.image_path) == -1 && 
-    		// 		(value.image_path != null || typeof(value.image_path) != "undefined")){
-    		// 		img_path[value.block_no][value.parcel_no].push(value.image_path);
-    		// 	}
-    		// }
-    		// else {
-    		// 	if (img_path[value.block_no][value.parcel_no].indexOf(value.image_path) == -1 && 
-    		// 		(value.image_path != null || typeof(value.image_path) != "undefined")){
-    		// 		img_path[value.block_no][value.parcel_no].push(value.image_path);
-    		// 	}
-    		// }
-			// // if (!(value.block_no in img_path) || !(value.parcel_no in img_path[value.block_no])) {
-			// if (!img_path[value.block_no] || !img_path[value.block_no][value.parcel_no]) {
-			// 	var parcel_array = []; 
-			// 	parcel_array[value.parcel_no] = [];
-			// 	if (parcel_array[value.parcel_no].indexOf(value.image_path) == -1 
-			// 		&& (value.image_path != null || typeof(value.image_path) != "undefined")){
-			// 		parcel_array[value.parcel_no].push(value.image_path);
-			// 		if ((value.block_no in img_path) && !(value.parcel_no in img_path[value.block_no])) {
-			// 		// if (img_path[value.block_no] && !img_path[value.block_no][value.parcel_no]) {
-			// 			img_path[value.block_no].push(parcel_array); 
-			// 		}
-			// 		// else if (!(value.block_no in img_path)) {
-			// 		else if (!img_path[value.block_no]) {
-			// 			img_path[value.block_no] = parcel_array; 
-			// 		} 
-			// 	}	
-			// } else {
-			// 	if (img_path[value.block_no][value.parcel_no].indexOf(value.image_path) == -1 
-			// 		&& (value.image_path != null || typeof(value.image_path) != "undefined")){
-			// 		img_path[value.block_no][value.parcel_no].push(value.image_path);
-			// 	}
-			// }
-			// if (img_path[value.block_no] != null) {
-			// 	console.log("Block: " + value.block_no);
-			// 	console.log(img_path[value.block_no].length);
-			// }
-			// if (img_path[value.block_no][value.parcel_no] != null){
-			// 	for (var i = 0; i<img_path[value.block_no][value.parcel_no].length; i++){			
-			// 		console.log(value.block_no + " " + value.parcel_no);
-			// 		console.log(img_path[value.block_no][value.parcel_no][i]);
-			// 		console.log();
-			// 	}
-			// }
-			// if (value.block_no == '55') {
-			// 	console.log(value.block_no+"_"+value.parcel_no);
-			// }
-    	});
-
-    	console.log(img_path);
-
-    	// get_image_paths(data);
     	getdata(data);
     });
 }
 
-
-// function get_image_paths(data) {
-// 	// This function will iterate the db_data once 
-// 	// and create hashmap based on parcel and block number.
-
-// 	return $.ajax({
-//         type:"GET",
-//         async:true,
-//         url:"get.php",
-//         dataType:'json',
-//         data: {
-//         	action: 'parcel'
-//         },
-//         error: function(err) {
-//         	console.log(err);        	
-//         }
-//     }).done(function(result) {
-//     	// img_path = new Array(result.length);
-
-//     	for (var i = 0; i < result.length; i++) {
-//     		img_path[parseInt(result[i].parcels)] = [];
-//     	}
-
-//     	for (var i = 0; i <data.length; i++) {
-//     		if (img_path[parseInt(data[i].parcel_no)][parseInt(data[i].block_no)] == undefined) {
-// 				img_path[parseInt(data[i].parcel_no)][parseInt(data[i].block_no)] = [];
-//     		}
-//     		if (img_path[parseInt(data[i].parcel_no)][parseInt(data[i].block_no)].indexOf(data[i].image_path) == -1) {
-//     			img_path[parseInt(data[i].parcel_no)][parseInt(data[i].block_no)].push(data[i].image_path);
-//     		}
-// 		}
-//     });
-// }
+function get_image_paths() {
+    // NOTE:  This function must return the value 
+    //        from calling the $.ajax() method.
+    return $.ajax({
+        type:"GET",
+        async:true,
+        url:"get_image_paths.php",
+        dataType:'json',        
+        error: function(err) {
+        	console.log(err);        	
+        }
+    }).done(function(data){
+    	// console.log(data);
+    	getimagedata(data);
+    });
+}
 
 
-// function get_image_paths() {
-//     // NOTE:  This function must return the value 
-//     //        from calling the $.ajax() method.
-//     return $.ajax({
-//         type:"GET",
-//         async:true,
-//         url:"get_image_paths.php",
-//         dataType:'json',        
-//         error: function(err) {
-//         	console.log(err);        	
-//         }
-//     }).done(function(data){
-//     	// console.log(data);
-//     	getimagedata(data);
-//     });
-// }
-
-
-$.when(load_data()).done(function() {
-
-// $.when(load_data(), get_image_paths()).done(function() {
-
+$.when(load_data(), get_image_paths()).done(function() {
+	
 	//Color 
 	var hoverColor = {
 	    fillColor:"#ffffb3",
@@ -270,8 +154,6 @@ $.when(load_data()).done(function() {
 		style: c1,					
 		onEachFeature: onEachFeature,
 	});
-
-
 
 	// load a main layer
 	var baseMap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 
@@ -358,6 +240,7 @@ $.when(load_data()).done(function() {
             	}
             }
         }).done(function(data){
+        	
         	parseResult(data);
         });
 	}
@@ -498,8 +381,7 @@ $.when(load_data()).done(function() {
 		type_count["awarded"] = 0;
 		type_count["end"] = 0;
 
-		// also, try not to use for loop here as well.
-
+		
 		for (var i = 0; i < db_data.length; i++) {
 			name=String(db_data[i].type);
 			name=name.split(" ")[0];
@@ -530,6 +412,7 @@ $.when(load_data()).done(function() {
 						break;
 				}
 			}
+
 		}		
 
 		var total = 936;
@@ -696,7 +579,6 @@ $.when(load_data()).done(function() {
 		increment: true
 	}).addTo(map); 
 
-
 	// Mouse track
 	function highlightDot(e){
 		var layer = e.target;
@@ -805,6 +687,7 @@ $.when(load_data()).done(function() {
 	    var popupContent = "";
 	    var circles = "";
 	    
+	    
 	    if (feature.properties.events == "No data"){
 	    	popupContent = "<p>No Data</p>";
 	    } else {		    	
@@ -856,9 +739,10 @@ $.when(load_data()).done(function() {
 		    }
 		}
 		
+
 		var parcel_num = feature.properties.parcel;
     	var block_num = feature.properties.block;
-
+    	
     	layer.on('click', function (e) {
 	      // e = event
 	       get_people_names (block_num, parcel_num);
@@ -869,40 +753,24 @@ $.when(load_data()).done(function() {
    		get_people_names (block_num, parcel_num);
 
 
+
 		var noData="<p>Sorry, No data</p>";		
 		var zero=String('No data');
-			
-
+				
 		//Popup info			
-		var block_parcel = null; //"B" + block_num + "_P" + parcel_num;
-		// var images = null;
-
-		// if (!(img_path[parcel_num][block_num])) {
-		// 	for (var i in img_path[parcel_num][block_num]) {
-		// 		if (img_path[parcel_num][block_num][i] != null)  {
-		// 			images.push(img_path[parcel_num][block_num][i]);
-		// 		}
-		// 	}
-		// }
-
-		// //test
-		// for (var i = 0; i < images.length; i++) {
-		// 	console.log(images[i]);
-		// }
-
-		// console.log(img_path[block_num][parcel_num]);
-		// if (!(img_path[block_num][parcel_num])){
-		// 	console.log(img_path[block_num][parcel_num]);
-		// }
-		// images = img_path[block_num][parcel_num];
-		// console.log(images);
-
+		var block_parcel = "B" + block_num + "_P" + parcel_num;
+		var images = Array();
 		
-		if( !(img_path[block_num]) || !(img_path[block_num][parcel_num]) 
-			|| img_path[block_num][parcel_num].length == 0) {
-			block_parcel = "images/default_image.jpg";		 		
+		for (var i = 0; i < image_path.length; i++){
+			if (image_path[i].indexOf(block_parcel) !== -1){
+				images.push(image_path[i]);
+			}	
+		}
+		
+		if(images.length >0) {
+			block_parcel = "images/properties/" + images[0];
 		} else {
-			block_parcel = img_path[block_num][parcel_num][0];
+			block_parcel = "images/default_image.jpg"; 
 		}
 
 		var address = (feature.properties.st_num == null ? "" : feature.properties.st_num) + " "+
@@ -932,22 +800,10 @@ $.when(load_data()).done(function() {
 						+"</div>"
 						+"<div class='thumb-images'>";
 
-		if (block_num in img_path && parcel_num in img_path[block_num]){
-			for (var i = 0; i<img_path[block_num][parcel_num].length; i++){			
-			customPopup += "<img class='img-click' src='" + img_path[block_num][parcel_num][i] + "'/>";
-			}
-		}	
-
-		// if (img_path[value.block_no][value.parcel_no] != null){
-		// 		for (var i = 0; i<img_path[value.block_no][value.parcel_no].length; i++){			
-		// 			console.log(value.block_no + " " + value.parcel_no);
-		// 			console.log(img_path[value.block_no][value.parcel_no][i]);
-		// 			console.log();
-		// 		}
-		// 	}
-		
+		for (var i = 0; i<images.length; i++){			
+			customPopup += "<img class='img-click' src='images/properties/" + images[i] + "'/>";
+		}
 		customPopup += "</div>";
-		
 
 		container.html(customPopup);
 
@@ -963,7 +819,6 @@ $.when(load_data()).done(function() {
 	    });
 
 		layer.bindPopup(container[0],customOptions);		
-			
 
 	}
 	
