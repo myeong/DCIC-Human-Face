@@ -57,18 +57,28 @@ if ($action=="search") {
 	// 		LEFT JOIN humanface.event_types d ON c.type=d.id
 	// 		ORDER BY c.date DESC;";
 	
+	// $sql = "SELECT DISTINCT on (p.parcel_no, p.block_no, t.type, e.date, t.id) 
+	// 			a.st_num,a.st_name,p.parcel_no,p.block_no,e.date,e.response,t.type,t.id
+	//  		FROM humanface.events e
+	//  		LEFT JOIN humanface.addresses a on a.parcel_id=e.parcel_id
+	//  		LEFT JOIN humanface.parcels p on  e.parcel_id=p.parcel_id
+	//  		LEFT JOIN humanface.event_types t ON e.type=t.id
+	//  		WHERE e.date IS NOT NULL and e.type IS NOT NULL
+	//  		ORDER BY e.date ASC, t.id ASC;";
+
 	$sql = "SELECT DISTINCT on (p.parcel_no, p.block_no, t.type, e.date, t.id) 
-				a.st_num,a.st_name,p.parcel_no,p.block_no,e.date,e.response,t.type,t.id
+				a.st_num,a.st_name,p.parcel_no,p.block_no,e.date,e.response,t.type,t.id,i.img_path
 	 		FROM humanface.events e
 	 		LEFT JOIN humanface.addresses a on a.parcel_id=e.parcel_id
 	 		LEFT JOIN humanface.parcels p on  e.parcel_id=p.parcel_id
 	 		LEFT JOIN humanface.event_types t ON e.type=t.id
+	 		LEFT JOIN humanface.image_paths i ON e.parcel_id=i.parcel_id
 	 		WHERE e.date IS NOT NULL and e.type IS NOT NULL
 	 		ORDER BY e.date ASC, t.id ASC;";
 
 } else if ($action=="owner"){
-	$parcel = $_GET['parcel'];
-	$block = $_GET['block'];
+	$parcel = intval($_GET['parcel']);
+	$block = intval($_GET['block']);
 
 	$sql = "SELECT DISTINCT on (p.name, a.role) p.name, a.role
 			FROM humanface.events e
@@ -77,6 +87,16 @@ if ($action=="search") {
 	 		LEFT JOIN humanface.people p on p.person_id=a.person_id
 	 		WHERE c.parcel_no ='$parcel' AND c.block_no = '$block'
 	 		ORDER BY a.role ASC;";
+
+} else if ($action=="parcel"){
+
+	$sql = "SELECT DISTINCT parcel_no as parcels
+	 		FROM humanface.parcels;";
+
+} else if ($action=="parcel"){
+
+	$sql = "SELECT DISTINCT parcel_no
+	 		FROM humanface.parcels;";
 
 } else {
 	die("Error: action=invalid");
@@ -111,7 +131,8 @@ if ($rows == 0) {
 				"block_no"=> $row['block_no'],
 				"date"=> $row['date'],
 				"type" => $row['type'],
-				"response" => $row['response']		
+				"response" => $row['response'],
+				"image_path" => $row['img_path']		
 				
 			);
 			$datas[] = $data;
@@ -126,7 +147,17 @@ if ($rows == 0) {
 			$datas[] = $data;
 		}
 		echo json_encode($datas);			
-	}
+	} else if ($action=="parcel") {
+		while ($row = pg_fetch_array($result)) {
+			$data = array(
+				"parcels" => $row['parcels']
+				// "parcel_count" => $row['parcel_count'],
+				// "block_count" => $row['block_count']				
+			);
+			$datas[] = $data;
+		}
+		echo json_encode($datas);			
+	} 
 }
 
 pg_free_result($result);
