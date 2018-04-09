@@ -105,6 +105,7 @@ GIS/parcels
 GIS/Asheville_map/new_Asheville_map3.tif*
 
 html/images/properties/*.tar.gz
+html/images/properties/*.jpg
 html/credentials.inc.php
 
 !README.md
