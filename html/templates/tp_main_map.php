@@ -27,9 +27,14 @@
 <script>
 var geojson_path = "js/with_date.geojson";
 var db_data = null;
+var image_path = null;
 
 function getdata(data){
 	db_data = data;
+}
+
+function getimagedata(data){
+	image_path = data;
 }
    
 function load_data() {
@@ -52,67 +57,87 @@ function load_data() {
     });
 }
 
-$.when(load_data()).done(function() {
+function get_image_paths() {
+    // NOTE:  This function must return the value 
+    //        from calling the $.ajax() method.
+    return $.ajax({
+        type:"GET",
+        async:true,
+        url:"get_image_paths.php",
+        dataType:'json',        
+        error: function(err) {
+        	console.log(err);        	
+        }
+    }).done(function(data){
+    	// console.log(data);
+    	getimagedata(data);
+    });
+}
+
+
+$.when(load_data(), get_image_paths()).done(function() {
 	
 	//Color 
 	var hoverColor = {
-	    fillColor:"#00FF00"
+	    fillColor:"#ffffb3",
+	    color: "#FF69B4",
+	    weight: 4
 	};	
 			
 	var c1 = {
 		fillColor: "#0000FF",
 		color: "white",
 		weight: 1,
-		fillOpacity: 1
+		fillOpacity: 0.7
 	};	
 
 	var c2 = {
 		fillColor: "#f00",
 		color: "white",
 		weight: 1,
-		fillOpacity: 1
+		fillOpacity: 0.7
 	};	
 	
 	var c3 = {
 		fillColor: "#ff7f00",
 		color: "white",
 		weight: 1,
-		fillOpacity: 1
+		fillOpacity: 0.7
 	};	
 
 	var c4 = {
 		fillColor: "#ff0",
 		color: "white",
 		weight: 1,
-		fillOpacity: 1
+		fillOpacity: 0.7
 	};	
 
 	var c5 = {
 		fillColor: "#0f0",
 		color: "white",
 		weight: 1,
-		fillOpacity: 1
+		fillOpacity: 0.7
 	};	
 
 	var c6 = {
 		fillColor: "#0ff",
 		color: "white",
 		weight: 1,
-		fillOpacity: 1
+		fillOpacity: 0.7
 	};	
 	
 	var c7 = {
 		fillColor: "#8b00ff",
 		color: "white",
 		weight: 1,
-		fillOpacity: 1
+		fillOpacity: 0.7
 	};	
 	
 	var c8 = {
 		fillColor: "#000000",
 		color: "white",
 		weight: 1,
-		fillOpacity: 1
+		fillOpacity: 0.7
 	};	
 	
 	var highlight = {
@@ -122,15 +147,13 @@ $.when(load_data()).done(function() {
 		fillOpacity: 1
 	};
    
-	var map = L.map('map').setView([35.5861, -82.5554], 17);
+	var map = L.map('map').setView([35.5811, -82.5560], 16);
 
-	
 	//loading a GeoJSON file directly from the file 
 	var poly = new L.GeoJSON.AJAX(geojson_path, {
 		style: c1,					
 		onEachFeature: onEachFeature,
 	});
-
 
 	// load a main layer
 	var baseMap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 
@@ -146,7 +169,7 @@ $.when(load_data()).done(function() {
 	// Slider menu 
 	var slideMenu = L.control.slideMenu('',{
 		position: 'topright', 
-		height: '680px', 
+		height: '700px', 
 		width: '355px'
 	}).addTo(map);
 
@@ -174,11 +197,11 @@ $.when(load_data()).done(function() {
 	var search_input_1 = L.DomUtil.create('input', 'menu-search-input', search_box);
 	search_input_1.id = 'input-1';
 	search_input_1.type = 'text';
-	search_input_1.placeholder = 'owner_name';
+	search_input_1.placeholder = 'Person Name';
 	var search_input_2 = L.DomUtil.create('input', 'menu-search-input', search_box);
 	search_input_2.id = 'input-2';
 	search_input_2.type = 'text';
-	search_input_2.placeholder = 'st_name';
+	search_input_2.placeholder = 'Street Name';
 	var search_btn = L.DomUtil.create('div', 'menu-search-btn', search_box);
 	search_btn.innerHTML = 'Search';
 	
@@ -226,10 +249,15 @@ $.when(load_data()).done(function() {
 	function parseResult(data) {
 		$(".menu-result").empty();
 		var frag = "";
-		for (var i = 0; i < data.length; i++) {
-			var index = i + 1;
+		var index = 0;
+		for (var i = 0; i < data.length; i++) {				
+			var snum = data[i].st_num.trim();
+			var sname = data[i].st_name.trim();
+
+			if (snum == "" && sname == "") continue;
+			index = index+1;
 			frag += "<div class=\"menu-result-row\" title=\"" + data[i].parcel_no + "," + data[i].block_no +"\">";
-			frag += index + ": " + data[i].st_num + " " + data[i].st_name;
+			frag += String(index) + ": " + snum + " " + sname;
 			frag += "</div>";
 		}
 		$(".menu-result").append(frag);
@@ -255,49 +283,53 @@ $.when(load_data()).done(function() {
 			}
 		}
 	}	
+
 	
 	// Data from database and store in "Poly"
+	// Event data's structure look like this (two-dimensional array):
+	// 		Array[index] {event_type, date}
     function parsePoly(feature, data) {
 
     	var parcel_num = feature.properties.parcel;
     	var block_num = feature.properties.block;
 		var zero=String('No data');
-    	//console.log(data);
+
+    	var events = [];
+    	var index = 0;
+
+		feature.properties['events'] = zero; 
+
 		
-		feature.properties['TransferofDeed'] = zero; 
-		feature.properties['OfferMade'] = zero; 
-		feature.properties['Appraisal'] = zero;
-		feature.properties['OfferAccepted'] = zero; 
-		feature.properties['TenantMoved'] = zero; 
-		feature.properties['Awarded'] = zero;
-		feature.properties['EndofCase'] = zero;
-		
-		
+		// Search gthough Data
     	for (var i = 0; i< data.length; i++){
 			var type = String(data[i].type);
-    		type = type.replace(/\s+/g, '');
+    		// type = type.replace(/\s+/g, '');
+
+    		// Only taking the first token for the array. (e.g., Transfer of Deed --> Transfer)
+    		type = type.split(" ")[0];
 		 
-    		// console.log(parseInt(data[i].block_no));
     		if (parseInt(data[i].block_no) == block_num && parseInt(data[i].parcel_no) == parcel_num){
-
-    			if (type) {
-    				if (data[i].date){
-    				feature.properties[type] = String(data[i].date);    					
-    				}
+    			if (type && data[i].date){					
+					var obj = {};
+					obj[type] = data[i].date;
+					if (type == "Decision"){
+						obj["response"] = data[i].response.replace(/\s+/g, '');;
+					}
+					events.push(obj);    				
     			}
-
     		}
+
     	}
-				//console.log(feature.properties);
+    	if (events.length >0) feature.properties['events'] = events;
     };
 
-	var result_div = L.DomUtil.create('div','menu-result-container');
+	var result_div = L.DomUtil.create('div','menu-result-container');	
 	mapbuttons_div.appendChild(result_div);
+
 	var result_text = L.DomUtil.create('p', 'menu-search-text', result_div);
 	result_text.innerHTML = "Analysis & Results";
 
-	var result = L.DomUtil.create('div', 'menu-result', result_div);
-	
+	var result = L.DomUtil.create('div', 'menu-result', result_div);	
 	var pie = L.DomUtil.create('div', 'menu-pie');
 	mapbuttons_div.appendChild(pie);
 
@@ -310,14 +342,17 @@ $.when(load_data()).done(function() {
 	map.addLayer(asheville);
 	
 	// Year slider
-	var SLIDER_VALUE = String(1960);
+	var SLIDER_VALUE = String(1959);
 	
-	var slider = L.control.slider(function(value,feature) {
+	// console.log(db_data);
+	// When slider value is changed
+	var slider = L.control.slider(function(value,feature) {		
 		SLIDER_VALUE = String(value);
-		
-	   
+
 		// Pie chart
 		d3.select("#piie").remove();	
+
+		// Set the year following the slidebar value.
 		$(".menu-year-input").html(value);	
         
 		var cc1 = "#f00";
@@ -328,340 +363,473 @@ $.when(load_data()).done(function() {
 		var cc6 = "#8b00ff";
 		var cc7 = "#000000";
 		var cc8 = "#0000FF";
-		
-		//count number
-		//Transfer of Deed
-		var todnum=0; 
-		// Offer Made
-		var omnum=0;
-		// Appraisal
-		var apnum=0;
-		//Offer Accepted
-		var oanum=0;
-		//Tenant Moved
-		var tmnum=0;
-		// Awarded
-		var awnum=0;
-		//End of case
-		var ecnum=0;
-		//No data
-		var ndnum=0;
-		
-
+	
 		// seems like it's possible to calculate the number of layers by 
-		// looping though each layer rather than load the JSON file one more 
-		// time... need to see. If so, possible to shrink the code. Not urgent(Myeong)
-		
-		
-        d3.select("#piie").remove();
-		
-		var year=[];
-		var name=[];
-			
+		// looping though each layer rather than loading the JSON file one more 
+		// time... need to see. If so, possible to shrink the code. Not urgent(Myeong)	
 
-			for (var i = 0; i < db_data.length; i++) {
-			name[i]=String(db_data[i].type);
-			name[i]=name[i].replace(/\s+/g, '');
-			year[i]=d3.values(db_data[i].date[0])+d3.values(db_data[i].date[1])+d3.values(db_data[i].date[2])+d3.values(db_data[i].date[3]);
-			};
+		// d3.select("#piie").remove();
+		
+		var type_count = Array();
 
-			var obj=['TransferofDeed','OfferMade','Appraisal','OfferAccepted','TenantMoved','Awarded','EndofCase'];
-			
-			for (var i = 0; i < db_data.length; i++) {
-			    if (value>=year[i]){
-					switch (name[i]){
-						case obj[0]:
-							todnum=todnum+1;
-						case obj[1]:
-							omnum=omnum+1;
-							todnum = (todnum >= 1) ? todnum-1 : 0;							
-						case obj[2]:
-							apnum=apnum+1;
-							omnum= (omnum >= 1) ? omnum-1 : 0;
-						case obj[3]:
-							oanum=oanum+1;
-							apnum= (apnum >= 1) ? apnum-1 : 0;
-						case obj[4]:
-							tmnum=tmnum+1;
-							oanum= (oanum >= 1) ? oanum-1 : 0;
-						case obj[5]:
-							awnum=awnum+1;
-							tmnum= (tmnum >= 1) ? tmnum-1 : 0;
-						case obj[6]:
-							ecnum=ecnum+1;
-							awnum= (awnum >= 1) ? awnum-1 : 0;
-					}
+		type_count["no_data"] = 0;
+		type_count["offer"] = 0;
+		type_count["transfer"] = 0;
+		type_count["appraisal"] = 0;
+		type_count["decision"] = 0;
+		type_count["tenant"] = 0;
+		type_count["awarded"] = 0;
+		type_count["end"] = 0;
+
+		
+		for (var i = 0; i < db_data.length; i++) {
+			name=String(db_data[i].type);
+			name=name.split(" ")[0];
+			year= db_data[i].date.split("-")[0];
+
+			if (value >= year){
+				switch (name){
+					case "Transfer":
+						type_count["transfer"] += 1;						
+						break;
+					case "Offer":
+						type_count["offer"] += 1;						
+						break;
+					case "Appraisal":
+						type_count["appraisal"] += 1;						
+						break;
+					case "Tenant":
+						type_count["tenant"] += 1;						
+						break;
+					case "Awarded":
+						type_count["awarded"] += 1;						
+						break;
+					case "End":
+						type_count["end"] += 1;						
+						break;
+					case "Decision":
+						type_count["decision"] += 1;
+						break;
 				}
-			};
-			
+			}
 
-			var dataset=[];
-			ndnum=936-(todnum+omnum+apnum+oanum+tmnum+awnum+ecnum);
-			dataset = [
-				{ label: 'Transfer of Deed', count: todnum },
-				{ label: 'Offer Made', count: omnum }, 
-				{ label: 'Appraisal', count: apnum }, 
-				{ label: 'Offer Accepted', count: oanum },
-				{ label: 'Tenant Moved', count: tmnum },
-				{ label: 'Awarded', count: awnum },
-				{ label: 'End of Case', count: ecnum },
-				{ label: 'No data', count: ndnum }
+		}		
 
-			];
-			
-			
-			// Percentage calculation
-			var total=936;
-			var ptodnum=Math.floor((todnum / total) * 100);
-			var pomnum=Math.floor((omnum / total) * 100);
-			var papnum=Math.floor((apnum / total) * 100);
-			var poanum=Math.floor((oanum / total) * 100);
-			var ptmnum=Math.floor((tmnum / total) * 100);
-			var pawnum=Math.floor((awnum / total) * 100);
-			var pecnum=Math.floor((ecnum / total) * 100);
-			var pndnum=Math.floor((ndnum / total) * 100);
-			
+		var total = 936;
+		type_count["no_data"] = 936 - (type_count["transfer"] + type_count["offer"]
+									+ type_count["appraisal"] + type_count["tenant"]
+									+ type_count["awarded"] + type_count["end"]
+									+ type_count["decision"]);
 
-			// Percentage array
-			var percentage=[ptodnum,pomnum,papnum,poanum,ptmnum,pawnum,pecnum,pndnum];
-			
-			var width = 340;
-			var height = 340;
-			var radius = Math.min(width, height) / 2;
-			var donutWidth = 58;
-			var legendRectSize = 18;       
-			var legendSpacing = 4; 
-			var color = d3.scale.ordinal().range([cc1,cc2,cc3,cc4,cc5,cc6,cc7,cc8]);
+		var dataset = [			
+			{ label: 'Offer Made', count: type_count["offer"] }, 
+			{ label: 'Appraisal', count: type_count["appraisal"] }, 
+			{ label: 'Decision for Offer', count: type_count["decision"] },
+			{ label: 'Tenant Moved', count: type_count["tenant"] },
+			{ label: 'Awarded', count: type_count["awarded"] },
+			{ label: 'Transfer of Deed', count: type_count["transfer"] },
+			{ label: 'End of Case', count: type_count["end"] },
+			{ label: 'No data', count: type_count["no_data"] }
+		];
 
-			var svg = d3.select('.menu-pie')
-				.append("svg:svg")
-				.attr("id", "piie")
-				.attr('width', width)
-				.attr('height', height)
-				.append('g')
-				.attr('transform', 'translate(' + (width / 2) + 
-					',' + (height / 2) + ')');
-		
-			var arc=d3.svg.arc()
-				.outerRadius(radius)
-				.innerRadius(radius - donutWidth);
+		for (var key in type_count){
+			type_count[key] = Math.floor((type_count[key] / total) * 100);
+		}		
+
+		var percentage = [
+			type_count["offer"], 
+			type_count["appraisal"],
+			type_count["decision"],
+			type_count["tenant"],
+			type_count["awarded"],
+			type_count["transfer"],
+			type_count["end"],
+			type_count["no_data"]
+		]
+
+		var width = 340;
+		var height = 340;
+		var radius = Math.min(width, height) / 2;
+		var donutWidth = 58;
+		var legendRectSize = 18;       
+		var legendSpacing = 4; 
+		var color = d3.scale.ordinal().range([cc1,cc2,cc3,cc4,cc5,cc6,cc7,cc8]);
+
+		var svg = d3.select('.menu-pie')
+			.append("svg:svg")
+			.attr("id", "piie")
+			.attr('width', width)
+			.attr('height', height)
+			.append('g')
+			.attr('transform', 'translate(' + (width / 2) + 
+				',' + (height / 2) + ')');
 	
-			var pie = d3.layout.pie()
-				.value(function(d) { return d.count; });
+		var arc=d3.svg.arc()
+			.outerRadius(radius)
+			.innerRadius(radius - donutWidth);
 
-			var path = svg.selectAll('path')
-				.data(pie(dataset))
-				.enter()
-				.append('path')
-				.attr('d', arc)
-				.attr('fill', function(d, i) { 
-					return color(d.data.label);
-				});
-			
-			var legend = svg.selectAll('.legend')                     
-				.data(color.domain())                                   
-				.enter()                                                
-				.append('g')                                            
-				.attr('class', 'legend')                              
-				.attr('transform', function(d, i) {                     
+		var pie = d3.layout.pie()
+			.value(function(d) { return d.count; });
+
+		var path = svg.selectAll('path')
+			.data(pie(dataset))
+			.enter()
+			.append('path')
+			.attr('d', arc)
+			.attr('fill', function(d, i) { 
+				return color(d.data.label);
+			});
 		
-					var height = legendRectSize + legendSpacing;         
-					var offset =  height * color.domain().length / 2;     
-					var horz = -3.5 * legendRectSize;                      
-					var vert = i * height - offset+3;                       
-					return 'translate(' + horz + ',' + vert + ')';        
-				});  		  
+		var legend = svg.selectAll('.legend')                     
+			.data(color.domain())                                   
+			.enter()                                                
+			.append('g')                                            
+			.attr('class', 'legend')                              
+			.attr('transform', function(d, i) {    	
+				var height = legendRectSize + legendSpacing;         
+				var offset =  height * color.domain().length / 2;     
+				var horz = -3.5 * legendRectSize;                      
+				var vert = i * height - offset+3;                       
+				return 'translate(' + horz + ',' + vert + ')';        
+			});  		  
 
-	
-			legend.append('rect')                                     
-				.attr('width', legendRectSize)                          
-				.attr('height', legendRectSize)                         
-				.style('fill', color)                                   
-				.style('stroke', color);                                
 
-			legend.append('text')                                     
-				.attr('x', legendRectSize + legendSpacing)              
-				.attr('y', legendRectSize - legendSpacing)
-				.style('fill', 'white')							
-				.text(function(d,i) { return d+":"+ percentage[i]+"%"; });                       	
-		
+		legend.append('rect')                                     
+			.attr('width', legendRectSize)                          
+			.attr('height', legendRectSize)                         
+			.style('fill', color)                                   
+			.style('stroke', color);                                
 
-		
-		$(".menu-result").hide();
-		$(".menu-pie").show();
-	
+		legend.append('text')                                     
+			.attr('x', legendRectSize + legendSpacing)              
+			.attr('y', legendRectSize - legendSpacing)
+			.style('fill', 'white')							
+			.text(function(d,i) { return d+": "+ percentage[i]+"%"; });                       	
 
 
 		//poly color
 		poly.eachLayer(function(layer) {
-			if (SLIDER_VALUE<'1961') {
-				layer.setStyle(c1);
-			}
-			else {
-			
-				// console.log(layer);
-				var properties = layer.feature.properties;
-				if (properties.EndofCase>=properties.Awarded) {
-					if (SLIDER_VALUE >= properties.TransferofDeed && SLIDER_VALUE < properties.OfferMade) {
-						layer.setStyle(c2);
-					} else if (SLIDER_VALUE >= properties.OfferMade && SLIDER_VALUE < properties.Appraisal) {
-						layer.setStyle(c3);
-					} else if (SLIDER_VALUE >= properties.Appraisal && SLIDER_VALUE < properties.OfferAccepted) {
-						layer.setStyle(c4);
-					} else if (SLIDER_VALUE >= properties.OfferAccepted && SLIDER_VALUE < properties.TenantMoved) {
-						layer.setStyle(c5);
-					} else if (SLIDER_VALUE >= properties.TenantMoved && SLIDER_VALUE < properties.Awarded) {
-						layer.setStyle(c6);
-					} else if (SLIDER_VALUE >= properties.Awarded && SLIDER_VALUE < properties.EndofCase) {
-						layer.setStyle(c7);
-					} 
-					else if (SLIDER_VALUE >= properties.EndofCase) {
-						layer.setStyle(c8);
-					}
-				} else {
-					layer.setStyle(c1);
-				}
-			};
-			
-		});
-		}, {
-			max: 1976,
-			min: 1960,
-			value: 1960,
-			step:1,
-			size: '250px',
-			orientation:'vertical',
-			id: 'slider',
-			collapsed: false,
-			position: "topleft",
-			syncSlider: true,
-			increment: true
-		}).addTo(map); 
-	
+			SLIDER_VALUE=parseInt(SLIDER_VALUE);
 
-		// Mouse track
-		function highlightDot(e){
-			var layer = e.target;
-			layer.setStyle(hoverColor);
+			var properties = layer.feature.properties;				
+
+			if (properties.events == "No data"){
+				layer.setStyle(c1);
+			} 
+			else {
+				var key = "";
+				var year = 0;				
+				var found = false;
+
+				for (var i=0; i<properties.events.length; i++) {
+					for (var k in properties.events[i]){
+						year = parseInt(properties.events[i][k].split("-")[0]);
+						if (SLIDER_VALUE >= year){
+							key = k;
+							found=true;	
+							break;
+						}
+					}					
+				}
+				if (!found){
+					layer.setStyle(c1);
+				} else {
+					switch (key){
+						case "Transfer":
+							layer.setStyle(c7);						
+							break;
+						case "Offer":
+							layer.setStyle(c2);
+							break;
+						case "Appraisal":
+							layer.setStyle(c3);
+							break;
+						case "Decision":
+							layer.setStyle(c4);
+							break;
+						case "Tenant":
+							layer.setStyle(c5);
+							break;
+						case "Awarded":
+							layer.setStyle(c6);
+							break;
+						case "End":
+							layer.setStyle(c8);
+							break;
+						// default:
+						// 	layer.setStyle(c1);
+						
+					}
+				}
+
+			}	
+		});	
+
+	}, {
+		max: 1978,
+		min: 1959,
+		value: 1959,
+		step:1,
+		size: '250px',
+		orientation:'vertical',
+		id: 'slider',
+		collapsed: false,
+		position: "topleft",
+		syncSlider: true,
+		increment: true
+	}).addTo(map); 
+
+	// Mouse track
+	function highlightDot(e){
+		var layer = e.target;
+		layer.setStyle(hoverColor);
+	}
+
+	function resetDotHighlight(e){
+		var layer = e.target;
+		var properties = layer.feature.properties;
+
+		if (properties.events == "No data"){
+				layer.setStyle(c1);
+		} 
+		else {
+			var key = "";
+			var year = 0;				
+			var found = false;
+
+			for (var i=0; i<properties.events.length; i++) {
+				for (var k in properties.events[i]){
+					year = parseInt(properties.events[i][k].split("-")[0]);
+					if (SLIDER_VALUE >= year){
+						key = k;
+						found=true;						
+						break;
+					}
+				}				
+			}
+			if (!found){
+				layer.setStyle(c1);
+			} else {
+				switch (key){
+					case "Transfer":
+						layer.setStyle(c7);						
+						break;
+					case "Offer":
+						layer.setStyle(c2);
+						break;
+					case "Appraisal":
+						layer.setStyle(c3);
+						break;
+					case "Decision":
+						layer.setStyle(c4);
+						break;
+					case "Tenant":
+						layer.setStyle(c5);
+						break;
+					case "Awarded":
+						layer.setStyle(c6);
+						break;
+					case "End":
+						layer.setStyle(c8);
+						break;
+					// default:
+					// 	layer.setStyle(c1);
+					
+				}
+			}
+
+		}
+    
+	}
+
+	function get_people_names(block, parcel) {
+	    return $.ajax({
+	        type:"GET",
+	        async:true,
+	        url:"get.php",
+	        dataType:'json',
+	        data: {
+            	action: 'owner',
+            	parcel: parcel,
+            	block: block
+            },
+	        error: function(err) {            	
+            }
+        }).done(function(data){   
+        	$("div.people").empty();  
+        	var names = "";
+        	var role = "";
+
+        	for (var i=0; i<data.length; i++){
+        		if (data[i].name==null || data[i].role==null) continue;
+        		if (data[i].name.trim()=="Redevelopment Commission of the City") continue;
+
+        		if (role != data[i].role){
+        			names += "<div class='role'>" +data[i].role+ "</div>";
+        			role = data[i].role;
+        		}
+
+        		names += "<div class='name'>" + data[i].name + "</div>";
+        	}        	
+        	$("div.people").html(names);
+        	$("div.people").show();
+        });
+	}
+
+	
+	// When a polygon is clicked
+	function onEachFeature(feature, layer) {
+
+	    if (db_data){
+	    	parsePoly(feature, db_data);		    	
+	    }
+		
+	    var popupContent = "";
+	    var circles = "";
+	    
+	    
+	    if (feature.properties.events == "No data"){
+	    	popupContent = "<p>No Data</p>";
+	    } else {		    	
+		    for (var i=0; i<feature.properties.events.length; i++){		    	
+		    	popupContent += "<p>";
+
+		    	for (var key in feature.properties.events[i]){
+		    		var type = "";
+		    		var circle = "";
+
+			    	switch(key) {
+					    case "Transfer":
+					        type = "Transfer of Deed";
+					        circle = "<div class='circle' style='background-color:#8b00ff;'></div>";
+					        break;
+					    case "Offer":
+					        type = "Offer Made";
+					        circle = "<div class='circle' style='background-color:#f00;'></div>";
+					        break;
+					    case "Appraisal":
+					    	type = key;
+					        circle = "<div class='circle' style='background-color:#ff7f00;'></div>";
+					        break;
+					    case "Decision":
+					        type = "Decision for the Offer (" + feature.properties.events[i].response + ")" ;
+					        circle = "<div class='circle' style='background-color:#ff0;'></div>";
+					        break;
+					    case "Tenant":
+					        type = "Tenant Moved";
+					        circle = "<div class='circle' style='background-color:#0f0;'></div>";
+					        break;
+					    case "Awarded":
+					    	type = key;
+					    	circle = "<div class='circle' style='background-color:#0ff;'></div>";
+					    	break;
+					    case "End":
+					        type = "End of Case";
+					        circle = "<div class='circle' style='background-color:black;'></div>";
+					        break;						    
+					    default:
+					        continue;
+					}
+					
+		    		popupContent += type + ": <span class='date-list'>" + feature.properties.events[i][key] + "</span></p>";
+		    		circles += circle;
+		    		
+		    	}	    	
+		    	
+		    }
+		}
+		
+
+		var parcel_num = feature.properties.parcel;
+    	var block_num = feature.properties.block;
+    	
+    	layer.on('click', function (e) {
+	      // e = event
+	       get_people_names (block_num, parcel_num);
+	      // You can make your ajax call declaration here
+	      //$.ajax(... 
+	    });
+
+   		get_people_names (block_num, parcel_num);
+
+
+
+		var noData="<p>Sorry, No data</p>";		
+		var zero=String('No data');
+				
+		//Popup info			
+		var block_parcel = "B" + block_num + "_P" + parcel_num;
+		var images = Array();
+		
+		for (var i = 0; i < image_path.length; i++){
+			if (image_path[i].indexOf(block_parcel) !== -1){
+				images.push(image_path[i]);
+			}	
+		}
+		
+		if(images.length >0) {
+			block_parcel = "images/properties/" + images[0];
+		} else {
+			block_parcel = "images/default_image.jpg"; 
 		}
 
-		function resetDotHighlight(e){
-			
-			var layer = e.target;	
-			// this is the way to access propertis from "event"
-			var properties = layer.feature.properties;
-
-			if (SLIDER_VALUE<'1961') {
-					layer.setStyle(c1);
-			}
-			
-			else {
-				if (properties.TransferofDeed < properties.OfferMade) {
-				if (SLIDER_VALUE >= properties.TransferofDeed && SLIDER_VALUE < properties.OfferMade) {
-						layer.setStyle(c2);
-					} else if (SLIDER_VALUE >= properties.OfferMade && SLIDER_VALUE < properties.Appraisal) {
-						layer.setStyle(c3);
-					} else if (SLIDER_VALUE >= properties.Appraisal && SLIDER_VALUE < properties.OfferAccepted) {
-						layer.setStyle(c4);
-					} else if (SLIDER_VALUE >= properties.OfferAccepted && SLIDER_VALUE < properties.TenantMoved) {
-						layer.setStyle(c5);
-					} else if (SLIDER_VALUE >= properties.TenantMoved && SLIDER_VALUE < properties.Awarded) {
-						layer.setStyle(c6);
-					} else if (SLIDER_VALUE >= properties.Awarded && SLIDER_VALUE < properties.EndofCase) {
-						layer.setStyle(c7);
-					} 
-					else if (SLIDER_VALUE >= properties.EndofCase) {
-						layer.setStyle(c8);
-					}		
-				} 
-				else {
-				layer.setStyle(c1);
-				}
-			}
-		};
+		var address = (feature.properties.st_num == null ? "" : feature.properties.st_num) + " "+
+					(feature.properties.st_name == null ? "" : feature.properties.st_name);
 		
-		
-		// When a polygon is clicked
-		function onEachFeature(feature, layer) {
-	
-		    if (db_data){
-		    	parsePoly(feature, db_data);
-		    }
+		var container = $('<div />');
 
-			var popupContent = "<p>Transfer of Deed:"+feature.properties.TransferofDeed+"</p>"
-					+"<p>Offer Made:"+feature.properties.OfferMade+"</p>"
-					+"<p>Appraisal:"+feature.properties.Appraisal+"</p>"
-					+"<p>Offer Accepted:"+feature.properties.OfferAccepted+"</p>"
-					+"<p>Tenant Moved:"+feature.properties.TenantMoved+"</p>"
-					+"<p>Awarded:"+feature.properties.Awarded+"</p>"
-					+"<p>End of Case:"+feature.properties.EndofCase+"</p>";
-			
-			
-			var noData="<p>Sorry, No data</p>";
-			
-			var zero=String('No data');
+		container.on('click', '.img-click', function() {				
+		    $(".img-cont").html("<img src='" + $(this)[0].currentSrc + "' />");
+		});
 
-			//var  pic_url='images/test.jpg';
-			
-			//Popup info
-			var customPopup;
-			
-			if (feature.properties.TransferofDeed == zero && feature.properties.TenantMoved== zero ){
-
-			customPopup= 
-							"<p>"+feature.properties.st_num+" "+feature.properties.st_name+"</p>"
-							+"<div style='float:right;width: 50%;display:inline-flex;'>"
+		var customPopup= "<div class='popup-title'>" +"<p>"+address+"</p></div>"  						
+						+"<div class='popup-table'>"
+							+"<div class='img-cont'>"
+								+"<img src='"+  block_parcel  + "' />"
+								
+							+"</div>" 
+							+"<div class='date-cont'style='width: 40%;display:inline-flex;padding-top:10px;height:250px;'>"
 								+"<div style='margin-left:15px;margin-right:10px;width:20px;'>"
-									+"<div class='circle' style='background-color:#f00;'></div>"
-							+"</div>"
-							+"<div style='width:calc(100% - 45px);line-height:16px;'"
-									+noData
+									+circles
 								+"</div>"
-							+"</div>";
-			}
-			else {
-				customPopup= "<span style='float:left;width: 50%;'>"
-								+"<img src="+  feature.properties.img_path  + " style='width: 100%; max-height: 80%;' />"
-								+"<p>"+feature.properties.st_num+" "+feature.properties.st_name+"</p>"
-							+"</span>" 
-							+"<div style='float:right;width: 50%;display:inline-flex;padding-top:10px;'>"
-								+"<div style='margin-left:15px;margin-right:10px;width:20px;'>"
-									+"<div class='circle' style='background-color:#f00;'></div>"
-									+"<div class='circle' style='background-color:#ff7f00;'></div>"
-									+"<div class='circle' style='background-color:#ff0;'></div>"
-									+"<div class='circle' style='background-color:#0f0;'></div>"
-									+"<div class='circle' style='background-color:#0ff;'></div>"
-									+"<div class='circle' style='background-color:#8b00ff;'></div>"
-									+"<div class='circle' style='background-color:black;'></div>"
-								+"</div>"
-								+"<div style='width:calc(100% - 45px);line-height:16px;'"
+								+"<div style='width:100%;line-height:16px;'"
 									+popupContent
 								+"</div>"
-							+"</div>" ;
-		    }
+							+"</div>"
+							+"<div class='people' style='width:20%;'></div>" 
+						+"</div>"
+						+"<div class='thumb-images'>";
 
-			var customOptions =
-			{
-			'maxWidth': 'auto'
-			}
-		
-			layer.on({
-		        mouseover: highlightDot,
-		        mouseout: resetDotHighlight
-		    });
+		for (var i = 0; i<images.length; i++){			
+			customPopup += "<img class='img-click' src='images/properties/" + images[i] + "'/>";
+		}
+		customPopup += "</div>";
 
-			layer.bindPopup(customPopup,customOptions);
-			
+		container.html(customPopup);
+
+		var customOptions =
+		{
+			'maxWidth': 'auto',
+			'className': 'map-pop-up'
 		}
 	
-		map.addLayer(poly);
+		layer.on({
+	        mouseover: highlightDot,
+	        mouseout: resetDotHighlight
+	    });
+
+		layer.bindPopup(container[0],customOptions);		
+
+	}
+	
+	map.addLayer(poly);
 		
-		//database manage button
-		// L.easyButton( '<strong>M</strong>', function(){
-		// 	alert('For administrator only');
-		// 	window.open('../phppgadmin/index.php');
-		// }).addTo(map);
-	});
+	//database manage button
+	// L.easyButton( '<strong>M</strong>', function(){
+	// 	alert('For administrator only');
+	// 	window.open('../phppgadmin/index.php');
+	// }).addTo(map);
+});
 				
 </script>
 </head>

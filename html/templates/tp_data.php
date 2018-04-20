@@ -2,7 +2,7 @@
 <?php include __DIR__.'/'.'tp_header.php'; ?>
 
 <div class="container lg-font col-md-12">
-	<form id="survey_form" class="form-horizontal" style="border:0px dotted black;" action="/input/<?php echo $content['parcel_id']; ?>" method="post">
+	<form id="survey_form" class="form-horizontal" style="border:0px dotted black;" action="/input2/<?php echo $content['parcel_id']; ?>" method="post">
 		
 		<div class="col-md-12" role="address-titlebar"  id="role-address-titlebar">
       		<div class="section-title"><h3>1. Basic Information</h3></div>

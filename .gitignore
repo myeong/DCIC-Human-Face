@@ -4,7 +4,10 @@ __pycache__/
 *$py.class
 
 vm/basic/.vagrant
+vm/windows/.vagrant
 vm/.vagrant
+vm/mac/.vagrant
+vm/ansible/.vagrant
 
 # C extensions
 *.so
@@ -97,9 +100,16 @@ ENV/
 
 
 .DS_Store
+.vagrant
 GIS/parcels
 GIS/Asheville_map/new_Asheville_map3.tif*
 
-
+html/images/properties/*.tar.gz
+html/images/properties/*.jpg
+html/credentials.inc.php
 
 !README.md
+
+python/data/transcription.csv
+python/Output/*.csv
+python/output/*.csv

@@ -53,7 +53,7 @@ L.Control.SlideMenu = L.Control.extend({
                 // Close
                 this._animate(this._menu, 0, this._startPosition, false);
             }, this);
-
+        this._animate(this._menu, this._startPosition, 0, true);
         return this._container;
     },
     
