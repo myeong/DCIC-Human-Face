@@ -28,6 +28,14 @@
 
 
 <script>
+$(function () {
+		$('#my-welcome-message').firstVisitPopup({
+				cookieName : 'homepage'
+		});
+	});
+</script>
+
+<script>
 var geojson_path = "js/with_date.geojson";
 var db_data = null;
 var img_path = [];
@@ -72,11 +80,6 @@ function load_data() {
 }
 
 $.when(load_data()).done(function() {
-	$(function () {
-		$('#my-welcome-message').firstVisitPopup({
-				cookieName : 'homepage'
-		});
-	});
 
 	// Click to close the popup
 	$(document).click(function(e){                            
@@ -185,8 +188,8 @@ $.when(load_data()).done(function() {
 	// Slider menu 
 	var slideMenu = L.control.slideMenu('',{
 		position: 'topright', 
-		height: '88%', 
-		width: '400px'
+		height: '100%', 
+		width: '300px'
 	}).addTo(map);
 
 	slideMenu.setContents('<div id=\'menu_slider\'></div>');
@@ -511,8 +514,6 @@ $.when(load_data()).done(function() {
 
         latest_status_cleaned = removeDuplicateUsingSet(latest_status);
 
-        console.log(latest_status);
-
         var appraisal_dat = [];	
         var appraisal_count = 0;				
 		var offermade_dat = [];
@@ -576,7 +577,7 @@ $.when(load_data()).done(function() {
        
 		var total = 936*7;
 
-		type_count["no_data"] = 936*7 - latest_status.length;
+		type_count["no_data"] = total - latest_status.length;
 
 		var dataset = [			
 			{ label: 'Offer Made', count: type_count["offer"] }, 
@@ -605,424 +606,370 @@ $.when(load_data()).done(function() {
 			type_count["end"],
 			type_count["no_data"]
 		]
+ 
 
-		//Old pie chart:
-		// var width = 340;
-		// var height = 340;
-		// var radius = Math.min(width, height) / 2;
-		// var donutWidth = 58;
-		// var legendRectSize = 18;       
-		// var legendSpacing = 4; 
-		// var color = d3.scale.ordinal().range([cc1,cc2,cc3,cc4,cc5,cc6,cc7,cc8]);
-
-		// var svg = d3.select('.menu-pie')
-		// 	.append("svg:svg")
-		// 	.attr("id", "piie")
-		// 	.attr('width', width)
-		// 	.attr('height', height)
-		// 	.append('g')
-		// 	.attr('transform', 'translate(' + (width / 2) + 
-		// 		',' + (height / 2) + ')');
+		// New Pie chart (clickable)
+		var width = 400;
+		var height = 395;
+		var radius = Math.min(width, height) / 2;
+		var donutWidth = 85;
+		var legendRectSize = 20;       
+		var legendSpacing = 3; 
+		var color = d3.scale.ordinal().range([cc1,cc2,cc3,cc4,cc5,cc6,cc7,cc8]);
+        var arcOver = d3.svg.arc().outerRadius(radius+0.5).innerRadius(radius-70);
+		var svg = d3.select('.menu-pie')
+			.append("svg:svg")
+			.attr("id", "piie")
+			.attr("preserveAspectRatio", "xMidYMid meet")
+        	.attr("viewBox", "0 0 410 400")
+			.append('g')
+			.attr('transform', 'translate(' + (width / 2) + 
+				',' + (height / 2) + ')');
 	
-		// var arc=d3.svg.arc()
-		// 	.outerRadius(radius)
-		// 	.innerRadius(radius - donutWidth);
+		var arc=d3.svg.arc()
+			.outerRadius(radius-30)
+			.innerRadius(radius - donutWidth+16);
 
-		// var pie = d3.layout.pie()
-		// 	.value(function(d) { return d.count; });
+		var pie = d3.layout.pie()
+			.value(function(d) { return d.count; });
 
-		// var path = svg.selectAll('path')
-		// 	.data(pie(dataset))
-		// 	.enter()
-		// 	.append('path')
-		// 	.attr('d', arc)
-		// 	.attr('fill', function(d, i) { 
-		// 		return color(d.data.label);
-		// 	});
-		
-		// var legend = svg.selectAll('.legend')                     
-		// 	.data(color.domain())                                   
-		// 	.enter()                                                
-		// 	.append('g')                                            
-		// 	.attr('class', 'legend')                              
-		// 	.attr('transform', function(d, i) {    	
-		// 		var height = legendRectSize + legendSpacing;         
-		// 		var offset =  height * color.domain().length / 2;     
-		// 		var horz = -3.5 * legendRectSize;                      
-		// 		var vert = i * height - offset+3;                       
-		// 		return 'translate(' + horz + ',' + vert + ')';        
-		// 	});  		  
+		var path = svg.selectAll('path')
+			.data(pie(dataset))
+			.enter()
+			.append('path')
+			.attr('d', arc)
+			.attr('fill', function(d, i) { 
+				return color(d.data.label);
+			});
+      
 
+        path.on("mouseenter", function (d) {
+        d3.select(this)
+            .attr("stroke", "white")
+            .transition()
+            .duration(200)
+            .attr("d", arcOver)
+            .attr("stroke-width", 1);
+    	});
+     	
+     	path.on("mouseleave", function (d) {
+         	d3.select(this).transition()
+            .duration(200)
+            .attr("d", arc)
+            .attr("stroke", "none");
+     	});
 
-		// legend.append('rect')                                     
-		// 	.attr('width', legendRectSize)                          
-		// 	.attr('height', legendRectSize)                         
-		// 	.style('fill', color)                                   
-		// 	.style('stroke', color);                                
+     	path.on("click", function (d,i) {
+            
+     		svg.selectAll('path')
+     		.attr('fill', function(d, i) { 
+				return color(d.data.label);
+			})
+			.style('opacity', 1);
 
-		// legend.append('text')                                     
-		// 	.attr('x', legendRectSize + legendSpacing)              
-		// 	.attr('y', legendRectSize - legendSpacing)
-		// 	.style('fill', 'white')							
-		// 	.text(function(d,i) { return d+": "+ percentage[i]+"%"; });   
-
-			// New Pie chart (clickable)
-			var width = 400;
-			var height = 395;
-			var radius = Math.min(width, height) / 2;
-			var donutWidth = 85;
-			var legendRectSize = 20;       
-			var legendSpacing = 3; 
-			var color = d3.scale.ordinal().range([cc1,cc2,cc3,cc4,cc5,cc6,cc7,cc8]);
-            var arcOver = d3.svg.arc().outerRadius(radius+0.5).innerRadius(radius-70);
-			var svg = d3.select('.menu-pie')
-				.append("svg:svg")
-				.attr("id", "piie")
-				.attr("preserveAspectRatio", "xMidYMid meet")
-            	.attr("viewBox", "0 0 410 400")
-				.append('g')
-				.attr('transform', 'translate(' + (width / 2) + 
-					',' + (height / 2) + ')');
-		
-			var arc=d3.svg.arc()
-				.outerRadius(radius-30)
-				.innerRadius(radius - donutWidth+16);
-	
-			var pie = d3.layout.pie()
-				.value(function(d) { return d.count; });
-
-			var path = svg.selectAll('path')
-				.data(pie(dataset))
-				.enter()
-				.append('path')
-				.attr('d', arc)
-				.attr('fill', function(d, i) { 
-					return color(d.data.label);
-				});
           
+            // Click a part on the pie chart
+			d3.select(this)
+			.transition()
+			.attr("stroke", "black")
+			.attr("stroke-width", 2)
+			.duration(350)
+			.attr("fill","#F6931F")  //orange
+			.style("opacity", 1);
+            
+     	   	mark=d.data.label;
 
-            path.on("mouseenter", function (d) {
-            d3.select(this)
-                .attr("stroke", "white")
-                .transition()
-                .duration(200)
-                .attr("d", arcOver)
-                .attr("stroke-width", 1);
-        	});
-         	
-         	path.on("mouseleave", function (d) {
-             	d3.select(this).transition()
-                .duration(200)
-                .attr("d", arc)
-                .attr("stroke", "none");
-         	});
+     	   	if (mark == 'No Activity/Data') {
+     	   		 d3.select("#chart").remove();
+     	   		$(".menu-chart-text").hide();
+     	   		$(".chart").hide();
+     	   		$(".chart_result").hide();
 
-         	path.on("click", function (d,i) {
-                
-         		svg.selectAll('path')
-         		.attr('fill', function(d, i) { 
-					return color(d.data.label);
-				})
-				.style('opacity', 1);
-
-              
-                // Click a part on the pie chart
-				d3.select(this)
-				.transition()
-				.attr("stroke", "black")
-				.attr("stroke-width", 2)
-				.duration(350)
-				.attr("fill","#F6931F")  //orange
-				.style("opacity", 1);
-                
-         	   	mark=d.data.label;
-
-         	   	if (mark == 'No Activity/Data') {
-         	   		 d3.select("#chart").remove();
-         	   		$(".menu-chart-text").hide();
-         	   		$(".chart").hide();
-         	   		$(".chart_result").hide();
-
-         	   	} else {	
-	               	linechart();
-	               	chart_text.innerHTML = "Line Chart for the activity: "+mark;
-         	   	}
+     	   	} else {	
+               	linechart();
+               	chart_text.innerHTML = "Line Chart for the activity: "+mark;
+     	   	}
 
 
-            });
+        });
+	
+		var legend = svg.selectAll('.legend')                     
+			.data(color.domain())                                   
+			.enter()                                                
+			.append('g')                                            
+			.attr('class', 'legend')
+			.attr('transform', function(d, i) {                     
+				var height = legendRectSize + legendSpacing;         
+				var offset =  height * color.domain().length / 2;     
+				//leftright
+				var horz = -3.5 * legendRectSize-11;  
+				//updown                    
+				var vert = i * height - offset+2;                       
+				return 'translate(' + horz + ',' + vert + ')';        
+			});  		  
+        
+		legend.append('rect')                                     
+			.attr('width', legendRectSize)                          
+			.attr('height', legendRectSize)                         
+			.style('fill', color)                                   
+			.style('stroke', color);                                
+
+		legend.append('text')                                     
+			.attr('x', legendRectSize + legendSpacing)              
+			.attr('y', legendRectSize - legendSpacing)
+			.style('fill', 'white')	
+			.style('font-size', '15px')						
+			.text(function(d,i) { return d+":"+ percentage[i]+"%"; });                     	
+                    	
+	//Line Chart 
+        function arrayElemCount(arrs){
+	    	var newArrs = [];
+	     	if(arrs.length > 0) {
+	        	for(var i = 0,ilen = arrs.length; i < ilen; i+=1) {
+	            	var temp = arrs[i];
+	            	var count = 0;
+	            	for(var j = 0,jlen = arrs.length; j < jlen; j+=1) {
+	               		if(arrs[j] == temp) {
+	                    		count++;
+	                    		arrs[j] = -1;
+	                 	}
+	           		}
+	           		if (temp != -1){
+	            	newArrs.push(temp+"-"+count);}
+	       		}
+	     	}
+	     	return newArrs;
+		}
+
+		appraisal_dat = arrayElemCount(appraisal_dat);
+		offermade_dat = arrayElemCount(offermade_dat);
+		decision_dat = arrayElemCount(decision_dat);
+		award_dat = arrayElemCount(award_dat);
+		tenant_dat = arrayElemCount(tenant_dat);
+		transferofdeed_dat = arrayElemCount(transferofdeed_dat);
+		end_count = arrayElemCount(end_count);
 		
-			var legend = svg.selectAll('.legend')                     
-				.data(color.domain())                                   
-				.enter()                                                
-				.append('g')                                            
-				.attr('class', 'legend')
-				.attr('transform', function(d, i) {                     
-					var height = legendRectSize + legendSpacing;         
-					var offset =  height * color.domain().length / 2;     
-					//leftright
-					var horz = -3.5 * legendRectSize-11;  
-					//updown                    
-					var vert = i * height - offset+2;                       
-					return 'translate(' + horz + ',' + vert + ')';        
-				});  		  
-	        
-			legend.append('rect')                                     
-				.attr('width', legendRectSize)                          
-				.attr('height', legendRectSize)                         
-				.style('fill', color)                                   
-				.style('stroke', color);                                
 
-			legend.append('text')                                     
-				.attr('x', legendRectSize + legendSpacing)              
-				.attr('y', legendRectSize - legendSpacing)
-				.style('fill', 'white')	
-				.style('font-size', '15px')						
-				.text(function(d,i) { return d+":"+ percentage[i]+"%"; });                     	
-	                    	
-		//Line Chart 
-            function arrayElemCount(arrs){
-		    	var newArrs = [];
-		     	if(arrs.length > 0) {
-		        	for(var i = 0,ilen = arrs.length; i < ilen; i+=1) {
-		            	var temp = arrs[i];
-		            	var count = 0;
-		            	for(var j = 0,jlen = arrs.length; j < jlen; j+=1) {
-		               		if(arrs[j] == temp) {
-		                    		count++;
-		                    		arrs[j] = -1;
-		                 	}
-		           		}
-		           		if (temp != -1){
-		            	newArrs.push(temp+"-"+count);}
-		       		}
-		     	}
-		     	return newArrs;
-			}
-
-			appraisal_dat = arrayElemCount(appraisal_dat);
-			offermade_dat = arrayElemCount(offermade_dat);
-			decision_dat = arrayElemCount(decision_dat);
-			award_dat = arrayElemCount(award_dat);
-			tenant_dat = arrayElemCount(tenant_dat);
-			transferofdeed_dat = arrayElemCount(transferofdeed_dat);
-			end_count = arrayElemCount(end_count);
+		//Get data from begining to the selectd year	
+		function line_chart_template(arras) {
 			
+			var total =0;
+			var template=[];
+			var activity_year;
+			var activity_count;
+			var sum=1;
 
-			//Get data from begining to the selectd year	
-			function line_chart_template(arras) {
-				
-				var total =0;
-				var template=[];
-				var activity_year;
-				var activity_count;
-				var sum=1;
+			for (var j=0; j<arras.length;j++){
 
-				for (var j=0; j<arras.length;j++){
+						activity_count=parseInt(arras[j].split("-")[1]);
+						sum += activity_count;}
 
-							activity_count=parseInt(arras[j].split("-")[1]);
-							sum += activity_count;}
+			for (var i=1950; i<=1978; i++){
+			
+				if (arras.length>0){
 
-				for (var i=1950; i<=1978; i++){
-				
-					if (arras.length>0){
+					for (var j=0; j<arras.length;j++){
 
-						for (var j=0; j<arras.length;j++){
+						activity_year=arras[j].split("-")[0];
+						activity_count=parseInt(arras[j].split("-")[1]);
 
-							activity_year=arras[j].split("-")[0];
-							activity_count=parseInt(arras[j].split("-")[1]);
-
-							if (i==activity_year){
-								temp_value = activity_count;
-								total += temp_value;
-							}
-
+						if (i==activity_year){
+							temp_value = activity_count;
+							total += temp_value;
 						}
-		  
-					  	 template.push({
-        					x: parseInt(i-1900),
-        					y: Number(total/(sum-1)).toFixed(2)
-    					});
-
 
 					}
-					else {
-							temp_value=0;
-							sum=1;
-							total += temp_value;
+	  
+				  	 template.push({
+    					x: parseInt(i-1900),
+    					y: Number(total/(sum-1)).toFixed(2)
+					});
 
-						 	template.push({
-        						x: parseInt(i-1900),
-        						y: Number((total/sum)).toFixed(2)
-    						});
-					}		 
-		            
-		        
+
 				}
+				else {
+						temp_value=0;
+						sum=1;
+						total += temp_value;
 
-				return template;
+					 	template.push({
+    						x: parseInt(i-1900),
+    						y: Number((total/sum)).toFixed(2)
+						});
+				}		 
+	            
+	        
 			}
 
-			// /Draw the line chart
-	    	function linechart() {          
-	    	    d3.select("#chart").remove();
-	    	    $(".menu-chart-text").show();
-  				$(".chart").show();
-         	   	$(".chart_result").show();
+			return template;
+		}
 
-	     		var width = 430, height = 300;
-                var padding = { top: 30, right: 30, bottom: 10, left: 30 };
-                var main = d3.select('.line-chart')
-				.append("svg")
-				.attr("id", "chart")
-				.attr("preserveAspectRatio", "xMidYMid meet")
-            	.attr("viewBox", "0 0 430 300")
-				.append('g')
-				.attr('transform', "translate(" + padding.top + ',' + padding.left + ')');
+		// /Draw the line chart
+    	function linechart() {          
+    	    d3.select("#chart").remove();
+    	    $(".menu-chart-text").show();
+				$(".chart").show();
+     	   	$(".chart_result").show();
 
-                var dataset = Array();
-                var final_data = Array();
-                var dataset_leng=0;
+     		
+     		var height = 300;
+			var width = height * 1.3;
+     		
+            var padding = { top: 30, right: 30, bottom: 20, left: 30 };
+            var main = d3.select('.line-chart')
+			.append("svg")
+			.attr("id", "chart")
+			.attr("preserveAspectRatio", "xMidYMid meet")
+        	.attr("viewBox", "0 0 430 300")
+			.append('g')
+			.attr('transform', "translate(" + padding.top + ',' + padding.left + ')');
 
-                dataset_leng=SLIDER_VALUE-1950+1;
-              
-                var choosed;
 
-                if (mark == "Offer Made" || mark == "No Activity/Data") {
-                	choosed=line_chart_template(offermade_dat);
-                } else {
-                	switch (mark){
-	                    case "Appraisal":
-							choosed=line_chart_template(appraisal_dat);						
-							break;
-						case "Decision for Offer":
-							choosed=line_chart_template(decision_dat);			
-							break;
-						case "Tenant Moved":
-							choosed=line_chart_template(tenant_dat);				
-							break;
-						case "Awarded":
-							choosed=line_chart_template(award_dat);			
-							break;
-						case "Transfer of Deed":
-							choosed=line_chart_template(transferofdeed_dat);					
-							break;
-						case "End of Case":
-							choosed=line_chart_template(end_count);			
-							break;
-                	}
 
-                };
+            var dataset = Array();
+            var final_data = Array();
+            var dataset_leng=0;
 
-                for (var cc=0;cc<dataset_leng;cc++){
-                	dataset[cc]=choosed[cc];
-                };
+            dataset_leng=SLIDER_VALUE-1950+1;
+          
+            var choosed;
 
-                var xScale = d3.scale.linear()
-                        .domain(d3.extent(dataset, function(d) {
-                            return d.x;
-                        }))
-                        .range([0, (width - padding.left - padding.right)]);
-                var yScale = d3.scale.linear()
-                        .domain([0,1])
-                        .range([height - padding.top - padding.bottom, 0]);
-                var xAxis = d3.svg.axis()
-                        .scale(xScale)
-                        .tickFormat(d3.format("d"))
-                        .orient('bottom');
-                var yAxis = d3.svg.axis()
-                        .scale(yScale)
-                        .orient('left');
-                main.append('g')
-                        .attr('class', 'axis')
-                        .attr('transform', 'translate(0,' + (height - padding.top - padding.bottom) + ')')
-                        .call(xAxis);
-                main.append('g')
-                        .attr('class', 'axis')
-                        .call(yAxis);
-                	main.append("text")
-    			.attr("class", "x label")
-    			.attr('transform', 'translate('+(width*0.86) +',' + (height*0.85) + ')  ')
-    			.text("Year")
-    			.attr('fill', 'white');
+            if (mark == "Offer Made" || mark == "No Activity/Data") {
+            	choosed=line_chart_template(offermade_dat);
+            } else {
+            	switch (mark){
+                    case "Appraisal":
+						choosed=line_chart_template(appraisal_dat);						
+						break;
+					case "Decision for Offer":
+						choosed=line_chart_template(decision_dat);			
+						break;
+					case "Tenant Moved":
+						choosed=line_chart_template(tenant_dat);				
+						break;
+					case "Awarded":
+						choosed=line_chart_template(award_dat);			
+						break;
+					case "Transfer of Deed":
+						choosed=line_chart_template(transferofdeed_dat);					
+						break;
+					case "End of Case":
+						choosed=line_chart_template(end_count);			
+						break;
+            	}
 
-   			 main.append("text")
-    			.attr("class", "y label")
-    			.attr('transform', 'translate(-20,' +  '-10)  ')
-    			.text("Percentage")
-    			.attr('fill', 'white');
-    			
-                var line = d3.svg.line()
-                        .x(function(d) {
-                            return xScale(d.x)
-                        })
-                        .y(function(d) {
-                            return yScale(d.y);
-                        })
-                        .interpolate('linear');
-                main.append('path')
-                        .attr('class', 'line')
-                        .attr('d', line(dataset));
-                
-               	var tooltip = d3.select('.chart_result');
+            };
 
-                main.selectAll('circle')
-                        .data(dataset)
-                        .enter()
-                        .append('circle')
-                        .attr('cx', function(d) {
-                            return xScale(d.x);
-                        })
-                        .attr('cy', function(d) {
-                            return yScale(d.y);
-                        })
-                        .attr('r', 7)
-                        .attr('fill', function(d, i) {
-                            return getColor(i);
-                        })
-                         .on('mouseover', function(d) {
-          					tooltip.transition()
-              			    .duration(300)
-               				.style("opacity", .9);
-          					tooltip.html("In Year 19"+d.x+", "+ (d.y*100).toFixed(2) +"% of the activity was done.")
-      					})
-      					.on('mouseout', function(d) {
-          					tooltip.transition()
-               				.duration(500)
-               				.style("opacity", 0);
-      					});
-      				
-      				function getColor() {
-               			 var palette = "";
+            for (var cc=0;cc<dataset_leng;cc++){
+            	dataset[cc]=choosed[cc];
+            };
 
-		                	switch (mark){
-		                    	case "Offer Made":
-									palette=cc1;						
-									break;
-		                    	case "Appraisal":
-									palette=cc2;						
-									break;
-								case "Decision for Offer":
-									palette=cc3;			
-									break;
-								case "Tenant Moved":
-									palette=cc4;				
-									break;
-								case "Awarded":
-									palette=cc5;			
-									break;
-								case "Transfer of Deed":
-									palette=cc6;					
-									break;
-								case "End of Case":
-									palette=cc7;			
-									break;
+            var xScale = d3.scale.linear()
+                    .domain(d3.extent(dataset, function(d) {
+                        return d.x;
+                    }))
+                    .range([0, (width - padding.left - padding.right)]);
+            var yScale = d3.scale.linear()
+                    .domain([0,1])
+                    .range([height - padding.top - padding.bottom, 0]);
+            var xAxis = d3.svg.axis()
+                    .scale(xScale)
+                    .tickFormat(d3.format("d"))
+                    .orient('bottom');
+            var yAxis = d3.svg.axis()
+                    .scale(yScale)
+                    .orient('left');
+            main.append('g')
+                    .attr('class', 'axis')
+                    .attr('transform', 'translate(0,' + (height - padding.top - padding.bottom) + ')')
+                    .call(xAxis);
+            main.append('g')
+                    .attr('class', 'axis')
+                    .call(yAxis);
+            	main.append("text")
+			.attr("class", "x label")
+			.attr('transform', 'translate('+(width*0.86) +',' + (height*0.85) + ')  ')
+			.text("Year")
+			.attr('fill', 'white');
 
-	                		};
-                		return palette;
-            		} 
-        };
+			 main.append("text")
+			.attr("class", "y label")
+			.attr('transform', 'translate(-20,' +  '-10)  ')
+			.text("Percentage")
+			.attr('fill', 'white');
+			
+            var line = d3.svg.line()
+                    .x(function(d) {
+                        return xScale(d.x)
+                    })
+                    .y(function(d) {
+                        return yScale(d.y);
+                    })
+                    .interpolate('linear');
+            main.append('path')
+                    .attr('class', 'line')
+                    .attr('d', line(dataset));
+            
+           	var tooltip = d3.select('.chart_result');
 
-        linechart();
+            main.selectAll('circle')
+                    .data(dataset)
+                    .enter()
+                    .append('circle')
+                    .attr('cx', function(d) {
+                        return xScale(d.x);
+                    })
+                    .attr('cy', function(d) {
+                        return yScale(d.y);
+                    })
+                    .attr('r', 7)
+                    .attr('fill', function(d, i) {
+                        return getColor(i);
+                    })
+                     .on('mouseover', function(d) {
+      					tooltip.transition()
+          			    .duration(300)
+           				.style("opacity", .9);
+      					tooltip.html("In Year 19"+d.x+", "+ (d.y*100).toFixed(2) +"% of the activity was done.")
+  					})
+  					.on('mouseout', function(d) {
+      					tooltip.transition()
+           				.duration(500)
+           				.style("opacity", 0);
+  					});
+  				
+  				function getColor() {
+           			 var palette = "";
+
+	                	switch (mark){
+	                    	case "Offer Made":
+								palette=cc1;						
+								break;
+	                    	case "Appraisal":
+								palette=cc2;						
+								break;
+							case "Decision for Offer":
+								palette=cc3;			
+								break;
+							case "Tenant Moved":
+								palette=cc4;				
+								break;
+							case "Awarded":
+								palette=cc5;			
+								break;
+							case "Transfer of Deed":
+								palette=cc6;					
+								break;
+							case "End of Case":
+								palette=cc7;			
+								break;
+
+                		};
+            		return palette;
+        		} 
+    };
+
+    linechart();
 
 		//poly color
 		poly.eachLayer(function(layer) {

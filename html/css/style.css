@@ -15,9 +15,7 @@ body{
 	background:#b5d0d0;
 	color:#285585;
 	font-family:Arial;
-	-moz-transform: scale(0.8, 0.8);
-   	zoom: 0.8;
-   	zoom: 80%;
+	
 }
 
 #header{
@@ -71,7 +69,7 @@ body{
 	height: 100%;
     width: 100%;
     display: block;
-	border-bottom: solid 1px #97989A; 
+	/*border-bottom: solid 1px #97989A; */
 }
 #menu_slider > .leaflet-control-slider {
 	margin: 15px;
@@ -232,7 +230,7 @@ body{
 }
 
 .line-chart {
-    width: 95%;
+    /*width: 95%;*/
     overflow: hidden;
     padding:10px 5px 0 15px;
 }
@@ -241,7 +239,7 @@ body{
 	overflow: hidden;
 	color:white;
 	font-size: 15px;
-	padding-left: 50px;
+	padding-left: 20px;
 	padding-top: 10px;
 }
 
