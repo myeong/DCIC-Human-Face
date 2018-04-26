@@ -26,7 +26,6 @@
 <link rel="stylesheet" href="css/L.Control.SlideMenu.css">
 <link rel="stylesheet" href="css/leaflet-slider.css"/>
 
-//First popup
 <script>
 	$(function () {
 		$('#my-welcome-message').firstVisitPopup({
