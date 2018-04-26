@@ -51,14 +51,14 @@
 <script>
 var geojson_path = "js/with_date.geojson";
 var db_data = null;
-//var image_path = null;
+var image_path = null;
 
 function getdata(data){
 	db_data = data;
 }
 
 function getimagedata(data){
-	image_path = data;
+  image_path = data;
 }
    
 function load_data() {
@@ -212,7 +212,7 @@ $.when(load_data(), get_image_paths()).done(function() {
 	var user_year_text = L.DomUtil.create('p', 'menu-year-text', user_year);
 	user_year_text.innerHTML = 'Year: ';
 	var user_year_input = L.DomUtil.create('p1', 'menu-year-input', user_year);
-	user_year_input.innerHTML = "1952";
+	user_year_input.innerHTML = "1950";
 	
 	//Search & Result area
 	var search_box_div = L.DomUtil.create('div', 'menu-search-container');
@@ -382,8 +382,6 @@ $.when(load_data(), get_image_paths()).done(function() {
     mapbuttons_div.appendChild(chart_result);
 
 
-
-
 	// Loading the Asheville Raster Layer (tilemap)
 	var asheville = L.tileLayer('asheville_tiles/{z}/{x}/{y}.png', {
 		tms: true, 
@@ -393,7 +391,7 @@ $.when(load_data(), get_image_paths()).done(function() {
 	map.addLayer(asheville);
 	
 	// Year slider
-	var SLIDER_VALUE = String(1952);
+	var SLIDER_VALUE = String(1950);
 
 	// console.log(db_data);
 	// When slider value is changed
@@ -524,7 +522,7 @@ $.when(load_data(), get_image_paths()).done(function() {
 
         latest_status_cleaned = removeDuplicateUsingSet(latest_status);
 
-        //console.log(latest_status);
+        console.log(latest_status);
 
         var appraisal_dat = [];	
         var appraisal_count = 0;				
@@ -835,7 +833,7 @@ $.when(load_data(), get_image_paths()).done(function() {
 							activity_count=parseInt(arras[j].split("-")[1]);
 							sum += activity_count;}
 
-				for (var i=1952; i<=1978; i++){
+				for (var i=1950; i<=1978; i++){
 				
 					if (arras.length>0){
 
@@ -869,6 +867,7 @@ $.when(load_data(), get_image_paths()).done(function() {
     						});
 					}		 
 		            
+		        
 				}
 
 				return template;
@@ -895,7 +894,7 @@ $.when(load_data(), get_image_paths()).done(function() {
                 var final_data = Array();
                 var dataset_leng=0;
 
-                dataset_leng=SLIDER_VALUE-1952+1;
+                dataset_leng=SLIDER_VALUE-1950+1;
               
                 var choosed;
 
@@ -957,7 +956,7 @@ $.when(load_data(), get_image_paths()).done(function() {
     			.text("Year")
     			.attr('fill', 'white');
 
-   			 	main.append("text")
+   			 main.append("text")
     			.attr("class", "y label")
     			.attr('transform', 'translate(-20,' +  '-10)  ')
     			.text("Percentage")
@@ -1094,8 +1093,8 @@ $.when(load_data(), get_image_paths()).done(function() {
 
 	}, {
 		max: 1978,
-		min: 1952,
-		value: 1952,
+		min: 1950,
+		value: 1950,
 		step:1,
 		size: '250px',
 		orientation:'horizontal',
@@ -1125,7 +1124,7 @@ $.when(load_data(), get_image_paths()).done(function() {
 	 	if ( properties.events == "No data"){
 			layer.setStyle(c8);
 		}
-		else if (current_year==1952){
+		else if (current_year==1950){
              layer.setStyle(c8);
 		}
 		else {
