@@ -69,7 +69,7 @@ foreach ($files as $file){
 		$parcel_id_fk = get_parcel_id($conn, $block_num, $parcel_num);
 
 		// get corresponding image path.
-		$img_path = "'" . $dir_path . $file . "'";
+		$img_path = "'images/properties/" . $file . "'";
 
 		// inserting the path.
 		insert_img_path($conn, $img_path, $parcel_id_fk);
