@@ -15,6 +15,9 @@ body{
 	background:#b5d0d0;
 	color:#285585;
 	font-family:Arial;
+	-moz-transform: scale(0.8, 0.8);
+   	zoom: 0.8;
+   	zoom: 80%;
 }
 
 #header{
