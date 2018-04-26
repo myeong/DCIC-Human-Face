@@ -26,39 +26,14 @@
 <link rel="stylesheet" href="css/L.Control.SlideMenu.css">
 <link rel="stylesheet" href="css/leaflet-slider.css"/>
 
-<script>
-	$(function () {
-		$('#my-welcome-message').firstVisitPopup({
-				cookieName : 'homepage'
-		});
-	});
-</script>
-
-
-<script>
-	// Click to close the popup
-	$(document).click(function(e){                            
-	    $("#my-welcome-message").hide(); 
-	});  
-
-	var delete_cookie = function(name) {
-	    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-	};  
-	delete_cookie('homepage');
-</script>
-
 
 <script>
 var geojson_path = "js/with_date.geojson";
 var db_data = null;
-var image_path = null;
+var img_path = [];
 
 function getdata(data){
-	db_data = data;
-}
-
-function getimagedata(data){
-  image_path = data;
+  db_data = data;
 }
    
 function load_data() {
@@ -77,28 +52,42 @@ function load_data() {
         }
     }).done(function(data){
     	// console.log(data);
+    	$.each(data, function(i, value){
+    		if (value.image_path != null){
+	    		if (!(value.block_no in img_path)){
+	    			img_path[value.block_no] = [];
+	    		}
+	    		if (!(value.parcel_no in img_path[value.block_no])){
+	    			img_path[value.block_no][value.parcel_no] = [];
+	    		}
+	    		if (img_path[value.block_no][value.parcel_no].indexOf(value.image_path) == -1 && 
+	    			(typeof(value.image_path) != "undefined")){
+	    			img_path[value.block_no][value.parcel_no].push(value.image_path);
+	    		}
+    		}
+    	});
+    	// console.log(img_path);
     	getdata(data);
     });
 }
 
-function get_image_paths() {
-    // NOTE:  This function must return the value 
-    //        from calling the $.ajax() method.
-    return $.ajax({
-        type:"GET",
-        async:true,
-        url:"get_image_paths.php",
-        dataType:'json',        
-        error: function(err) {
-        	console.log(err);        	
-        }
-    }).done(function(data){
-    	// console.log(data);
-    	getimagedata(data);
-    });
-}
+$.when(load_data()).done(function() {
+	$(function () {
+		$('#my-welcome-message').firstVisitPopup({
+				cookieName : 'homepage'
+		});
+	});
 
-$.when(load_data(), get_image_paths()).done(function() {
+	// Click to close the popup
+	$(document).click(function(e){                            
+	    $("#my-welcome-message").hide(); 
+	});  
+
+	var delete_cookie = function(name) {
+	    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+	};  
+	delete_cookie('homepage');
+
 
 	//Color 
 	var hoverColor = {
@@ -1294,6 +1283,7 @@ $.when(load_data(), get_image_paths()).done(function() {
 	      //$.ajax(... 
 	    });
 
+    	// need to check on this (performance)
    		get_people_names (block_num, parcel_num);
 
 
@@ -1302,30 +1292,22 @@ $.when(load_data(), get_image_paths()).done(function() {
 		var zero=String('No data');
 				
 		//Popup info			
-		var block_parcel = "B" + block_num + "_P" + parcel_num;
-		var images = Array();
+		var block_parcel = null;
 		
-		for (var i = 0; i < image_path.length; i++){
-			if (image_path[i].indexOf(block_parcel) !== -1){
-				images.push(image_path[i]);
-			}	
-		}
 		
-		if(images.length >0) {
-			block_parcel = "images/properties/" + images[0];
+		if( !(img_path[block_num]) || !(img_path[block_num][parcel_num]) 
+			|| img_path[block_num][parcel_num].length == 0) {
+			block_parcel = "images/default_image.jpg";		 		
 		} else {
-			block_parcel = "images/default_image.jpg"; 
+			block_parcel = img_path[block_num][parcel_num][0];
 		}
-
 		var address = (feature.properties.st_num == null ? "" : feature.properties.st_num) + " "+
 					(feature.properties.st_name == null ? "" : feature.properties.st_name);
 		
 		var container = $('<div />');
-
 		container.on('click', '.img-click', function() {				
 		    $(".img-cont").html("<img src='" + $(this)[0].currentSrc + "' />");
 		});
-
 		var customPopup= "<div class='popup-title'>" +"<p>"+address+"</p></div>"  						
 						+"<div class='popup-table'>"
 							+"<div class='img-cont'>"
@@ -1343,14 +1325,22 @@ $.when(load_data(), get_image_paths()).done(function() {
 							+"<div class='people' style='width:20%;'></div>" 
 						+"</div>"
 						+"<div class='thumb-images'>";
-
-		for (var i = 0; i<images.length; i++){			
-			customPopup += "<img class='img-click' src='images/properties/" + images[i] + "'/>";
-		}
+		if (block_num in img_path && parcel_num in img_path[block_num]){
+			for (var i = 0; i<img_path[block_num][parcel_num].length; i++){			
+			customPopup += "<img class='img-click' src='" + img_path[block_num][parcel_num][i] + "'/>";
+			}
+		}	
+		// if (img_path[value.block_no][value.parcel_no] != null){
+		// 		for (var i = 0; i<img_path[value.block_no][value.parcel_no].length; i++){			
+		// 			console.log(value.block_no + " " + value.parcel_no);
+		// 			console.log(img_path[value.block_no][value.parcel_no][i]);
+		// 			console.log();
+		// 		}
+		// 	}
+		
 		customPopup += "</div>";
-
+		
 		container.html(customPopup);
-
 		var customOptions =
 		{
 			'maxWidth': 'auto',
@@ -1361,9 +1351,8 @@ $.when(load_data(), get_image_paths()).done(function() {
 	        mouseover: highlightDot,
 	        mouseout: resetDotHighlight
 	    });
-
 		layer.bindPopup(container[0],customOptions);		
-
+			
 	}
 	
 	map.addLayer(poly);
