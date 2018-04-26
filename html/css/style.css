@@ -15,6 +15,9 @@ body{
 	background:#b5d0d0;
 	color:#285585;
 	font-family:Arial;
+	-moz-transform: scale(0.8, 0.8);
+   	zoom: 0.8;
+   	zoom: 80%;
 }
 
 #header{
@@ -32,6 +35,21 @@ body{
 	width:100%;
 	float:left;
 }
+
+#my-welcome-message {
+	z-index: 500;
+	position: fixed;
+	width: 50%;
+    height: 50%;
+	top: 4%;
+	left:4%;
+	background: rgba(48, 49, 37, 0);
+}
+
+#fvpp-close{
+	display: none;
+}
+
 #map{ 
 	height:100%;
 	width:100%;
@@ -53,7 +71,6 @@ body{
 	height: 100%;
     width: 100%;
     display: block;
-	margin: 5px;
 	border-bottom: solid 1px #97989A; 
 }
 #menu_slider > .leaflet-control-slider {
@@ -78,15 +95,24 @@ body{
 #menu_slider p1 {
 	color: orange;
 }
+
 .menu-year {
 	display: inline-flex;
 	color:  #F6931F;
     font-size: 26px;
-    margin: 10px;
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     width: calc(100% - 20px);
     border-bottom: solid 1px #97989A;
     padding-bottom: 10px;
 }
+
+.menu-year-text {
+	margin-left: 15px;
+
+}
+
 .menu-search-container {
 /*	position: absolute;
 	top: 100px;
@@ -104,17 +130,30 @@ body{
 
 }
 .menu-search {
-	margin: 10px;
+	margin-left: 20px;
 }
 .menu-search-btn {
     background-color: #97989A;
     text-align: center;
 	font-size:16px;
     line-height: 30px;
-    color: black;
+    color: white;
 }
+
+.menu-search-btn:hover {
+	color:black;
+	background-color: #dadaeb;
+}
+
+.menu-search-btn:active {
+	color:white;
+	background-color: #4292c6;
+
+}
+
 #menu-search-div > div {
 	width: calc(100% - 30px);
+	max-width: 90%;
 	height: 33px;
 	border-radius: 0px;
 	box-shadow: 0 0px 0px;
@@ -162,6 +201,8 @@ body{
 	color:white;
 	display: none;
 	padding-left: 10px;
+	max-height: 60%;
+    overflow: auto;
 }
 .menu-result-row {
 	height: 33px;
@@ -171,15 +212,71 @@ body{
     line-height: 33px;
     padding-left: 5px;
 }
-.menu-result-row:hover {
-	background-color: #414141;
-}
+
+
 .menu-pie {
-	width: 290px;
-	height:340px;
+	width: 100%;
+    max-height: 100%;
 /*	padding-top: 198px;
 	padding-left: 1px;*/
 }
+
+
+.menu-chart {
+   margin-left:25px;
+   font-size:15px;
+}
+
+#menu_slider .menu-chart p{
+	color:white;
+}
+
+.line-chart {
+    width: 95%;
+    overflow: hidden;
+    padding:10px 5px 0 15px;
+}
+.chart_result{
+	max-width: 90%;
+	overflow: hidden;
+	color:white;
+	font-size: 15px;
+	padding-left: 50px;
+	padding-top: 10px;
+}
+
+#chart{
+	overflow: hidden;
+}
+
+.axis {
+ fill: white;
+}
+
+.axis line,
+.axis path{
+ stroke: #fff;
+ fill: none;
+ stroke-width: 1px;
+
+}
+.line {
+ stroke: #FFFFFF;
+ fill: none;
+ stroke-width: 2px;
+ }
+
+
+
+
+
+
+
+
+
+
+
+
 
 .date-list{
 	color:purple;
