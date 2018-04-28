@@ -14,7 +14,7 @@ Hyeong-gi Hong
 	```bash
 	"BlockNum_ParcelNum_Date_Series.png"
 	```
-Retrieve block number and parcel number by using split/explode. The block or parcel numbers can contain a letter, so create a filtering system as need. 
+	Retrieve block number and parcel number by using split/explode. The block or parcel numbers can contain a letter, so create a filtering system as need. 
 
 4. Send a query to parcels table in the database to see if the property information is already in database. If it is, retrieve the parcel_id. Otherwise, create a insert query to insert a property information and retreive the given parcel_id.
 
