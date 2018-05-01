@@ -79,6 +79,44 @@ function load_data() {
     });
 }
 
+function get_people_names(block, parcel) {
+		
+
+    return $.ajax({
+        type:"GET",
+        async:true,
+        url:"get.php",
+        dataType:'json',
+        data: {
+        	action: 'owner',
+        	parcel: parcel,
+        	block: block
+        },
+        error: function(err) {            	
+        }
+    }).done(function(data){   
+    	$("div.people").empty();  
+    	var names = "";
+    	var role = "";
+
+    	for (var i=0; i<data.length; i++){
+    		if (data[i].name==null || data[i].role==null) continue;
+    		if (data[i].name.trim()=="Redevelopment Commission of the City") continue;
+
+    		if (role != data[i].role){
+    			names += "<div class='role'>" +data[i].role+ "</div>";
+    			role = data[i].role;
+    		}
+
+    		names += "<div class='name'>" + data[i].name + "</div>";
+    	}        	
+    	$("div.people").html(names);
+    	$("div.people").show();
+    });
+		
+
+}
+
 $.when(load_data()).done(function() {
 
 	// Click to close the popup
@@ -307,6 +345,7 @@ $.when(load_data()).done(function() {
 				var layer = poly.getLayers()[i];
 				layer.setStyle(highlight);
 				map.fitBounds(layer.getBounds());
+				break;
 			}
 		}
 	}	
@@ -722,6 +761,7 @@ $.when(load_data()).done(function() {
                     	
 	//Line Chart 
         function arrayElemCount(arrs){
+        	console.log(arrs);
 	    	var newArrs = [];
 	     	if(arrs.length > 0) {
 	        	for(var i = 0,ilen = arrs.length; i < ilen; i+=1) {
@@ -1112,59 +1152,7 @@ $.when(load_data()).done(function() {
     
 	}
 
-	function get_people_names(block, parcel) {
-		
 
-	    // return $.ajax({
-	    //     type:"GET",
-	    //     async:true,
-	    //     url:"get.php",
-	    //     dataType:'json',
-	    //     data: {
-     //        	action: 'owner',
-     //        	parcel: parcel,
-     //        	block: block
-     //        },
-	    //     error: function(err) {            	
-     //        }
-     //    }).done(function(data){   
-     //    	$("div.people").empty();  
-     //    	var names = "";
-     //    	var role = "";
-
-     //    	for (var i=0; i<data.length; i++){
-     //    		if (data[i].name==null || data[i].role==null) continue;
-     //    		if (data[i].name.trim()=="Redevelopment Commission of the City") continue;
-
-     //    		if (role != data[i].role){
-     //    			names += "<div class='role'>" +data[i].role+ "</div>";
-     //    			role = data[i].role;
-     //    		}
-
-     //    		names += "<div class='name'>" + data[i].name + "</div>";
-     //    	}        	
-     //    	$("div.people").html(names);
-     //    	$("div.people").show();
-     //    });
-			$("div.people").empty();  
-        	var names = "";
-        	var role = "";
-
-        	for (var i=0; i<db_data.length; i++){
-        		if (db_data[i].name==null || db_data[i].role==null) continue;
-        		if (db_data[i].name.trim()=="Redevelopment Commission of the City") continue;
-
-        		if (role != db_data[i].role){
-        			names += "<div class='role'>" +db_data[i].role+ "</div>";
-        			role = data[i].role;
-        		}
-
-        		names += "<div class='name'>" + db_data[i].name + "</div>";
-        	}        	
-        	$("div.people").html(names);
-        	$("div.people").show();
-
-	}
 
 	
 	// When a polygon is clicked
@@ -1241,72 +1229,63 @@ $.when(load_data()).done(function() {
 
 		var parcel_num = feature.properties.parcel;
     	var block_num = feature.properties.block;
+    	var container = $('<div />');
     	
     	layer.on('click', function (e) {
-	      // e = event
-	       get_people_names (block_num, parcel_num);
-	      // You can make your ajax call declaration here
-	      //$.ajax(... 
+	        // e = event
+	        get_people_names (block_num, parcel_num);
+
+	       //Popup tag generation			
+			var block_parcel = null;
+			
+			if( !(img_path[block_num]) || !(img_path[block_num][parcel_num]) 
+				|| img_path[block_num][parcel_num].length == 0) {
+				block_parcel = "images/default_image.jpg";		 		
+			} else {
+				block_parcel = img_path[block_num][parcel_num][0];
+			}
+			var address = (feature.properties.st_num == null ? "" : feature.properties.st_num) + " "+
+						(feature.properties.st_name == null ? "" : feature.properties.st_name);
+			
+			
+
+			container.on('click', '.img-click', function() {				
+			    $(".img-cont").html("<img src='" + $(this)[0].currentSrc + "' />");
+			});
+			var customPopup= "<div class='popup-title'>" +"<p>"+address+"</p></div>"  						
+							+"<div class='popup-table'>"
+								+"<div class='img-cont'>"
+									+"<img src='"+  block_parcel  + "' />"
+									
+								+"</div>" 
+								+"<div class='date-cont'style='width: 40%;display:inline-flex;padding-top:10px;height:250px;'>"
+									+"<div style='margin-left:15px;margin-right:10px;width:20px;'>"
+										+circles
+									+"</div>"
+									+"<div style='width:100%;line-height:16px;'"
+										+popupContent
+									+"</div>"
+								+"</div>"
+								+"<div class='people' style='width:20%;'></div>" 
+							+"</div>"
+							+"<div class='thumb-images'>";
+			if (block_num in img_path && parcel_num in img_path[block_num]){
+				for (var i = 0; i<img_path[block_num][parcel_num].length; i++){			
+				customPopup += "<img class='img-click' src='" + img_path[block_num][parcel_num][i] + "'/>";
+				}
+			}	
+
+			customPopup += "</div>";
+			container.html(customPopup);
+	      
 	    });
 
     	// need to check on this (performance)
-   		get_people_names (block_num, parcel_num);
+   		// get_people_names (block_num, parcel_num);
 
-
-
-		var noData="<p>Sorry, No data</p>";		
-		var zero=String('No data');
 				
-		//Popup info			
-		var block_parcel = null;
-		
-		
-		if( !(img_path[block_num]) || !(img_path[block_num][parcel_num]) 
-			|| img_path[block_num][parcel_num].length == 0) {
-			block_parcel = "images/default_image.jpg";		 		
-		} else {
-			block_parcel = img_path[block_num][parcel_num][0];
-		}
-		var address = (feature.properties.st_num == null ? "" : feature.properties.st_num) + " "+
-					(feature.properties.st_name == null ? "" : feature.properties.st_name);
-		
-		var container = $('<div />');
-		container.on('click', '.img-click', function() {				
-		    $(".img-cont").html("<img src='" + $(this)[0].currentSrc + "' />");
-		});
-		var customPopup= "<div class='popup-title'>" +"<p>"+address+"</p></div>"  						
-						+"<div class='popup-table'>"
-							+"<div class='img-cont'>"
-								+"<img src='"+  block_parcel  + "' />"
-								
-							+"</div>" 
-							+"<div class='date-cont'style='width: 40%;display:inline-flex;padding-top:10px;height:250px;'>"
-								+"<div style='margin-left:15px;margin-right:10px;width:20px;'>"
-									+circles
-								+"</div>"
-								+"<div style='width:100%;line-height:16px;'"
-									+popupContent
-								+"</div>"
-							+"</div>"
-							+"<div class='people' style='width:20%;'></div>" 
-						+"</div>"
-						+"<div class='thumb-images'>";
-		if (block_num in img_path && parcel_num in img_path[block_num]){
-			for (var i = 0; i<img_path[block_num][parcel_num].length; i++){			
-			customPopup += "<img class='img-click' src='" + img_path[block_num][parcel_num][i] + "'/>";
-			}
-		}	
-		// if (img_path[value.block_no][value.parcel_no] != null){
-		// 		for (var i = 0; i<img_path[value.block_no][value.parcel_no].length; i++){			
-		// 			console.log(value.block_no + " " + value.parcel_no);
-		// 			console.log(img_path[value.block_no][value.parcel_no][i]);
-		// 			console.log();
-		// 		}
-		// 	}
-		
-		customPopup += "</div>";
-		
-		container.html(customPopup);
+
+		// container.html(customPopup);
 		var customOptions =
 		{
 			'maxWidth': 'auto',

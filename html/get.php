@@ -64,8 +64,8 @@ if ($action=="search") {
 	 		WHERE e.date IS NOT NULL and e.type IS NOT NULL
 	 		ORDER BY e.date ASC, t.id ASC;";
 } else if ($action=="owner"){
-	$parcel = intval($_GET['parcel']);
-	$block = intval($_GET['block']);
+	$parcel = $_GET['parcel'];
+	$block = $_GET['block'];
 	$sql = "SELECT DISTINCT on (p.name, a.role) p.name, a.role
 			FROM humanface.events e
 			LEFT JOIN humanface.parcels c on  e.parcel_id=c.parcel_id
@@ -79,11 +79,16 @@ if ($action=="search") {
 } else {
 	die("Error: action=invalid");
 }
+
+
 $result = pg_query($connect, $sql);
 if(!$result){
 	die("Error in SQL query: " . pg_last_error());
 }
+
 $rows = pg_num_rows($result);
+
+
 if ($rows == 0) {
 	echo "Zero result";
 } else {
