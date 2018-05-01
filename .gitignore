@@ -113,3 +113,5 @@ html/credentials.inc.php
 python/data/transcription.csv
 python/Output/*.csv
 python/output/*.csv
+
+db_dump/csv

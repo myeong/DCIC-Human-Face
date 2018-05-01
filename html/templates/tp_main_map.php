@@ -91,7 +91,6 @@ $.when(load_data()).done(function() {
 	};  
 	delete_cookie('homepage');
 
-
 	//Color 
 	var hoverColor = {
 	    fillColor:"#feebe2",
@@ -1114,37 +1113,57 @@ $.when(load_data()).done(function() {
 	}
 
 	function get_people_names(block, parcel) {
-	    return $.ajax({
-	        type:"GET",
-	        async:true,
-	        url:"get.php",
-	        dataType:'json',
-	        data: {
-            	action: 'owner',
-            	parcel: parcel,
-            	block: block
-            },
-	        error: function(err) {            	
-            }
-        }).done(function(data){   
-        	$("div.people").empty();  
+		
+
+	    // return $.ajax({
+	    //     type:"GET",
+	    //     async:true,
+	    //     url:"get.php",
+	    //     dataType:'json',
+	    //     data: {
+     //        	action: 'owner',
+     //        	parcel: parcel,
+     //        	block: block
+     //        },
+	    //     error: function(err) {            	
+     //        }
+     //    }).done(function(data){   
+     //    	$("div.people").empty();  
+     //    	var names = "";
+     //    	var role = "";
+
+     //    	for (var i=0; i<data.length; i++){
+     //    		if (data[i].name==null || data[i].role==null) continue;
+     //    		if (data[i].name.trim()=="Redevelopment Commission of the City") continue;
+
+     //    		if (role != data[i].role){
+     //    			names += "<div class='role'>" +data[i].role+ "</div>";
+     //    			role = data[i].role;
+     //    		}
+
+     //    		names += "<div class='name'>" + data[i].name + "</div>";
+     //    	}        	
+     //    	$("div.people").html(names);
+     //    	$("div.people").show();
+     //    });
+			$("div.people").empty();  
         	var names = "";
         	var role = "";
 
-        	for (var i=0; i<data.length; i++){
-        		if (data[i].name==null || data[i].role==null) continue;
-        		if (data[i].name.trim()=="Redevelopment Commission of the City") continue;
+        	for (var i=0; i<db_data.length; i++){
+        		if (db_data[i].name==null || db_data[i].role==null) continue;
+        		if (db_data[i].name.trim()=="Redevelopment Commission of the City") continue;
 
-        		if (role != data[i].role){
-        			names += "<div class='role'>" +data[i].role+ "</div>";
+        		if (role != db_data[i].role){
+        			names += "<div class='role'>" +db_data[i].role+ "</div>";
         			role = data[i].role;
         		}
 
-        		names += "<div class='name'>" + data[i].name + "</div>";
+        		names += "<div class='name'>" + db_data[i].name + "</div>";
         	}        	
         	$("div.people").html(names);
         	$("div.people").show();
-        });
+
 	}
 
 	

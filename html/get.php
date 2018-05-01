@@ -76,9 +76,6 @@ if ($action=="search") {
 } else if ($action=="parcel"){
 	$sql = "SELECT DISTINCT parcel_no as parcels
 	 		FROM humanface.parcels;";
-} else if ($action=="parcel"){
-	$sql = "SELECT DISTINCT parcel_no
-	 		FROM humanface.parcels;";
 } else {
 	die("Error: action=invalid");
 }
