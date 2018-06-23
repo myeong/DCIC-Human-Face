@@ -15,14 +15,14 @@
   //Connection to PostgreSQL
   $connect = pg_connect('host=' . DBHOST . ' dbname=' . DBNAME . ' user=' . DBUSER . ' password=' . DBPASS);
   if (!$connect){
-  	die("Error in connection!:");
+  	die("Error in connection!:" . pg_last_error());
   }
 else{
   echo "DB connection successful";
   }
   //Parcels Table
-  $query = 'SELECT * FROM parcels';
-  $parcel = 'SELECT * parcel_id FROM parcels'
+  $query = 'SELECT * FROM humanface.parcels LIMIT 5';
+  $parcel = 'SELECT max(parcel_id) FROM humanface.parcels';
   $par = pg_query($connect, $query);
   ?>
 </head>
@@ -42,16 +42,23 @@ else{
       </tr>
     </thead>
     <tbody>
-      <?php while($row = pg_fetch_array($par)){?>
       <tr>
-        <td><?php echo $row['parcel_id']; ?></td>
+        <?php while($row = pg_fetch_array($par)){ ?>
+        <td><?php echo $row['parcel_id'] . "<br>"; ?></td>
+        <?php } ?>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
       </tr>
-    <?php } ?>
     </tbody>
   </table>
+  <?php
+    /*while($row = pg_fetch_array($par)){
+      echo $row['parcel_id'];
+      echo "<br>";
+    }*/
+    //pg_close($connect);
+   ?>
 </body>
 </html>
