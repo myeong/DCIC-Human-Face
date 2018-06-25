@@ -21,9 +21,9 @@ else{
   echo "DB connection successful";
   }
   //Parcels Table
-  $query = 'SELECT * FROM humanface.parcels LIMIT 5';
-  $parcel = 'SELECT max(parcel_id) FROM humanface.parcels';
+  $query = 'SELECT * FROM humanface.parcels';
   $par = pg_query($connect, $query);
+  $row = pg_fetch_all($par);
   ?>
 </head>
 <body>
@@ -42,23 +42,16 @@ else{
       </tr>
     </thead>
     <tbody>
+      <?php foreach($row as $rows){ ?>
       <tr>
-        <?php while($row = pg_fetch_array($par)){ ?>
-        <td><?php echo $row['parcel_id'] . "<br>"; ?></td>
-        <?php } ?>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td><?php echo $rows['parcel_id'] . "\n"; ?></td>
+        <td><?php echo $rows['block_no'] . "\n"; ?></td>
+        <td><?php echo $rows['parcel_no'] . "\n"; ?></td>
+        <td><?php echo $rows['ward_no'] . "\n"; ?></td>
+        <td><?php echo $rows['land_use'] . "\n"; ?></td>
       </tr>
+      <?php } ?>
     </tbody>
   </table>
-  <?php
-    /*while($row = pg_fetch_array($par)){
-      echo $row['parcel_id'];
-      echo "<br>";
-    }*/
-    //pg_close($connect);
-   ?>
 </body>
 </html>
