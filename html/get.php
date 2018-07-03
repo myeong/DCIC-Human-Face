@@ -2,7 +2,7 @@
 
 ini_set('display_errors', 1);
 require 'credentials.inc.php';
-$connect = pg_connect('host=' . DBHOST . ' dbname=' .DBNAME . ' user=' .DBUSER . ' password=' . DBPASS);
+$connect = pg_connect('host= ' . DBHOST . ' dbname=' .DBNAME . ' user=' .DBUSER . ' password=' . DBPASS);
 
 if (!$connect){
 	die("Error in connection!");
