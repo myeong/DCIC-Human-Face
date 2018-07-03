@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+  <link rel="stylesheet" href="main_php.css">
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
@@ -35,13 +36,12 @@ else{
     <p1>Utilize this search page to find parcel specific information within the DCIC: Human Face of Big Data relational database system.</p1>
   </header>
 
-  <form class = "form-inline my-2 my-lg-0" name = "form" method="post" action = "search.php">
+  <form class = "form-inline align-content-sm-end" name = "form" method="post" action = "search.php">
     <input class="form-control mr-sm-2" type="search" placeholder="Search" name = "search">
     <input class=" btn btn-outline-danger my-2 my-sm-0" type = "submit" name = "submit" value = "submit">
   </form>
 
   <?php echo "There are " . $num . " rows in the " . pg_dbname() . " database"; ?>
-  <p>You searched for <?php echo $search; ?></p>
 
   <table class="table table-light table-hover table-striped">
     <thead>
