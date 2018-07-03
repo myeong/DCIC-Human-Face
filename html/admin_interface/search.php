@@ -24,7 +24,7 @@ if(isset($_POST['submit'])){
   //Stores post data to array (humanface.parcels table)
   $search = $_POST['search'];
   $q = pg_query("SELECT * FROM humanface.parcels WHERE parcel_id = $search");
-  $array = pg_fetch_array($q);
+  $array = pg_fetch_all($q);
   $numb = pg_num_rows($q);
 }
 else{
@@ -47,20 +47,16 @@ else{
     <tbody>
       <?php foreach($array as $arr){ ?>
       <tr>
-      <td><?php echo $arr[0]; ?></td>
-      <td><?php echo $arr[1]; ?></td>
-      <td><?php echo $arr[2]; ?></td>
-      <td><?php echo $arr[3]; ?></td>
-      <td><?php echo $arr[4]; ?></td>
+      <td><?php echo $arr['parcel_id']; ?></td>
+      <td><?php echo $arr['block_no']; ?></td>
+      <td><?php echo $arr['parcel_no']; ?></td>
+      <td><?php echo $arr['ward_no']; ?></td>
+      <td><?php echo $arr['land_use']; ?></td>
     </tr>
   <?php } ?>
     </tbody>
   </table>
-  <?php echo "You searched for " . $search; ?>
-  <?php
-  foreach($array as $arr){
-    echo $arr[0];
-  }
-  ?>
+  <?php echo "You searched for " . $search . "<br>"; ?>
+  <?php echo "You searched for " . $numb . " row"; ?>
 </body>
 </html>
