@@ -14,8 +14,8 @@ if(isset($_POST['submit'])){
   //Stores post data to array (humanface.parcels table)
   $search = $_POST['search'];
   $q = pg_query("SELECT * FROM humanface.parcels WHERE $search = '$search'");
-  while(pg_fetch_all($q)){
-    
+  foreach($arr = pg_fetch_all_columns($q) as $value){
+    echo $value[0];
   }
 }
 else{

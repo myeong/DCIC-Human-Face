@@ -32,14 +32,6 @@ else{
     $q = "SELECT * FROM humanface.parcels WHERE $search = '$search'";
     $parcels = pg_query($connect, $q);
     $qsearch = pg_fetch_array($parcels);
-    /*foreach($qsearch as $p){
-      echo "<p> $p['parcel_id'] </p>";
-    }*/
-  }
-  /*else{
-    $q = "SELECT * FROM humanface.parcels";
-    $cue = pg_query($connect, $q);
-  }*/
   ?>
 </head>
 <body>
@@ -54,7 +46,9 @@ else{
   </form>
 
   <?php echo "There are " . $num . " rows in the " . pg_dbname() . " database"; ?>
+  //Jquery Onclick
   <p>You searched for <?php echo $search; ?></p>
+
 
   <table class="table table-light table-hover table-striped">
     <thead>
