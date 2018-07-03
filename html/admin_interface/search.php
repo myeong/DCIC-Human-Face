@@ -15,7 +15,10 @@ if(isset($_POST['submit'])){
   $search = $_POST['search'];
   $q = pg_query("SELECT * FROM humanface.parcels WHERE $search = '$search'");
   foreach($arr = pg_fetch_all_columns($q) as $value){
-    echo $value[0];
+    /*echo "<table>
+    <tr>
+    </tr>";*/
+    echo "<table>";
   }
 }
 else{

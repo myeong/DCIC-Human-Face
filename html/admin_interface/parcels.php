@@ -20,8 +20,9 @@
 else{
   echo "Successfully connected to database:" . " " . pg_dbname() . " on " . pg_host();
   }
-  //Querying Parcels Table Infomation
-  $query = 'SELECT * FROM humanface.parcels';
+
+  //Querying Parcels Table Information
+  $query = 'SELECT * FROM humanface.parcels LIMIT 10';
   $par = pg_query($connect, $query);
   $row = pg_fetch_all($par);
   $num = pg_num_rows($par);
@@ -40,15 +41,13 @@ else{
     <p1>Utilize this search page to find parcel specific information within the DCIC: Human Face of Big Data relational database system.</p1>
   </header>
 
-  <form class = "form-inline my-2 my-lg-0" name = "form" method="post" action = "search.php">
+  <form class = "form-inline my-2 my-lg-0" name = "form" method="post" action = "parcels.php">
     <input class="form-control mr-sm-2" type="search" placeholder="Search" name = "search">
     <input class=" btn btn-outline-danger my-2 my-sm-0" type = "submit" name = "submit" value = "submit">
   </form>
 
   <?php echo "There are " . $num . " rows in the " . pg_dbname() . " database"; ?>
-  //Jquery Onclick
   <p>You searched for <?php echo $search; ?></p>
-
 
   <table class="table table-light table-hover table-striped">
     <thead>
