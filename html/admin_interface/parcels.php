@@ -27,12 +27,12 @@ else{
   $row = pg_fetch_all($par);
   $num = pg_num_rows($par);
 
-  /*//PHP Search Bar
+  //PHP Search Bar
   if(isset($_POST['submit'])){
     $search = $_POST['search'];
     $q = "SELECT * FROM humanface.parcels WHERE $search = '$search'";
     $parcels = pg_query($connect, $q);
-    $qsearch = pg_fetch_all($parcels);*/
+  }
   ?>
 
 </head>
@@ -42,7 +42,7 @@ else{
     <p1>Utilize this search page to find parcel specific information within the DCIC: Human Face of Big Data relational database system.</p1>
   </header>
 
-  <form class = "form-inline my-2 my-lg-0" name = "form" method="post" action = "parcels.php">
+  <form class = "form-inline my-2 my-lg-0" name = "form" method="post" action = "search.php">
     <input class="form-control mr-sm-2" type="search" placeholder="Search" name = "search">
     <input class=" btn btn-outline-danger my-2 my-sm-0" type = "submit" name = "submit" value = "submit">
   </form>

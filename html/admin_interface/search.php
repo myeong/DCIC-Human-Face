@@ -14,11 +14,12 @@ if(isset($_POST['submit'])){
   //Stores post data to array (humanface.parcels table)
   $search = $_POST['search'];
   $q = pg_query("SELECT * FROM humanface.parcels WHERE $search = '$search'");
-  foreach($arr = pg_fetch_all_columns($q) as $value){
+  foreach($arr = pg_fetch_array($q) as $value){
     /*echo "<table>
     <tr>
-    </tr>";*/
-    echo "<table>";
+    </tr>";
+    echo "<table>";*/
+    echo $value[0];
   }
 }
 else{
