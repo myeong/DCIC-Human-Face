@@ -26,13 +26,6 @@ else{
   $par = pg_query($connect, $query);
   $row = pg_fetch_all($par);
   $num = pg_num_rows($par);
-
-  //PHP Search Bar
-  if(isset($_POST['submit'])){
-    $search = $_POST['search'];
-    $q = "SELECT * FROM humanface.parcels WHERE $search = '$search'";
-    $parcels = pg_query($connect, $q);
-  }
   ?>
 
 </head>
