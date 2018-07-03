@@ -22,18 +22,19 @@ else{
   }
 
   //Querying Parcels Table Information
-  $query = 'SELECT * FROM humanface.parcels LIMIT 10';
+  $query = 'SELECT * FROM humanface.parcels';
   $par = pg_query($connect, $query);
   $row = pg_fetch_all($par);
   $num = pg_num_rows($par);
 
-  //PHP Search Bar
+  /*//PHP Search Bar
   if(isset($_POST['submit'])){
     $search = $_POST['search'];
     $q = "SELECT * FROM humanface.parcels WHERE $search = '$search'";
     $parcels = pg_query($connect, $q);
-    $qsearch = pg_fetch_array($parcels);
+    $qsearch = pg_fetch_all($parcels);*/
   ?>
+
 </head>
 <body>
   <header>
