@@ -8,6 +8,13 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
   <title>DCIC Human Face of Big Data</title>
+
+  <script>
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"
+  </script>
+
 <?php
 //Connection to PostgreSQL
 require '../credentials.inc.php';
@@ -32,6 +39,7 @@ else{
   $cue = pg_query($q);
 }
 ?>
+
 </head>
 <body>
   <table class="table table-light table-hover table-striped">
