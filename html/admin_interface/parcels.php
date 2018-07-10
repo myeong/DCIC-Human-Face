@@ -39,10 +39,26 @@ else{
       return false;
     }
   }
-  function mouse(){
-    var e;
-    e = document.getElementById("form");
-    if(e.type == 'mouseover'){}
+
+  function filter(){
+    //Declare variables
+    var input, table, filter tr, td, x;
+    input = document.getElementById("input");
+    filter = input.value.toString();
+    table = document.getElementById("table");
+    tr = document.getElementsByTagName("tr");
+    //Filter Table
+    for(x = 0; x < tr.length(); x++){
+      td = tr[x].getElementsByTagName("td")[0];
+      if(td){
+        if(td.innerHTML.toString().indexOf(filter) > -1){
+          tr[x].style.display = "";
+        }
+        else{
+          tr[x].style.display = "none";
+        }
+      }
+    }
   }
 </script>
 
@@ -53,41 +69,63 @@ else{
     <p1>Utilize this search page to find parcel specific information within the DCIC: Human Face of Big Data relational database system.</p1>
   </header>
 
-  <div>
-    <form class = "form-inline align-content-sm-end" name = "form" id = "form" method="post" action = "search.php" onsubmit="return validateForm()">
-      <div class="form-group">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" name = "search">
-      <input class=" btn btn-outline-danger my-2 my-sm-0" type = "submit" name = "submit" value = "submit">
-      </div>
+    <form class = "form-inline my-2 my-lg-0" name = "form" id = "form" method="post" action = "search.php" onsubmit="return validateForm()">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" name = "search" id="input" onkeyup="filter()">
+        <button class="btn btn-outline-danger my-2 my-sm-0" type = "submit" name = "submit" value = "submit">Search</button>
     </form>
-  </div>
 
-  <?php echo "There are " . $num . " rows in the " . pg_dbname() . " database"; ?>
-
-  <table class="table table-light table-hover table-striped table-bordered">
-    <thead>
+  <table class="table table-light table-hover table-striped table-bordered table-responsive-md" id="table">
+    <thead class="thead-dark">
       <tr>
-        <th scope="col">#</th>
-        <th scope="col col-md">Parcel ID</th>
-        <th scope="col">Block Number</th>
-        <th scope="col">Parcel Number</th>
-        <th scope="col">Ward Number</th>
-        <th scope="col">Land Use</th>
+        <th scope="col" class="text-center">#</th>
+        <th scope="col" class="pr-md-3 pr-5 text-center">
+          <input class="form-check-input" type="checkbox">
+          <label class="form-check-label" for = "checkbox"></label>
+        </th>
+        <th class="text-center">Parcel ID</th>
+        <th scope="col" class="text-center">Block Number</th>
+        <th scope="col" class="text-center">Parcel Number</th>
+        <th scope="col" class="text-center">Ward Number</th>
+        <th scope="col" class="text-center">Land Use</th>
       </tr>
     </thead>
     <tbody>
       <?php foreach($row as $rows){ ?>
       <tr>
         <td></td>
-        <td><?php echo $rows['parcel_id'] . "\n"; ?></td>
-        <td><?php echo $rows['block_no'] . "\n"; ?></td>
-        <td><?php echo $rows['parcel_no'] . "\n"; ?></td>
-        <td><?php echo $rows['ward_no'] . "\n"; ?></td>
-        <td><?php echo $rows['land_use'] . "\n"; ?></td>
+        <td class="pr-md-3 pr-5 text-center">
+          <input class="form-check-input" type="checkbox">
+          <label class="form-check-label" for = "checkbox"></label>
+        </td>
+        <td class="text-center"><?php echo $rows['parcel_id'] . "\n"; ?></td>
+        <td class="text-center"><?php echo $rows['block_no'] . "\n"; ?></td>
+        <td class="text-center"><?php echo $rows['parcel_no'] . "\n"; ?></td>
+        <td class="text-center"><?php echo $rows['ward_no'] . "\n"; ?></td>
+        <td class="text-center"><?php echo $rows['land_use'] . "\n"; ?></td>
       </tr>
       <?php } ?>
     </tbody>
   </table>
+
+
+  <table class="table table-light table-hover table-striped table-bordered"
+        data-toggle="table"
+       data-url="https://api.github.com/users/wenzhixin/repos?type=owner&sort=full_name&direction=asc&per_page=100&page=1"
+       data-sort-name="stargazers_count"
+       data-sort-order="desc">
+    <thead>
+    <div class="row">
+      <div class="col">
+        <th scope="col" data-field="name" data-sortable="true">#</th>
+        <th scope="col">Parcel ID</th>
+        <th scope="col">Parcel Information</th>
+      </div>
+    </div>
+    </thead>
+  </table>
+
+<?php echo "There are " . $num . " rows in the " . pg_dbname() . " database"; ?>
+
 </body>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
