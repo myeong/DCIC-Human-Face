@@ -71,7 +71,7 @@ else{
 
 <!-- Bootstrap Table Button Groups-->
 
-    <div class="btn-group float-md-lefts" id="toolbar">
+    <div class="btn-group float-md-left" id="toolbar">
       <button type="button" class="btn btn-danger my-2 my-sm-0">Delete</button>
     </div>
 
@@ -118,6 +118,7 @@ else{
   </table>
 
 <!-- Bootstrap Table Pagination-->
+
 <div class="float-md-right">
   <nav>
     <ul class="pagination">
