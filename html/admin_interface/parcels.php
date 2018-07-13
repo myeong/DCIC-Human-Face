@@ -82,6 +82,7 @@ else{
       </form>
       </div>
 
+  <br><br>
 <!-- Bootstrap Table-->
 
   <table class="table table-light table-hover table-striped table-bordered table-responsive-md" id="table">
@@ -131,7 +132,9 @@ else{
   </nav>
 </div>
 
+<div class="card col-sm-3">
 <?php echo "There are " . $num . " rows in the " . pg_dbname() . " database"; ?>
+</div>
 
 </body>
 
