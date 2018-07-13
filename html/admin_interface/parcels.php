@@ -69,10 +69,20 @@ else{
     <p1>Utilize this search page to find parcel specific information within the DCIC: Human Face of Big Data relational database system.</p1>
   </header>
 
-    <form class = "form-inline my-2 my-lg-0" name = "form" id = "form" method="post" action = "search.php" onsubmit="return validateForm()">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" name = "search" id="input" onkeyup="filter()">
-        <button class="btn btn-outline-danger my-2 my-sm-0" type = "submit" name = "submit" value = "submit">Search</button>
-    </form>
+<!-- Bootstrap Table Button Groups-->
+
+    <div class="btn-group float-md-lefts" id="toolbar">
+      <button type="button" class="btn btn-danger my-2 my-sm-0">Delete</button>
+    </div>
+
+      <div class="float-md-right">
+      <form class = "form-inline" name = "form" id = "form" method="post" action = "search.php" onsubmit="return validateForm()">
+          <input class="form-control mr-sm-2 float-md-right" type="search" placeholder="Search" name = "search" id="input" onkeyup="filter()">
+          <button class="btn btn-outline-success my-2 my-sm-0" type = "submit" name = "submit" value = "submit">Search</button>
+      </form>
+      </div>
+
+<!-- Bootstrap Table-->
 
   <table class="table table-light table-hover table-striped table-bordered table-responsive-md" id="table">
     <thead class="thead-dark">
@@ -94,7 +104,7 @@ else{
       <tr>
         <td></td>
         <td class="pr-md-3 pr-5 text-center">
-          <input class="form-check-input" type="checkbox">
+          <input data-placement = "top" class="form-check-input" type="checkbox">
           <label class="form-check-label" for = "checkbox"></label>
         </td>
         <td class="text-center"><?php echo $rows['parcel_id'] . "\n"; ?></td>
@@ -107,22 +117,18 @@ else{
     </tbody>
   </table>
 
-
-  <table class="table table-light table-hover table-striped table-bordered"
-        data-toggle="table"
-       data-url="https://api.github.com/users/wenzhixin/repos?type=owner&sort=full_name&direction=asc&per_page=100&page=1"
-       data-sort-name="stargazers_count"
-       data-sort-order="desc">
-    <thead>
-    <div class="row">
-      <div class="col">
-        <th scope="col" data-field="name" data-sortable="true">#</th>
-        <th scope="col">Parcel ID</th>
-        <th scope="col">Parcel Information</th>
-      </div>
-    </div>
-    </thead>
-  </table>
+<!-- Bootstrap Table Pagination-->
+<div class="float-md-right">
+  <nav>
+    <ul class="pagination">
+      <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>
+  </nav>
+</div>
 
 <?php echo "There are " . $num . " rows in the " . pg_dbname() . " database"; ?>
 
