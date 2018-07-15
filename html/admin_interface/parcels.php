@@ -76,10 +76,18 @@ else{
 <!-- Bootstrap Table Button Groups-->
 
     <div class="float-md-left" id="toolbar">
-      <button type="button" class="btn btn-danger my-2 my-sm-0">Delete</button>
-      <button type="button" class="btn btn-primary my-2 my-sm-0">Edit</button>
-      <button type="button" class="btn btn-success my-2 my-sm-0 octicon-diff-added"><i class="fas fa-plus"></i>
-          Add</button>
+      <button type="button" class="btn btn-danger my-2 my-sm-0">
+        <i class="fas fa-trash-alt"></i>
+        Delete
+      </button>
+      <button type="button" class="btn btn-primary my-2 my-sm-0">
+        <i class="fas fa-edit"></i>
+        Edit
+      </button>
+      <button type="button" class="btn btn-success my-2 my-sm-0 octicon-diff-added">
+        <i class="fas fa-plus"></i>
+          Add
+        </button>
     </div>
 
       <div class="float-md-right">
