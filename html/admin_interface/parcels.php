@@ -5,8 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <link rel="stylesheet" href="main_php.css">
+
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
   <title>DCIC Human Face of Big Data</title>
 
@@ -71,8 +75,11 @@ else{
 
 <!-- Bootstrap Table Button Groups-->
 
-    <div class="btn-group float-md-left" id="toolbar">
+    <div class="float-md-left" id="toolbar">
       <button type="button" class="btn btn-danger my-2 my-sm-0">Delete</button>
+      <button type="button" class="btn btn-primary my-2 my-sm-0">Edit</button>
+      <button type="button" class="btn btn-success my-2 my-sm-0 octicon-diff-added"><i class="fas fa-plus"></i>
+          Add</button>
     </div>
 
       <div class="float-md-right">
