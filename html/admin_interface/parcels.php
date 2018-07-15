@@ -94,6 +94,7 @@ else{
       <form class = "form-inline" name = "form" id = "form" method="post" action = "search.php" onsubmit="return validateForm()">
           <input class="form-control mr-sm-2 float-md-right" type="search" placeholder="Search" name = "search" id="input" onkeyup="filter()">
           <button class="btn btn-outline-success my-2 my-sm-0" type = "submit" name = "submit" value = "submit">Search</button>
+          <button class="btn"><i class="fas fa-sync-alt"></i></button>
       </form>
       </div>
 
@@ -103,7 +104,7 @@ else{
   <table class="table table-light table-hover table-striped table-bordered table-responsive-md" id="table">
     <thead class="thead-dark">
       <tr>
-        <th scope="col" class="text-center">#</th>
+        <th scope="col" class="text-center"></th>
         <th scope="col" class="pr-md-3 pr-5 text-center">
           <input class="form-check-input" type="checkbox">
           <label class="form-check-label" for = "checkbox"></label>
@@ -118,7 +119,7 @@ else{
     <tbody>
       <?php foreach($row as $rows){ ?>
       <tr>
-        <td></td>
+        <td><button class="btn"><i class="fas fa-plus"></i></button></td>
         <td class="pr-md-3 pr-5 text-center">
           <input data-placement = "top" class="form-check-input" type="checkbox">
           <label class="form-check-label" for = "checkbox"></label>
