@@ -101,7 +101,6 @@ else{
           data-trigger="hover" >
           Search
         </button>
-          <button class="btn"><i class="fas fa-sync-alt"></i></button>
       </form>
       </div>
 
