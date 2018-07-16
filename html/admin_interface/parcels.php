@@ -150,10 +150,9 @@ function validateForm(){
     return false;
   }
 }
-
-function filter(){
+//funtion filter(){
 //Declare variables
-var input, table, filter tr, td, x;
+/*var input, table, filter tr, td, x;
 input = document.getElementById("input");
 filter = input.value.toString();
 table = document.getElementById("table");
@@ -170,7 +169,7 @@ for(x = 0; x < tr.length(); x++){
     }
   }
 }
-}
+}*/
   //jQuery
   //Bootstrap Popover
   $(function () {
