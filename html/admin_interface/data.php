@@ -26,6 +26,10 @@ else{
   echo "Successfully connected to database:" . " " .pg_dbname() . " on " . pg_host();
 }
 
+//Insert Data into Parcel table
+//Edit Data in Parcel table
+//Delete Data in Parcel Table
+
 ?>
 
 </head>
