@@ -25,8 +25,9 @@ else{
 <body>
   <form>
   <div class="form-group">
-  <label>Parcel ID</label>
-  <input type="text" class="form-control">
+  <label class="float-md-center" for="Parcel ID">Parcel ID</label>
+  <input class="form-control" type="text" id="Parcel ID">
+  <span class="error">*Please Enter the Parcel ID</span>
   </div>
   </form>
 
