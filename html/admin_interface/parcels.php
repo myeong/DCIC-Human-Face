@@ -45,11 +45,21 @@ else{
 
     <div class="float-md-left" id="toolbar" name = "data">
       <form class="form-group">
-      <button type="button" class="btn btn-danger my-2 my-sm-0" name="delete">
+      <button type="button" class="btn btn-danger my-2 my-sm-0" name="delete"
+      data-toggle="popover"
+      title="Delete an Existing Record"
+      data-trigger="hover"
+      data-placement="bottom"
+      data-content="Selecting this button will delete an existing record in the Humanface of Big Data Relational Database">
         <i class="fas fa-trash-alt"></i>
         Delete
       </button>
-      <button type="button" class="btn btn-primary my-2 my-sm-0" name="edit">
+      <button type="button" class="btn btn-primary my-2 my-sm-0" name="edit"
+      data-toggle="popover"
+      title="Edit an Existing Record"
+      data-trigger="hover"
+      data-placement="bottom"
+      data-content="Selecting this button will update an existing record in the Humanface of Big Data Relational Database">
         <i class="fas fa-edit"></i>
         Edit
       </button>
