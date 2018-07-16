@@ -24,10 +24,19 @@ else{
 </head>
 <body>
   <form>
+    <div class="card float-md-none">
+      <div class="card-header">
+        Human Face of Big Data
+      </div>
+    </div>
   <div class="form-group">
   <label class="float-md-center" for="Parcel ID">Parcel ID</label>
   <input class="form-control" type="text" id="Parcel ID">
   <span class="error">*Please Enter the Parcel ID</span>
+  </div>
+  <div class="form-group">
+  <label class="float-md-center" for="block_number">Block Number</label>
+  <input class="form-control" type="text" id="block_number">
   </div>
   </form>
 
