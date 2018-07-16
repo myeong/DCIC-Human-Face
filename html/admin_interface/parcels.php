@@ -84,6 +84,7 @@ else{
         title="Human Face of Big Data Parcel Table Information"
         data-trigger="click"
         data-placement="right"
+        data-content="Welcome, this page displays the current Human Face of Big Data Parcel Table"
         >
         Info
       </button>
