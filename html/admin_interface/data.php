@@ -33,4 +33,6 @@ else{
 ?>
 
 </head>
+<body>
+</body>
 </html>

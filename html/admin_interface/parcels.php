@@ -43,7 +43,7 @@ else{
 
 <!-- Bootstrap Table Button Groups-->
 
-    <div class="float-md-left" id="toolbar">
+    <div class="float-md-left" id="toolbar" name = "data">
       <form class="form-group">
       <button type="button" class="btn btn-danger my-2 my-sm-0">
         <i class="fas fa-trash-alt"></i>
