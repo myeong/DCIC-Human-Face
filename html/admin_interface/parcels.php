@@ -88,12 +88,28 @@ else{
         <i class="fas fa-plus"></i>
           Add
         </button>
+        <button type="button" class="btn btn-info"
+        data-toggle="popover"
+        title="Human Face of Big Data Parcel Table Information"
+        data-trigger="click"
+        data-placement="right"
+        >
+        Info
+      </button>
     </div>
 
       <div class="float-md-right">
       <form class = "form-inline" name = "form" id = "form" method="post" action = "search.php" onsubmit="return validateForm()">
           <input class="form-control mr-sm-2 float-md-right" type="search" placeholder="Search" name = "search" id="input" onkeyup="filter()">
-          <button class="btn btn-outline-success my-2 my-sm-0" type = "submit" name = "submit" value = "submit">Search</button>
+          <button class="btn btn-outline-success my-2 my-sm-0" type = "submit" name = "submit" value = "submit"
+          data-toggle="popover"
+          title="Submit"
+          data-placement="top"
+          data-content="Select this button to query existing parcel data."
+          data-trigger="hover"
+          >
+          Search
+        </button>
           <button class="btn"><i class="fas fa-sync-alt"></i></button>
       </form>
       </div>
@@ -152,9 +168,19 @@ else{
 <?php echo "There are " . $num . " rows in the " . pg_dbname() . " database"; ?>
 </div>
 
-</body>
-
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
+<script>
+
+  //jQuery
+
+  $(function () {
+    $('[data-toggle="popover"]').popover()
+  })
+
+</script>
+
+</body>
 </html>
