@@ -38,6 +38,10 @@ else{
   <label class="float-md-center" for="block_number">Block Number</label>
   <input class="form-control" type="text" id="block_number">
   </div>
+  <div class="form-group">
+  <label class="float-md-center" for="parcel_number">Parcel Number</label>
+  <input class="form-control" type="text" id="parcel_number">
+  </div>
   </form>
 
 <!-- Optional JavaScript -->
