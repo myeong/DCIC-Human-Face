@@ -44,8 +44,8 @@ else{
 <!-- Bootstrap Table Button Groups-->
 
     <div class="float-md-left" id="toolbar">
-      <form class="form-group" action="data.php" name="data">
-      <button type="button" class="btn btn-danger my-2 my-sm-0" name="delete" type="submit"
+      <form class="form-group" method="post" action="data.php" name="data">
+      <button class="btn btn-danger my-2 my-sm-0" name="delete" type="submit" value="submit"
       data-toggle="popover"
       title="Delete an Existing Record"
       data-trigger="hover"
