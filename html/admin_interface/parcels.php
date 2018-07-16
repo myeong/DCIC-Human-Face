@@ -97,8 +97,7 @@ else{
           title="Submit"
           data-placement="top"
           data-content="Select this button to query existing parcel data."
-          data-trigger="hover"
-          >
+          data-trigger="hover" >
           Search
         </button>
           <button class="btn"><i class="fas fa-sync-alt"></i></button>
@@ -173,7 +172,7 @@ function validateForm(){
   }
 }
   //jQuery
-
+  //Bootstrap Popover
   $(function () {
     $('[data-toggle="popover"]').popover()
   })
