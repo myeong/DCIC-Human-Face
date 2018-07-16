@@ -54,7 +54,12 @@ else{
         Edit
       </button>
 
-      <button type="button" class="btn btn-success my-2 my-sm-0 octicon-diff-added" name="add">
+      <button type="button" class="btn btn-success my-2 my-sm-0 octicon-diff-added" name="add"
+      data-toggle="popover"
+      title="Add New Record"
+      data-trigger="hover"
+      data-placement="bottom"
+      data-content="Selecting this button will add a new record to the Humanface of Big Data Relational Database">
         <i class="fas fa-plus"></i>
           Add
         </button>
