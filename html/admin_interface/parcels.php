@@ -45,16 +45,16 @@ else{
 
     <div class="float-md-left" id="toolbar" name = "data">
       <form class="form-group">
-      <button type="button" class="btn btn-danger my-2 my-sm-0">
+      <button type="button" class="btn btn-danger my-2 my-sm-0" name="delete">
         <i class="fas fa-trash-alt"></i>
         Delete
       </button>
-      <button type="button" class="btn btn-primary my-2 my-sm-0">
+      <button type="button" class="btn btn-primary my-2 my-sm-0" name="edit">
         <i class="fas fa-edit"></i>
         Edit
       </button>
 
-      <button type="button" class="btn btn-success my-2 my-sm-0 octicon-diff-added">
+      <button type="button" class="btn btn-success my-2 my-sm-0 octicon-diff-added" name="add">
         <i class="fas fa-plus"></i>
           Add
         </button>
