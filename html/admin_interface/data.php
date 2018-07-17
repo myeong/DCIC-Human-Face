@@ -42,6 +42,14 @@ else{
   <label class="float-md-center" for="parcel_number">Parcel Number</label>
   <input class="form-control" type="text" id="parcel_number">
   </div>
+  <div class="form-group">
+  <label class="float-md-center" for="ward_number">Ward Number</label>
+  <input class="form-control" type="text" id="ward_number">
+  </div>
+  <div class="form-group">
+  <label class="float-md-center" for="land_use">Land Use</label>
+  <input class="form-control" type="text" id="land_use">
+  </div>
   </form>
 
 <!-- Optional JavaScript -->
