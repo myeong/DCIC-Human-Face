@@ -23,7 +23,7 @@ else{
 
 </head>
 <body>
-  <form method="post">
+  <form method="post" action="data.php">
     <div class="card float-md-none">
       <div class="card-header">
         Human Face of Big Data

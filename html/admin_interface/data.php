@@ -10,5 +10,7 @@ else{
 }
 
 //Inserting Data into Parcels table
+if(isset($_POST['add'])){}
 //Deleting Data in Parcels table
+if(isset($_POST['delete'])){}
  ?>
