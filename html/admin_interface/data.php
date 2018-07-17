@@ -1,6 +1,9 @@
 <?php
 //Connection to PostgreSQL
 require '../credentials.inc.php';
+
+ini_set('display_errors');
+
 $connect = pg_connect('host=' . DBHOST . ' dbname=' . DBNAME . ' user=' . DBUSER . ' password=' . DBPASS);
 if (!$connect){
   die("Error in connection!:" . pg_last_error());
