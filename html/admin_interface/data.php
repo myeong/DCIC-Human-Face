@@ -16,7 +16,10 @@ $ward_no = $_POST['ward_no'];
 $land_use = $_POST['land_use'];
 
 //Inserting Data into Parcels table
-if(isset($_POST['add'])){}
+if(isset($_POST['add'])){
+  $sql = "INSERT INTO humanface.parcels VALUES('parcel_id', 'block_no', 'parcel_no', 'ward_no', 'land_use')";
+  $query = pg_query($connect, $sql);
+}
 //Deleting Data in Parcels table
 if(isset($_POST['delete'])){}
  ?>
