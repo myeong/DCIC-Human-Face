@@ -11,6 +11,7 @@ if (!$connect){
 else{
   echo "Successfully connected to database:" . " " .pg_dbname() . " on " . pg_host();
 }
+
 //Store post data to array (parcels table)
 $parcel_id = $_POST['parcel_id'];
 $block_no = $_POST['block_no'];

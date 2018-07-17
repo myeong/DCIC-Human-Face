@@ -25,7 +25,7 @@ else{
 //Querying Parcels Table information
 $query = 'SELECT * FROM humanface.parcels';
 $p = pg_query($connect, $query);
-$array = pg_fetch_array($p);
+$array = pg_fetch_assoc($p);
 echo $array;
 ?>
 
