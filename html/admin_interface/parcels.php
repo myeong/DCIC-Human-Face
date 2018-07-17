@@ -44,7 +44,7 @@ else{
 <!-- Bootstrap Table Button Groups-->
 
     <div class="form-row float-md-left" id="toolbar">
-      <form class="form-group col" method="post" action="delete.php" name="data">
+      <form class="form-group col" method="post" action="delete.php" name="delete">
       <button class="btn btn-danger my-2 my-sm-0" name="delete" type="submit" value="submit"
       data-toggle="popover"
       title="Delete an Existing Record"
@@ -55,8 +55,8 @@ else{
         Delete
       </button>
     </form>
-      <form class="form-group col">
-      <button type="button" class="btn btn-primary my-2 my-sm-0" name="edit"
+      <form class="form-group col" method="post" name="edit">
+      <button type="button" class="btn btn-primary my-2 my-sm-0"
       data-toggle="popover"
       title="Edit an Existing Record"
       data-trigger="hover"
@@ -66,8 +66,8 @@ else{
         Edit
       </button>
       </form>
-      <form class="form-group col">
-      <button type="button" class="btn btn-success my-2 my-sm-0 octicon-diff-added" name="add"
+      <form class="form-group col" action="insert.php" method="post" name="add">
+      <button type="button" class="btn btn-success my-2 my-sm-0 octicon-diff-added"
       data-toggle="popover"
       title="Add New Record"
       data-trigger="hover"
@@ -87,7 +87,6 @@ else{
         >
         Info
       </button>
-    </form>
     </form>
     </div>
 
