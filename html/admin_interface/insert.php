@@ -23,13 +23,13 @@ else{
 
 </head>
 <body>
-  <form>
+  <form method="post">
     <div class="card float-md-none">
       <div class="card-header">
         Human Face of Big Data
       </div>
     </div>
-  <div class="form-group">
+  <div class="form-group" action = "data.php">
   <label class="float-md-center" for="Parcel ID">Parcel ID</label>
   <input class="form-control" type="text" id="Parcel ID">
   <span class="error">*Please Enter the Parcel ID</span>

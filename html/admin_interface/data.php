@@ -8,4 +8,7 @@ if (!$connect){
 else{
   echo "Successfully connected to database:" . " " .pg_dbname() . " on " . pg_host();
 }
+
+//Inserting Data into Parcels table
+//Deleting Data in Parcels table
  ?>

@@ -43,8 +43,8 @@ else{
 
 <!-- Bootstrap Table Button Groups-->
 
-    <div class="float-md-left" id="toolbar">
-      <form class="form-group" method="post" action="delete.php" name="data">
+    <div class="form-row float-md-left" id="toolbar">
+      <form class="form-group col" method="post" action="delete.php" name="data">
       <button class="btn btn-danger my-2 my-sm-0" name="delete" type="submit" value="submit"
       data-toggle="popover"
       title="Delete an Existing Record"
@@ -54,6 +54,8 @@ else{
         <i class="fas fa-trash-alt"></i>
         Delete
       </button>
+    </form>
+      <form class="form-group col">
       <button type="button" class="btn btn-primary my-2 my-sm-0" name="edit"
       data-toggle="popover"
       title="Edit an Existing Record"
@@ -63,7 +65,8 @@ else{
         <i class="fas fa-edit"></i>
         Edit
       </button>
-
+      </form>
+      <form class="form-group col">
       <button type="button" class="btn btn-success my-2 my-sm-0 octicon-diff-added" name="add"
       data-toggle="popover"
       title="Add New Record"
@@ -73,7 +76,8 @@ else{
         <i class="fas fa-plus"></i>
           Add
         </button>
-
+      </form>
+      <form class="form-group">
         <button type="button" class="btn btn-info"
         data-toggle="popover"
         title="Human Face of Big Data Parcel Table Information"
@@ -83,6 +87,7 @@ else{
         >
         Info
       </button>
+    </form>
     </form>
     </div>
 
