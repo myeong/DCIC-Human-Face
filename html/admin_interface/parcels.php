@@ -110,7 +110,6 @@ else{
   <table class="table table-light table-hover table-striped table-bordered table-responsive-md" id="table">
     <thead class="thead-dark">
       <tr>
-        <th scope="col" class="text-center"></th>
         <th scope="col" class="pr-md-3 pr-5 text-center">
           <input class="form-check-input" type="checkbox">
           <label class="form-check-label" for = "checkbox"></label>
@@ -125,7 +124,6 @@ else{
     <tbody>
       <?php foreach($row as $rows){ ?>
       <tr>
-        <td><button class="btn"><i class="fas fa-plus"></i></button></td>
         <td class="pr-md-3 pr-5 text-center">
           <input data-placement = "top" class="form-check-input" type="checkbox">
           <label class="form-check-label" for = "checkbox"></label>
