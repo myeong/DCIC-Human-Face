@@ -29,7 +29,7 @@ else{
         Human Face of Big Data
       </div>
     </div>
-  <div class="form-group" action = "data.php">
+  <div class="form-group">
   <label class="float-md-center" for="Parcel ID">Parcel ID</label>
   <input class="form-control" type="text" id="Parcel ID">
   <span class="error">*Please Enter the Parcel ID</span>

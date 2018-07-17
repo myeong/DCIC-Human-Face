@@ -67,7 +67,7 @@ else{
       </button>
       </form>
       <form class="form-group col" action="insert.php" method="post" name="add">
-      <button type="button" class="btn btn-success my-2 my-sm-0 octicon-diff-added"
+      <button class="btn btn-success my-2 my-sm-0 octicon-diff-added" type="submit" value="submit"
       data-toggle="popover"
       title="Add New Record"
       data-trigger="hover"
@@ -77,7 +77,7 @@ else{
           Add
         </button>
       </form>
-      <form class="form-group">
+      <form class="form-group col">
         <button type="button" class="btn btn-info"
         data-toggle="popover"
         title="Human Face of Big Data Parcel Table Information"
