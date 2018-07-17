@@ -22,6 +22,10 @@ if (!$connect){
 else{
   echo "Successfully connected to database:" . " " .pg_dbname() . " on " . pg_host();
 }
+//Querying Parcels Table information
+$query = 'SELECT * FROM humanface.parcels';
+$p = pg_query($connect, $query);
+$array = pg_fetch_assoc($p);
 ?>
 
 </head>
