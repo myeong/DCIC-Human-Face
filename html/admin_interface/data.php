@@ -22,6 +22,12 @@ $land_use = $_POST['land_use'];
 if(isset($_POST['add'])){
   $sql = "INSERT INTO humanface.parcels VALUES('parcel_id', 'block_no', 'parcel_no', 'ward_no', 'land_use')";
   $query = pg_query($connect, $sql);
+  echo $parcel_id;
+  echo $block_no;
+  echo $parcel_no;
+  echo $ward_no;
+  echo $land_use;
+  //echo $sql;
 }
 //Deleting Data in Parcels table
 if(isset($_POST['delete'])){}
