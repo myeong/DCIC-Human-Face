@@ -50,6 +50,7 @@ else{
   <label class="float-md-center" for="land_use">Land Use</label>
   <input class="form-control" type="text" id="land_use">
   </div>
+  <button type="submit" class="btn btn-success" name="delete">Delete</button>
   </form>
 
 <!-- Optional JavaScript -->
