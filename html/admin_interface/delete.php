@@ -31,26 +31,26 @@ else{
     </div>
   <div class="form-group">
   <label class="float-md-center" for="Parcel ID">Parcel ID</label>
-  <input class="form-control" type="text" id="Parcel ID">
+  <input class="form-control" type="text" id="Parcel ID" value='<?php $array['parcel_id']?>'>
   <span class="error">*Please Enter the Parcel ID</span>
   </div>
   <div class="form-group">
   <label class="float-md-center" for="block_number">Block Number</label>
-  <input class="form-control" type="text" id="block_number">
+  <input class="form-control" type="text" id="block_number" value='<?php $array['block_no']?>'>
   </div>
   <div class="form-group">
   <label class="float-md-center" for="parcel_number">Parcel Number</label>
-  <input class="form-control" type="text" id="parcel_number">
+  <input class="form-control" type="text" id="parcel_number" value='<?php $array['parcel_no']?>'>
   </div>
   <div class="form-group">
   <label class="float-md-center" for="ward_number">Ward Number</label>
-  <input class="form-control" type="text" id="ward_number">
+  <input class="form-control" type="text" id="ward_number" value='<?php $array['ward_no']?>'>
   </div>
   <div class="form-group">
   <label class="float-md-center" for="land_use">Land Use</label>
-  <input class="form-control" type="text" id="land_use">
+  <input class="form-control" type="text" id="land_use" value='<?php $array['land_use']?>'>
   </div>
-  <button type="submit" class="btn btn-danger" name="delete">Delete</button>
+  <button type="submit" class="btn btn-success" name="add">Submit</button>
   </form>
 
 <!-- Optional JavaScript -->
