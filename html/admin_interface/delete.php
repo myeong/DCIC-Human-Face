@@ -38,24 +38,24 @@ $array = pg_fetch_assoc($p);*/
     </div>
   <div class="form-group">
   <label class="float-md-center" for="Parcel ID">Parcel ID</label>
-  <input class="form-control" type="text" id="Parcel ID" value="">
+  <input class="form-control" type="text" id="parcel_id" name="parcel_id" value="">
   <span class="error">*Please Enter the Parcel ID</span>
   </div>
   <div class="form-group">
   <label class="float-md-center" for="block_number">Block Number</label>
-  <input class="form-control" type="text" id="block_number" value="">
+  <input class="form-control" type="text" id="block_number" name="block_number" value="" >
   </div>
   <div class="form-group">
   <label class="float-md-center" for="parcel_number">Parcel Number</label>
-  <input class="form-control" type="text" id="parcel_number" value="">
+  <input class="form-control" type="text" id="parcel_number" name="parcel_number" value="">
   </div>
   <div class="form-group">
   <label class="float-md-center" for="ward_number">Ward Number</label>
-  <input class="form-control" type="text" id="ward_number" value="">
+  <input class="form-control" type="text" id="ward_number" name="ward_number" value="">
   </div>
   <div class="form-group">
   <label class="float-md-center" for="land_use">Land Use</label>
-  <input class="form-control" type="text" id="land_use" value="">
+  <input class="form-control" type="text" id="land_use" name="land_use" value="">
   </div>
   <button type="submit" class="btn btn-success" name="add">Submit</button>
   </form>
