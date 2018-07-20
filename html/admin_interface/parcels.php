@@ -55,7 +55,7 @@ else{
         Delete
       </button>
     </form>
-      <form class="form-group col" action="delete.php" method="post" name="edit">
+      <form class="form-group col" method="post" name="edit">
       <button type="button" class="btn btn-primary my-2 my-sm-0"
       data-toggle="popover"
       title="Edit an Existing Record"
