@@ -31,5 +31,8 @@ if(isset($_POST['add'])){
   //echo $sql;
 }
 //Deleting Data in Parcels table
-if(isset($_POST['delete'])){}
+if(isset($_POST['delete'])){
+  $sql = "DELETE FROM humanface.parcels";
+  $query = pg_query($connect, $sql);
+}
  ?>
