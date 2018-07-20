@@ -23,9 +23,9 @@ else{
   echo "Successfully connected to database:" . " " .pg_dbname() . " on " . pg_host();
 }
 //Querying Parcels Table information
-$query = 'SELECT * FROM humanface.parcels';
+/*$query = 'SELECT * FROM humanface.parcels';
 $p = pg_query($connect, $query);
-$array = pg_fetch_assoc($p);
+$array = pg_fetch_assoc($p);*/
 ?>
 
 </head>
@@ -38,24 +38,24 @@ $array = pg_fetch_assoc($p);
     </div>
   <div class="form-group">
   <label class="float-md-center" for="Parcel ID">Parcel ID</label>
-  <input class="form-control" type="text" id="Parcel ID" value='<?php $array['parcel_id']?>'>
+  <input class="form-control" type="text" id="Parcel ID" value="">
   <span class="error">*Please Enter the Parcel ID</span>
   </div>
   <div class="form-group">
   <label class="float-md-center" for="block_number">Block Number</label>
-  <input class="form-control" type="text" id="block_number" value='<?php $array['block_no']?>'>
+  <input class="form-control" type="text" id="block_number" value="">
   </div>
   <div class="form-group">
   <label class="float-md-center" for="parcel_number">Parcel Number</label>
-  <input class="form-control" type="text" id="parcel_number" value='<?php $array['parcel_no']?>'>
+  <input class="form-control" type="text" id="parcel_number" value="">
   </div>
   <div class="form-group">
   <label class="float-md-center" for="ward_number">Ward Number</label>
-  <input class="form-control" type="text" id="ward_number" value='<?php $array['ward_no']?>'>
+  <input class="form-control" type="text" id="ward_number" value="">
   </div>
   <div class="form-group">
   <label class="float-md-center" for="land_use">Land Use</label>
-  <input class="form-control" type="text" id="land_use" value='<?php $array['land_use']?>'>
+  <input class="form-control" type="text" id="land_use" value="">
   </div>
   <button type="submit" class="btn btn-success" name="add">Submit</button>
   </form>
