@@ -153,7 +153,7 @@ else{
 </div>
 
 <div class="card col-sm-3">
-<?php echo "There are " . $num . " rows in the " . pg_dbname() . " database"; ?>
+<?php echo "There are " . $num . " rows in the " . pg_dbname() . " parcels table"; ?>
 </div>
 
 <!-- Optional JavaScript -->
