@@ -30,7 +30,7 @@ $array = pg_fetch_assoc($p);*/
 
 </head>
 <body>
-  <form method="post" action="data.php">
+  <form method="post" action="data.php" name="form" id="form">
     <div class="card float-md-none">
       <div class="card-header">
         Human Face of Big Data
