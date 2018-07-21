@@ -57,7 +57,7 @@ $array = pg_fetch_assoc($p);*/
   <label class="float-md-center" for="land_use">Land Use</label>
   <input class="form-control" type="text" id="land_use" name="land_use" value="">
   </div>
-  <button type="submit" class="btn btn-success" name="delete">Submit</button>
+  <button type="submit" class="btn btn-success" name="delete" id="delete">Submit</button>
   </form>
 
 <!-- Optional JavaScript -->
