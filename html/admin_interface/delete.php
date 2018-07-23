@@ -41,7 +41,9 @@ $row = pg_fetch_all($par);
     Dropdown button
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <a class="dropdown-item">Action</a>
+      <?php foreach($row as $r){ ?>
+      <a class="dropdown-item"><?php echo $r['parcel_id'];?></a>
+    <?php } ?>
     </div>
   </div>
   <div class="form-group">
