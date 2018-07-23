@@ -34,8 +34,7 @@ if(isset($_POST['add'])){
 
 //Deleting Data in Parcels table
 if(isset($_POST['delete'])){
-  $sql = "DELETE FROM humanface.parcels WHERE $parcel_id = '$parcel_id' AND $block_no = '$block_no'
-  AND $parcel_no = '$parcel_no' AND $ward_no = '$ward_no' AND $land_use = '$land_use'";
+  $sql = "DELETE FROM humanface.parcels WHERE parcel_id = '$parcel_id'";
   $query = pg_query($connect, $sql);
 }
  ?>
