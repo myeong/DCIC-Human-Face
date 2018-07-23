@@ -36,6 +36,13 @@ $array = pg_fetch_assoc($p);*/
         Human Face of Big Data
       </div>
     </div>
+  <div class="dropdown">
+      <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Dropdown button
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    </div>
+  </div>
   <div class="form-group">
   <label class="float-md-center" for="Parcel ID">Parcel ID</label>
   <input class="form-control" type="text" id="parcel_id" name="parcel_id" value="">
