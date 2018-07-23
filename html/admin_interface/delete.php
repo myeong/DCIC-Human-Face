@@ -29,7 +29,7 @@ $row = pg_fetch_all($par);
 
 //Obtain Selected Parcel Information (Parcel ID)
 if($_GET['p_id']){
-  $u = "SELECT * FROM humanface.parcels WHERE parcel_id = " . $_GET['p_id']"";
+  //$u = "SELECT * FROM humanface.parcels WHERE parcel_id = " . $_GET['p_id']" ";
   $pquery = pg_query($connect, $u);
   $arr = pg_fetch_assoc($u);
 }
