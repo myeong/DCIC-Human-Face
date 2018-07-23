@@ -23,9 +23,9 @@ else{
   echo "Successfully connected to database:" . " " .pg_dbname() . " on " . pg_host();
 }
 //Querying Parcels Table information
-/*$query = 'SELECT * FROM humanface.parcels';
-$p = pg_query($connect, $query);
-$array = pg_fetch_assoc($p);*/
+$query = 'SELECT * FROM humanface.parcels';
+$par = pg_query($connect, $query);
+$row = pg_fetch_all($par);
 ?>
 
 </head>
@@ -37,10 +37,11 @@ $array = pg_fetch_assoc($p);*/
       </div>
     </div>
   <div class="dropdown">
-      <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     Dropdown button
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a class="dropdown-item">Action</a>
     </div>
   </div>
   <div class="form-group">
