@@ -76,8 +76,13 @@ function validateForm(){
   w = document.forms["form"]["ward_no"].value;
   v = document.forms["form"]["land_use"].value;
   //Form Validation
-  if(x == ""){
+  /*if(x == ""){
     alert("Input not valid");
+    return false;
+  }*/
+  //Validates that all Form fields are completed
+  if(x == "" && y == "" && z == "" && w == "" && z == ""){
+    alert("Please fill out all form fields");
     return false;
   }
   //Validates that Inputs are not "Nan" Values
