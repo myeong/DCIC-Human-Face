@@ -29,9 +29,9 @@ $row = pg_fetch_all($par);
 
 //Obtain Selected Parcel Information (Parcel ID)
 if($_GET['p_id']){
-  //$u = "SELECT * FROM humanface.parcels WHERE parcel_id = " . $_GET['p_id']" ";
+  $u = "SELECT * FROM humanface.parcels WHERE parcel_id = " . $_GET['p_id'];
   $pquery = pg_query($connect, $u);
-  $arr = pg_fetch_assoc($u);
+  $arr = pg_fetch_assoc($pquery);
 }
 ?>
 
@@ -49,10 +49,11 @@ if($_GET['p_id']){
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
       <?php foreach($row as $r){ ?>
-      <a class="dropdown-item"><?php echo $r['parcel_id'];?></a>
+      <a class="dropdown-item" href="data.php?p_id=<?=$r['parcel_id']?>"><?php echo $r['parcel_id'];?></a>
     <?php } ?>
     </div>
   </div>
+  <input id="parcel_id" type="hidden" name="parcel_id" value="<?=$arr['parcel_id']?>">
   <div class="form-group">
   <label class="float-md-center" for="Parcel ID">Parcel ID</label>
   <input class="form-control" type="text" id="parcel_id" name="parcel_id" value="">
