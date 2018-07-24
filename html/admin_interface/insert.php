@@ -76,8 +76,12 @@ function validateForm(){
   w = document.forms["form"]["ward_no"].value;
   v = document.forms["form"]["land_use"].value;
   //Form Validation
-  if(x == "" || y == ""){
+  if(x == ""){
     alert("Input not valid");
+    return false;
+  }
+  if(isNaN(y)){
+    alert("Please Enter a valid block number");
     return false;
   }
 }
