@@ -57,7 +57,6 @@ if($_GET['p_id']){
   <div class="form-group">
   <label class="float-md-center" for="Parcel ID">Parcel ID</label>
   <input class="form-control" type="text" id="parcel_id" name="parcel_id" value="<?=$arr['parcel_id'];?>">
-  <span class="error">*Please Enter the Parcel ID</span>
   </div>
   <div class="form-group">
   <label class="float-md-center" for="block_number">Block Number</label>
