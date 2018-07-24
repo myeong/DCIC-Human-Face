@@ -81,17 +81,22 @@ function validateForm(){
     return false;
   }
   //Validates that Inputs are not "Nan" Values
-  if(isNaN(y) || isNaN(z) || isNaN(w) || isNaN(v)){
+  if(isNaN(y) || isNaN(z) || isNaN(w)){
     alert("Please Enter a valid number");
     return false;
   }
+  //Validates that Land Use is not NaN
+  if(isNaN(v)){
+    alert("Please Enter a valid input");
+    return false;
+  }
   //Validates that the block, parcel, and ward numbers are integers
-  if(typeof y == String(y)){
+  if(typeof y == String(y) || typeof z == String(z) || typeof w == String(w)){
     alert("Please enter a number in this field");
     return false;
   }
   //Validates that Land Use is a String
-  /*if(typeof v != String(v)){
+  /*if(typeof v == "number"{
     alert("Please do not enter any numbers in this field");
     return false;
   }*/
