@@ -85,11 +85,16 @@ function validateForm(){
     alert("Please Enter a valid number");
     return false;
   }
-  //Validates that Land Use is a String
-  if(typeof v != String(v)){
-    alert("Please do not enter any numbers in this field");
+  //Validates that the block, parcel, and ward numbers are integers
+  if(typeof y == String(y)){
+    alert("Please enter a number in this field");
     return false;
   }
+  //Validates that Land Use is a String
+  /*if(typeof v != String(v)){
+    alert("Please do not enter any numbers in this field");
+    return false;
+  }*/
 }
 </script>
 </body>
