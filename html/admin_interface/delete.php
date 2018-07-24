@@ -61,19 +61,19 @@ if($_GET['p_id']){
   </div>
   <div class="form-group">
   <label class="float-md-center" for="block_number">Block Number</label>
-  <input class="form-control" type="text" id="block_number" name="block_number" value="">
+  <input class="form-control" type="text" id="block_number" name="block_number" value="<?=$arr['block_no']?>">
   </div>
   <div class="form-group">
   <label class="float-md-center" for="parcel_number">Parcel Number</label>
-  <input class="form-control" type="text" id="parcel_number" name="parcel_number" value="">
+  <input class="form-control" type="text" id="parcel_number" name="parcel_number" value="<?=$arr['parcel_no']?>">
   </div>
   <div class="form-group">
   <label class="float-md-center" for="ward_number">Ward Number</label>
-  <input class="form-control" type="text" id="ward_number" name="ward_number" value="">
+  <input class="form-control" type="text" id="ward_number" name="ward_number" value="<?=$arr['ward_no']?>">
   </div>
   <div class="form-group">
   <label class="float-md-center" for="land_use">Land Use</label>
-  <input class="form-control" type="text" id="land_use" name="land_use" value="">
+  <input class="form-control" type="text" id="land_use" name="land_use" value="<?=$arr['land_use']?>">
   </div>
   <button type="submit" class="btn btn-success" name="delete" id="delete">Submit</button>
   </form>
