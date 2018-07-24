@@ -69,14 +69,22 @@ else{
 
 <script>
 function validateForm(){
-  var x;
+  var x, y, z, v, w;
   x = document.forms["form"]["parcel_id"].value;
+  y = document.forms["form"]["block_no"].value;
+  z = document.forms["form"]["parcel_no"].value;
+  w = document.forms["form"]["ward_no"].value;
+  v = document.forms["form"]["land_use"].value;
+  //Form Validation
   if(x == ""){
     alert("Input not valid");
     return false;
   }
+  /*if(isNAN(document.form.block_no.value){
+    alert("Please enter a valid number");
+    return false;
+  }*/
 }
 </script>
-
 </body>
 </html>
