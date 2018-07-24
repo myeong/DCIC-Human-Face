@@ -49,19 +49,19 @@ if($_GET['p_id']){
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
       <?php foreach($row as $r){ ?>
-      <a class="dropdown-item" href="data.php?p_id=<?=$r['parcel_id']?>"><?php echo $r['parcel_id'];?></a>
-    <?php } ?>
+      <a class="dropdown-item" href="delete.php?p_id=<?=$r['parcel_id']?>"><?php echo $r['parcel_id'];?></a>
+      <?php } ?>
     </div>
   </div>
   <input id="parcel_id" type="hidden" name="parcel_id" value="<?=$arr['parcel_id']?>">
   <div class="form-group">
   <label class="float-md-center" for="Parcel ID">Parcel ID</label>
-  <input class="form-control" type="text" id="parcel_id" name="parcel_id" value="">
+  <input class="form-control" type="text" id="parcel_id" name="parcel_id" value="<?=$arr['parcel_id'];?>">
   <span class="error">*Please Enter the Parcel ID</span>
   </div>
   <div class="form-group">
   <label class="float-md-center" for="block_number">Block Number</label>
-  <input class="form-control" type="text" id="block_number" name="block_number" value="" >
+  <input class="form-control" type="text" id="block_number" name="block_number" value="">
   </div>
   <div class="form-group">
   <label class="float-md-center" for="parcel_number">Parcel Number</label>
