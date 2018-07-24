@@ -76,14 +76,10 @@ function validateForm(){
   w = document.forms["form"]["ward_no"].value;
   v = document.forms["form"]["land_use"].value;
   //Form Validation
-  if(x == ""){
+  if(x == "" || y == ""){
     alert("Input not valid");
     return false;
   }
-  /*if(isNAN(document.form.block_no.value){
-    alert("Please enter a valid number");
-    return false;
-  }*/
 }
 </script>
 </body>
