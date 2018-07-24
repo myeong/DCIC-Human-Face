@@ -80,8 +80,12 @@ function validateForm(){
     alert("Input not valid");
     return false;
   }
-  if(isNaN(y)){
-    alert("Please Enter a valid block number");
+  if(isNaN(y) || isNaN(z) || isNaN(w) || isNaN(v)){
+    alert("Please Enter a valid number");
+    return false;
+  }
+  if(typeof v != String(v)){
+    alert("Please do not enter any numbers in this field");
     return false;
   }
 }
