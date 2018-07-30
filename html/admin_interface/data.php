@@ -20,9 +20,22 @@ $parcel_no = $_POST['parcel_no'];
 $ward_no = $_POST['ward_no'];
 $land_use = $_POST['land_use'];
 
+//Store post data to array (addresses table)
+$id = $_POST['id'];
+$st_num = $_POST['st_num'];
+$st_name = $_POST['st_name'];
+//$parcel = $_POST['parcel_id']
+
 //Inserting Data into Parcels table
 if(isset($_POST['add'])){
+  $human = "SELECT * FROM humanface.parcels p
+    JOIN humanface.addresses a on p.parcel_id = a.parcel_id
+    JOIN humanface.events e on p.parcel_id = e.parcel_id
+    JOIN humanface.event_types et on e.event_id = et.id
+    JOIN humanface.event_people_assoc epa on e.event_id = epa.id
+    JOIN humanface.people peo on epa.person_id = peo.person_id";
   $sql = "INSERT INTO humanface.parcels VALUES('$parcel_id', '$block_no', '$parcel_no', '$ward_no', '$land_use')";
+  $sql = "INSERT INTO humanface.addresses VALUES()";
   $query = pg_query($connect, $sql);
   /*echo $parcel_id;
   echo $block_no;

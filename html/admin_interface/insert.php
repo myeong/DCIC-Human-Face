@@ -86,7 +86,7 @@ function validateForm(){
     return false;
   }
   //Validates that Inputs are not "Nan" Values
-  if(isNaN(x)|| isNaN(y) || isNaN(z) || isNaN(w)){
+  if(isNaN(x) || isNaN(y) || isNaN(z) || isNaN(w)){
     alert("Please Enter a valid number");
     return false;
   }
@@ -96,7 +96,7 @@ function validateForm(){
     return false;
   }*/
   //Validates that the block, parcel, and ward numbers are integers
-  if(typeof y == String(y) || typeof z == String(z) || typeof w == String(w)){
+  if(typeof x == String(x) || typeof y == String(y) || typeof z == String(z) || typeof w == String(w)){
     alert("Please enter a number in this field");
     return false;
   }
