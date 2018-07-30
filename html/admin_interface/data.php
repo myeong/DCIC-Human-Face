@@ -35,7 +35,7 @@ if(isset($_POST['add'])){
     JOIN humanface.event_people_assoc epa on e.event_id = epa.id
     JOIN humanface.people peo on epa.person_id = peo.person_id";
   $sql = "INSERT INTO humanface.parcels VALUES('$parcel_id', '$block_no', '$parcel_no', '$ward_no', '$land_use')";
-  $sql = "INSERT INTO humanface.addresses VALUES()";
+  $sql = "INSERT INTO humanface.addresses VALUES('$id', '$st_num', '$st_name', '$parcel_id')";
   $query = pg_query($connect, $sql);
   /*echo $parcel_id;
   echo $block_no;
