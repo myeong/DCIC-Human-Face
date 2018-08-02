@@ -69,13 +69,14 @@ else{
 
 <script>
 function validateForm(){
+  //Form Validation
   var x, y, z, v, w;
   x = document.forms["form"]["parcel_id"].value;
   y = document.forms["form"]["block_no"].value;
   z = document.forms["form"]["parcel_no"].value;
   w = document.forms["form"]["ward_no"].value;
   v = document.forms["form"]["land_use"].value;
-  //Form Validation
+
   /*if(x == ""){
     alert("Input not valid");
     return false;
@@ -105,6 +106,9 @@ function validateForm(){
     alert("Please do not enter any numbers in this field");
     return false;
   }*/
+  //JQuery
+  //Form Submission Event
+  $(#form).submit(function(){});
 }
 </script>
 </body>
