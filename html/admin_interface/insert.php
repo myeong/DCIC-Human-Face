@@ -106,10 +106,13 @@ function validateForm(){
     alert("Please do not enter any numbers in this field");
     return false;
   }*/
-  //JQuery
-  //Form Submission Event
-  $(#form).submit(function(){});
 }
+//JQuery
+//Form Validation
+$("#parcel_id").on("click", function(){
+  alert("Please provide the Parcel ID number!");
+});
+//Form Submission Event
 </script>
 </body>
 </html>
