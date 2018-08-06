@@ -105,7 +105,7 @@ function validateForm(){
     return false;
   }
   //Validates that Land Use is a String
-  if(typeof v == Number(v)){
+  if(Number.isInteger(v)){
     alert("Please do not enter any numbers in this field");
     return false;
   }
