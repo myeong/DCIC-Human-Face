@@ -36,8 +36,8 @@ if(isset($_POST['add'])){
     JOIN humanface.people peo on epa.person_id = peo.person_id";*/
   //Insert form data into multiple tables
   $sql = "INSERT INTO humanface.parcels VALUES('$parcel_id', '$block_no', '$parcel_no', '$ward_no', '$land_use')";
-  $sql .= "INSERT INTO humanface.addresses VALUES('$parcel', '$st_num', '$st_name', '$parcel')";
-  $sql .= "INSERT INTO humanface.events VALUES('$event_id', '$response', '$extra_information', '$parcel_id', '$date', '$type', '$price')";
+  //$sql .= "INSERT INTO humanface.addresses VALUES('$parcel', '$st_num', '$st_name', '$parcel')";
+  //$sql .= "INSERT INTO humanface.events VALUES('$event_id', '$response', '$extra_information', '$parcel_id', '$date', '$type', '$price')";
   $query = pg_query($connect, $sql);
   /*$result = pg_get_result($connect);
   echo "Query Result:" . $result;*/

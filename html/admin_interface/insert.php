@@ -85,27 +85,43 @@ function validateForm(){
     return false;
   }*/
   //Validates that all Form fields are completed
-  /*if(x == "" || y == "" || z == "" || w == "" || z == "" || v == ""){
+  if(x == "" || y == "" || z == "" || w == "" || z == "" || v == ""){
     alert("Please fill out all form fields");
     return false;
-  }*/
+  }
   //Validates that Inputs are not "Nan" Values
-  if(isNaN(x) || isNaN(y) || isNaN(z) || isNaN(w)){
+  /*if(isNaN(x) || isNaN(y) || isNaN(z) || isNaN(w)){
     alert("Please Enter a valid number");
     return false;
-  }
+  }*/
   //Validates that Land Use is not NaN
-  if(isNaN(v)){
+  /*if(isNaN(v)){
     alert("Please Enter a valid input");
     return false;
-  }
+  }*/
   //Validates that the block, parcel, and ward numbers are integers
-  if(typeof x == String(x) || typeof y == String(y) || typeof z == String(z) || typeof w == String(w)){
-    alert("Please enter a number in this field");
+  //Parcel ID
+  if(typeof x == String(x)){
+    alert("Please enter a number in the Parcel ID field");
     return false;
   }
+  //Block Number
+  if(typeof y == String(y)){
+    alert("Please enter a number in the Block Number field");
+    return false;
+  }
+  //Parcel Number
+  if(typeof z == String(z)){
+    alert("Please enter a number in the Parcel Number field");
+    return false;
+  }
+  //Ward Number
+  if(typeof w == String(w)){
+   alert("Please enter a number in the Ward Number field");
+   return false;
+  }
   //Validates that Land Use is a String
-  if(Number.isInteger(v)){
+  if(isFinite(v)){
     alert("Please do not enter any numbers in this field");
     return false;
   }
