@@ -95,10 +95,10 @@ function validateForm(){
     return false;
   }
   //Validates that Land Use is not NaN
-  /*if(isNaN(v)){
+  if(isNaN(v)){
     alert("Please Enter a valid input");
     return false;
-  }*/
+  }
   //Validates that the block, parcel, and ward numbers are integers
   if(typeof x == String(x) || typeof y == String(y) || typeof z == String(z) || typeof w == String(w)){
     alert("Please enter a number in this field");
