@@ -33,8 +33,8 @@ else{
 <body>
   <form method="post" action="data.php" name="form" id="form" onsubmit="return validateForm()">
     <div class="card float-md-none">
-      <div class="card-header">
-        Human Face of Big Data
+      <div class="card-header" id="card-header">
+        <p>Human Face of Big Data</p>
       </div>
     </div>
   <div class="form-group">
@@ -108,10 +108,10 @@ function validateForm(){
   }*/
 }
 //JQuery
-//Form Validation
 $("#parcel_id").on("click", function(){
   alert("Please provide the Parcel ID number!");
 });
+
 //Form Submission Event
 </script>
 </body>
