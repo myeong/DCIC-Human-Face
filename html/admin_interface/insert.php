@@ -68,6 +68,9 @@ else{
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
 <script>
+
+//JavaScript Code
+
 function validateForm(){
   //Form Validation
   var x, y, z, v, w;
@@ -82,10 +85,10 @@ function validateForm(){
     return false;
   }*/
   //Validates that all Form fields are completed
-  if(x == "" || y == "" || z == "" || w == "" || z == "" || v == ""){
+  /*if(x == "" || y == "" || z == "" || w == "" || z == "" || v == ""){
     alert("Please fill out all form fields");
     return false;
-  }
+  }*/
   //Validates that Inputs are not "Nan" Values
   if(isNaN(x) || isNaN(y) || isNaN(z) || isNaN(w)){
     alert("Please Enter a valid number");
@@ -102,12 +105,14 @@ function validateForm(){
     return false;
   }
   //Validates that Land Use is a String
-  /*if(typeof v == "number"{
+  if(typeof v == Number(v)){
     alert("Please do not enter any numbers in this field");
     return false;
-  }*/
+  }
 }
-//JQuery
+
+//JQuery Code
+
 $("#parcel_id").on("click", function(){
   alert("Please provide the Parcel ID number!");
 });
