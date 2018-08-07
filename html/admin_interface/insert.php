@@ -80,7 +80,6 @@ function validateForm(){
   w = document.forms["form"]["ward_no"].value;
   v = document.forms["form"]["land_use"].value;
 
-
   //Validates that all Form fields are completed
   if(x == "" || y == "" || z == "" || w == "" || z == "" || v == ""){
     alert("Please fill out all form fields");
