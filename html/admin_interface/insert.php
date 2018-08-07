@@ -80,15 +80,12 @@ function validateForm(){
   w = document.forms["form"]["ward_no"].value;
   v = document.forms["form"]["land_use"].value;
 
-  /*if(x == ""){
-    alert("Input not valid");
-    return false;
-  }*/
+
   //Validates that all Form fields are completed
-  /*if(x == "" || y == "" || z == "" || w == "" || z == "" || v == ""){
+  if(x == "" || y == "" || z == "" || w == "" || z == "" || v == ""){
     alert("Please fill out all form fields");
     return false;
-  }*/
+  }
 
   //Validates that the block, parcel, and ward numbers are integers
   //Parcel ID
@@ -111,11 +108,6 @@ function validateForm(){
    alert("Please enter a number in the Ward Number field");
    return false;
   }
-  //Validates that Land Use is a String
-  /*if(isFinite(v)){
-    alert("Please do not enter any numbers in the Land Use field");
-    return false;
-  }*/
 }
 
 //JQuery Code
