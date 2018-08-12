@@ -116,10 +116,10 @@ else{
         data-placement="bottom">
         <i class="fas fa-minus-square"></i>
       </button>
-        <button type="button" class="btn btn-dark"
+        <button type="button" class="btn btn-dark" id="table-pagi"
         data-toggle="popover"
         data-trigger="hover"
-        data-content="Hide table"
+        data-content="hide/show table"
         data-placement="bottom">
         <i class="fas fa-table"></i>
       </button>
@@ -227,9 +227,11 @@ for(x = 0; x < tr.length(); x++){
       height: 10 px;
     });*/
 
-    //$("table").hide();
-
   }); //Waits until DOM elements are loaded and ready to execute
+
+  $('#table-pagi').click(function(){
+    $("table").hide();
+  });
 
 </script>
 
