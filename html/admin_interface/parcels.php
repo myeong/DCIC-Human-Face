@@ -110,7 +110,12 @@ else{
 
       <div class="float-md-right">
         <button type="button" class="btn"><i class="fas fa-minus-square"></i></button>
-        <button><i class="fal fa-table"></i></button>
+        <button type="button" class="btn"
+        data-toggle="popover"
+        data-trigger="hover"
+        data-content="Hide table"
+        data-placement="bottom"
+        ><i class="fas fa-table"></i></button>
       </div>
 
   <br><br>
