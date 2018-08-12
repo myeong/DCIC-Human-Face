@@ -90,6 +90,8 @@ else{
     </form>
     </div>
 
+      <!-- Search Bar -->
+
       <div class="float-md-right">
       <form class = "form-inline" name = "form" id = "form" method="post" action = "search.php" onsubmit="return validateForm()">
           <input class="form-control mr-sm-2 float-md-right" type="search" placeholder="Search" name = "search" id="input" onkeyup="filter()">
@@ -102,6 +104,13 @@ else{
           Search
         </button>
       </form>
+      </div>
+
+      <!-- Pagination Bar Button Group -->
+
+      <div class="float-md-right">
+        <button type="button" class="btn"><i class="fas fa-minus-square"></i></button>
+        <button><i class="fal fa-table"></i></button>
       </div>
 
   <br><br>
@@ -192,7 +201,16 @@ for(x = 0; x < tr.length(); x++){
 
   //Table pagination
 
-  $(document).ready(function(){}); //Waits until DOM elements are loaded and ready to execute
+  $(document).ready(function(){
+
+    /*$("table").animate({
+      width: 50 px;
+      height: 10 px;
+    });*/
+
+    //$("table").hide();
+
+  }); //Waits until DOM elements are loaded and ready to execute
 
 </script>
 
