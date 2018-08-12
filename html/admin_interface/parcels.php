@@ -191,7 +191,7 @@ else{
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
 <script>
-
+//Javascript Code
 //funtion filter(){
 //Declare variables
 /*var input, table, filter tr, td, x;
@@ -212,7 +212,7 @@ for(x = 0; x < tr.length(); x++){
   }
 }
 }*/
-  //jQuery
+  //jQuery Code
   //Bootstrap Popover
   $(function () {
     $('[data-toggle="popover"]').popover()
@@ -238,7 +238,7 @@ for(x = 0; x < tr.length(); x++){
   });
   //Show/Hide Pagination Function
   $('#pagi').on("click", function(){
-    ('#pagination').hide();
+    $('#pagination').hide();
   });
 
 </script>
