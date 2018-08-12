@@ -108,7 +108,7 @@ else{
 
       <!-- Pagination Bar Button Group -->
 
-      <div class="float-md-right">
+      <div align="center">
         <button type="button" class="btn"><i class="fas fa-minus-square"></i></button>
         <button type="button" class="btn"
         data-toggle="popover"
