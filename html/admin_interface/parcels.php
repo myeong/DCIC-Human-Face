@@ -231,14 +231,14 @@ for(x = 0; x < tr.length(); x++){
 
   // Show/Hide Button Function
   $('#table-pagi').click(function(){
-    $("table").hide();
+    $("table").toggle();
   });
-  $('#table-pagi').on("dblclick", function(){
+  /*$('#table-pagi').on("dblclick", function(){
     $("table").show();
-  });
+  });*/
   //Show/Hide Pagination Function
   $('#pagi').on("click", function(){
-    $('#pagination').hide();
+    $('#pagination').toggle();
   });
 
 </script>
