@@ -113,20 +113,20 @@ else{
         data-toggle="popover"
         data-trigger="hover"
         data-content="hide/show pagination"
-        data-placement="bottom"
-        ><i class="fas fa-minus-square"></i></button>
+        data-placement="bottom">
+        <i class="fas fa-minus-square"></i></button>
         <button type="button" class="btn btn-dark"
         data-toggle="popover"
         data-trigger="hover"
         data-content="Hide table"
-        data-placement="bottom"
-        ><i class="fas fa-table"></i></button>
+        data-placement="bottom">
+        <i class="fas fa-table"></i></button>
         <button type="button" class="btn btn-dark"
           data-toggle="popover"
           data-trigger="hover"
           data-content="refresh"
-          data-placement="bottom"
-        ><i class="fas fa-sync-alt"></i></button>
+          data-placement="bottom">
+          <i class="fas fa-sync-alt"></i></button>
       </div>
 
   <br><br>
