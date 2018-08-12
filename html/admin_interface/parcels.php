@@ -229,10 +229,13 @@ for(x = 0; x < tr.length(); x++){
 
   }); //Waits until DOM elements are loaded and ready to execute
 
+  // Show/Hide Button Function
   $('#table-pagi').click(function(){
     $("table").hide();
   });
-
+  $('#table-pagi').on("dblclick", function(){
+    $("table").show();
+  });
 </script>
 
 </body>
