@@ -109,7 +109,7 @@ else{
       <!-- Pagination Bar Button Group -->
 
       <div align="center">
-        <button type="button" class="btn btn-dark"
+        <button type="button" class="btn btn-dark" id="pagi"
         data-toggle="popover"
         data-trigger="hover"
         data-content="hide/show pagination"
@@ -236,6 +236,10 @@ for(x = 0; x < tr.length(); x++){
   $('#table-pagi').on("dblclick", function(){
     $("table").show();
   });
+  $('#pagi').on("click", function(){
+
+  });
+
 </script>
 
 </body>
