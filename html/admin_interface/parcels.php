@@ -170,7 +170,7 @@ else{
 
 <div class="float-md-right">
   <nav>
-    <ul class="pagination">
+    <ul class="pagination" id="pagination">
       <li class="page-item"><a class="page-link" href="#">Previous</a></li>
       <li class="page-item"><a class="page-link" href="#">1</a></li>
       <li class="page-item"><a class="page-link" href="#">2</a></li>
@@ -236,8 +236,9 @@ for(x = 0; x < tr.length(); x++){
   $('#table-pagi').on("dblclick", function(){
     $("table").show();
   });
+  //Show/Hide Pagination Function
   $('#pagi').on("click", function(){
-
+    ('#pagination').hide();
   });
 
 </script>
