@@ -83,10 +83,10 @@ else{
         title="Human Face of Big Data Parcel Table Information"
         data-trigger="click"
         data-placement="right"
-        data-content="Welcome, this page displays the current Human Face of Big Data Parcel Table"
-        >
+        data-content="Welcome, this page displays the current Human Face of Big Data Parcel Table">
+      <i class="fas fa-info-circle"></i>
         Info
-      </button>
+    </button>
     </form>
     </div>
 
@@ -101,8 +101,9 @@ else{
           data-placement="top"
           data-content="Select this button to query existing parcel data."
           data-trigger="hover" >
+        <i class="fas fa-search"></i>
           Search
-        <i class="fas fa-search"></i></button>
+      </button>
       </form>
       </div>
 
