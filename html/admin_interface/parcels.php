@@ -190,6 +190,10 @@ for(x = 0; x < tr.length(); x++){
     $('[data-toggle="popover"]').popover()
   })
 
+  //Table pagination
+
+  $(document).ready(function(){}); //Waits until DOM elements are loaded and ready to execute
+
 </script>
 
 </body>
