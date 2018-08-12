@@ -102,13 +102,13 @@ else{
           data-content="Select this button to query existing parcel data."
           data-trigger="hover" >
           Search
-        </button>
+        <i class="fas fa-search"></i></button>
       </form>
       </div>
 
       <!-- Pagination Bar Button Group -->
 
-      <div align="center">
+      <div align="center" class="btn-group col-4 float-md-right">
         <button type="button" class="btn btn-dark" id="pagi"
         data-toggle="popover"
         data-trigger="hover"
@@ -130,6 +130,12 @@ else{
           data-placement="bottom">
           <i class="fas fa-sync-alt"></i>
         </button>
+        <button class="btn btn-dark"
+          data-toggle="popover"
+          data-trigger="hover"
+          data-content="table columns"
+          data-placement="bottom">
+          <i class="fas fa-th"></i></button>
       </div>
 
   <br><br>
@@ -180,7 +186,7 @@ else{
   </nav>
 </div>
 
-<div class="card col-sm-3">
+<div class="card col-sm-3" id="postgres">
 <?php echo "There are " . $num . " rows in the " . pg_dbname() . " parcels table"; ?>
 </div>
 
@@ -239,6 +245,7 @@ for(x = 0; x < tr.length(); x++){
   //Show/Hide Pagination Function
   $('#pagi').on("click", function(){
     $('#pagination').toggle();
+    $('#postgres').toggle();
   });
 
 </script>
