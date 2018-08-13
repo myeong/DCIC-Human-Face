@@ -201,7 +201,7 @@ else{
   //Javascript Code
   //JavaScript & jQuery Table Pagination, Sort, & Filter
 
-  function filter(){
+  function pagination(){
     //Selectors
     var table = "#table";
     var page = 0;
@@ -218,11 +218,11 @@ else{
   //jQuery Pagination
 
   $(document).ready(function(){
-
+    //pagination();
   }); //Waits until DOM elements are loaded and ready to execute
 
   //User Interface functions
-  
+
   // Show/Hide Button Function
   $('#table-pagi').click(function(){
     $("table").toggle();
