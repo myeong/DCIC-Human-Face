@@ -204,8 +204,12 @@ else{
   function pagination(){
     //Selectors
     var table = "#table";
+    var tablebody = table + "tbody";
+    var tablerows = table + "tr"
+    var tablecolumns = table + "th";
     var page = 0;
     var numpage = 10;
+    //Table sort
   }
 
   //jQuery Code
