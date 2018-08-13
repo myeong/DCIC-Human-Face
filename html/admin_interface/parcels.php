@@ -223,16 +223,11 @@ for(x = 0; x < tr.length(); x++){
   //Bootstrap Popover
   $(function () {
     $('[data-toggle="popover"]').popover()
-  })
+  });
 
-  //Table pagination
+  //jQuery Pagination
 
   $(document).ready(function(){
-
-    /*$("table").animate({
-      width: 50 px;
-      height: 10 px;
-    });*/
 
   }); //Waits until DOM elements are loaded and ready to execute
 
@@ -240,14 +235,21 @@ for(x = 0; x < tr.length(); x++){
   $('#table-pagi').click(function(){
     $("table").toggle();
   });
-  /*$('#table-pagi').on("dblclick", function(){
-    $("table").show();
-  });*/
   //Show/Hide Pagination Function
   $('#pagi').on("click", function(){
     $('#pagination').toggle();
     $('#postgres').toggle();
   });
+
+  //jQuery Table Pagination, Sort, & Filter
+
+  //Table Sort
+  $(function(){
+    //Selectors
+    var table = "#table";
+  });
+
+
 
 </script>
 
