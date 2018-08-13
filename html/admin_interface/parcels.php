@@ -207,9 +207,11 @@ else{
     var tablebody = table + "tbody";
     var tablerows = table + "tr"
     var tablecolumns = table + "th";
+    //Variables
     var page = 0;
     var numpage = 10;
     //Table sort
+    $(tablecolumns).eq(0).addClass("sorted-asc");
   }
 
   //jQuery Code
