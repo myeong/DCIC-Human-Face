@@ -198,27 +198,12 @@ else{
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
 <script>
-//Javascript Code
-//funtion filter(){
-//Declare variables
-/*var input, table, filter tr, td, x;
-input = document.getElementById("input");
-filter = input.value.toString();
-table = document.getElementById("table");
-tr = document.getElementsByTagName("tr");
-//Filter Table
-for(x = 0; x < tr.length(); x++){
-  td = tr[x].getElementsByTagName("td")[0];
-  if(td){
-    if(td.innerHTML.toString().indexOf(filter) > -1){
-      tr[x].style.display = "";
-    }
-    else{
-      tr[x].style.display = "none";
-    }
+  //Javascript Code
+  function filter(){
+    //Selectors
+    var table = "#table";
+    var page = 0;
   }
-}
-}*/
   //jQuery Code
   //Bootstrap Popover
   $(function () {
