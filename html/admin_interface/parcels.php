@@ -199,12 +199,17 @@ else{
 
 <script>
   //Javascript Code
+  //JavaScript & jQuery Table Pagination, Sort, & Filter
+
   function filter(){
     //Selectors
     var table = "#table";
     var page = 0;
+    var numpage = 10;
   }
+
   //jQuery Code
+
   //Bootstrap Popover
   $(function () {
     $('[data-toggle="popover"]').popover()
@@ -216,6 +221,8 @@ else{
 
   }); //Waits until DOM elements are loaded and ready to execute
 
+  //User Interface functions
+  
   // Show/Hide Button Function
   $('#table-pagi').click(function(){
     $("table").toggle();
@@ -225,16 +232,6 @@ else{
     $('#pagination').toggle();
     $('#postgres').toggle();
   });
-
-  //jQuery Table Pagination, Sort, & Filter
-
-  //Table Sort
-  $(function(){
-    //Selectors
-    var table = "#table";
-  });
-
-
 
 </script>
 
