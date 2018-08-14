@@ -213,6 +213,11 @@ else{
     //Table sort
     $(tablecolumns).eq(0).addClass("sorted-asc");
   }
+  //Search filter
+  function filter(){
+    var input, filter, table, tr, td;
+    
+  }
 
   //jQuery Code
 
