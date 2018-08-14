@@ -216,9 +216,9 @@ else{
   //Search filter
   function filter(){
     var input, filter, table, tr, td, x;
-      input = document.getElementByID("input");
+      input = document.getElementById("input");
       filter = input.value;
-      table = document.getElementByID("table");
+      table = document.getElementById("table");
       tr = table.getElementsByTagName("tr");
       //Loop through all the table rows, and hide those that do not match the search query
       for(x = 0; x < tr.length; x++){
