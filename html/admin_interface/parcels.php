@@ -216,13 +216,13 @@ else{
   //Search filter
   function filter(){
     var input, filter, table, tr, td, x;
-      input = getElementByID("input");
+      input = document.getElementByID("input");
       filter = input.value;
-      table = getElementByID("table");
-      tr = getElementsTagName("tr");
+      table = document.getElementByID("table");
+      tr = table.getElementsByTagName("tr");
       //Loop through all the table rows, and hide those that do not match the search query
       for(x = 0; x < tr.length; x++){
-        td = tr[x].getElementsTagName("td")[5];
+        td = tr[x].getElementsByTagName("td")[5];
         if(td){
           if(td.innerHTML.indexOf(filter) > -1){
             tr[x].style.display = "";
