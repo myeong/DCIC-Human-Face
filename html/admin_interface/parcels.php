@@ -93,7 +93,7 @@ else{
       <!-- Search Bar -->
 
       <div class="float-md-right">
-      <form class = "form-inline" name = "form" id = "form" method="post" action = "search.php" onsubmit="return validateForm()">
+      <form class = "form-inline" name = "form" id = "input" onkeydown = "filter()">
           <input class="form-control mr-sm-2 float-md-right" type="search" placeholder="Search" name = "search" id="input" onkeyup="filter()">
           <button class="btn btn-outline-success my-2 my-sm-0" type = "submit" name = "submit" value = "submit"
           data-toggle="popover"
@@ -215,8 +215,23 @@ else{
   }
   //Search filter
   function filter(){
-    var input, filter, table, tr, td;
-    
+    var input, filter, table, tr, td, x;
+      input = getElementByID("#input");
+      filter = input.value;
+      table = getElementByID("table");
+      tr = getElementsTagName("tr");
+      //Loop through all the table rows, and hide those that dont match the search query
+      for(x = 0; x < tr.length; x++){
+        td = tr[x].getElementsTagName("td")[5];
+        if(td){
+          if(td.innerHTML.indexof(filter) > -1){
+            tr[x].style.display = "";
+          }
+          else{
+            tr[x].style.display = "none";
+          }
+        }
+      }
   }
 
   //jQuery Code
@@ -230,6 +245,7 @@ else{
 
   $(document).ready(function(){
     //pagination();
+    filter();
   }); //Waits until DOM elements are loaded and ready to execute
 
   //User Interface functions
