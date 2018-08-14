@@ -93,7 +93,7 @@ else{
       <!-- Search Bar -->
 
       <div class="float-md-right">
-      <form class = "form-inline" name = "form">
+      <form class = "form-inline" name = "form" method="post" action="search.php" onsubmit="return validateForm()">
           <input class="form-control mr-sm-2 float-md-right" type="search" placeholder="Search" name = "search" id="input" onkeyup="filter()">
           <button class="btn btn-outline-success my-2 my-sm-0" type = "submit" name = "submit" value = "submit"
           data-toggle="popover"
