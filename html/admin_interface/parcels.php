@@ -224,7 +224,7 @@ else{
       for(x = 0; x < tr.length; x++){
         td = tr[x].getElementsTagName("td")[5];
         if(td){
-          if(td.innerHTML.indexof(filter) > -1){
+          if(td.innerHTML.indexOf(filter) > -1){
             tr[x].style.display = "";
           }
           else{
