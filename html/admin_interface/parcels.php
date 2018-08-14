@@ -93,7 +93,7 @@ else{
       <!-- Search Bar -->
 
       <div class="float-md-right">
-      <form class = "form-inline" name = "form" id = "input" onkeydown = "filter()">
+      <form class = "form-inline" name = "form">
           <input class="form-control mr-sm-2 float-md-right" type="search" placeholder="Search" name = "search" id="input" onkeyup="filter()">
           <button class="btn btn-outline-success my-2 my-sm-0" type = "submit" name = "submit" value = "submit"
           data-toggle="popover"
@@ -216,11 +216,11 @@ else{
   //Search filter
   function filter(){
     var input, filter, table, tr, td, x;
-      input = getElementByID("#input");
+      input = getElementByID("input");
       filter = input.value;
       table = getElementByID("table");
       tr = getElementsTagName("tr");
-      //Loop through all the table rows, and hide those that dont match the search query
+      //Loop through all the table rows, and hide those that do not match the search query
       for(x = 0; x < tr.length; x++){
         td = tr[x].getElementsTagName("td")[5];
         if(td){
