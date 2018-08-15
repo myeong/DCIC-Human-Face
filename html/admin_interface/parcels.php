@@ -233,8 +233,9 @@ else{
         }
       }
   }
+  //Refreshes the webpage
   function refresh(){
-    location.reload();
+    location.reload(); //Pagination refresh button onclick function
   }
   //jQuery Code
 
