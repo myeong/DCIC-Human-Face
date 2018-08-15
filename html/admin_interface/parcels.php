@@ -124,7 +124,7 @@ else{
         data-placement="bottom">
         <i class="fas fa-table"></i>
       </button>
-        <button type="button" class="btn btn-dark"
+        <button type="button" class="btn btn-dark" onclick="refresh()"
           data-toggle="popover"
           data-trigger="hover"
           data-content="refresh"
@@ -233,12 +233,14 @@ else{
         }
       }
   }
-
+  function refresh(){
+    location.reload();
+  }
   //jQuery Code
 
   //Bootstrap Popover
   $(function () {
-    $('[data-toggle="popover"]').popover()
+    $('[data-toggle="popover"]').popover();
   });
 
   //jQuery Pagination
