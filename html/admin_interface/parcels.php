@@ -222,7 +222,7 @@ else{
       tr = table.getElementsByTagName("tr");
       //Loop through all the table rows, and hide those that do not match the search query
       for(x = 0; x < tr.length; x++){
-        td = tr[x].getElementsByTagName("td")[5];
+        td = tr[x].getElementsByTagName("td")[5]; //Table filter
         if(td){
           if(td.innerHTML.indexOf(filter) > -1){
             tr[x].style.display = "";
