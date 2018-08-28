@@ -215,7 +215,11 @@ else{
       //Variables
       var page = 0;
       var numpage = 10;
-    })
+      var $pagi = $(this);
+      $pagi.bind('repaginate', function(){
+        $pagi.find('tbody tr').hide().slice(page * numpage, (page + 1) * numpage).show();
+      });
+    });
   }
 
   //Search filter
