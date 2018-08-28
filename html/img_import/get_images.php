@@ -10,9 +10,8 @@ if (!$conn){
 
 // A function to get corresponding parcel_id.
 function get_parcel_id($conn, $block_num, $parcel_num){
-	$query = "SELECT parcel_id 
-	FROM humanface.parcels
-	WHERE parcel_no = $parcel_num AND block_no = $block_num;";
+
+	$query = "SELECT parcel_id FROM humanface.parcels WHERE parcel_no='$parcel_num' AND block_no='$block_num';";
 
 	$result = pg_query($conn, $query);
 
@@ -21,19 +20,20 @@ function get_parcel_id($conn, $block_num, $parcel_num){
     		$id = $row["parcel_id"];
     	}
 	} else {
-		$insert_query = "INSERT INTO parcels (block_no, parcel_no)
-		VALUES ($block_num, $parcel_num);";
+		$insert_query = "INSERT INTO humanface.parcels (block_no, parcel_no) VALUES ('$block_num', '$parcel_num') RETURNING parcel_id;";
 
-		pg_query($conn, $insert_query);
-		return get_parcel_id($conn, $block_num, $parcel_num);
+		$r = pg_query($conn, $insert_query);
+		$row = pg_fetch_row($r);
+
+		//write array to variable $user_id
+		return $row[0];
 	}
 	return $id;
 }
 
 // A function to insert image path.
 function insert_img_path($conn, $img_path, $parcel_id){
-	$img_query = "INSERT INTO image_paths (img_path, parcel_id)
-	VALUES ($img_path, $parcel_id);";
+	$img_query = "INSERT INTO humanface.image_paths (img_path, parcel_id) VALUES ($img_path, $parcel_id);";
 
 	pg_query($conn, $img_query);
 }
@@ -44,8 +44,12 @@ $dir_path = "/var/www/html/images/properties/";
 $files = scandir($dir_path);
 
 foreach ($files as $file){
-	if (strlen($file) > 2){
+	if (strlen($file) > 2 && pathinfo($file)['extension'] == "png"){
 		$prop = explode(".", $file);
+
+		if (!$prop[0]){
+			continue;
+		}
 
 		// extract the block number.
 		$block_info = split('[_]', $prop[0])[0];
@@ -66,10 +70,13 @@ foreach ($files as $file){
 
 		// get image_paths table properties.
 		// get corresponding parcel id.
-		$parcel_id_fk = get_parcel_id($conn, $block_num, $parcel_num);
+		$parcel_id_fk = get_parcel_id($conn, strval($block_num),  strval($parcel_num));
 
 		// get corresponding image path.
-		$img_path = "'" . $dir_path . $file . "'";
+		$img_path = "'images/properties/" . $file . "'";
+
+		echo "Block: " . $block_num . ", " . "Parcel: " . $parcel_num . "\n";
+		echo "Parcel ID: " . $parcel_id_fk . "\n";
 
 		// inserting the path.
 		insert_img_path($conn, $img_path, $parcel_id_fk);

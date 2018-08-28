@@ -5,3 +5,5 @@ $ pg_dump -h localhost -U username -W -F t database_name > database_dump_file.ta
 
 Restore a database
 $ pg_restore -h localhost -U username -W -F t -d new_database_name database_dump_file.tar
+
+###Sudo Commands####

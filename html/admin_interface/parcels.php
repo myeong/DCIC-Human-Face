@@ -199,8 +199,8 @@ else{
 
 <script>
   //Javascript Code
-  //JavaScript & jQuery Table Pagination, Sort, & Filter
 
+  //JavaScript & jQuery Table Pagination, Sort, & Filter
   function pagination(){
     //Selectors
     var table = "#table";
@@ -249,6 +249,7 @@ else{
   $(document).ready(function(){
     //pagination();
     filter();
+    refresh();
   }); //Waits until DOM elements are loaded and ready to execute
 
   //User Interface functions

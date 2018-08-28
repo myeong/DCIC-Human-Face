@@ -7,7 +7,7 @@
 	position:absolute;
     background-color: #343434;
     overflow-x:hidden;
-	overflow-y:hidden;
+	overflow-y:auto;
     cursor: default;
     z-index: 9999;
 }
