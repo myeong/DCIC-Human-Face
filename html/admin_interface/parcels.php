@@ -212,6 +212,8 @@ else{
     var numpage = 10;
     //Table sort
     $(tablecolumns).eq(0).addClass("sorted-asc");
+    //Table Pagination
+    
   }
   //Search filter
   function filter(){
@@ -236,7 +238,7 @@ else{
   //Refreshes the webpage
   function refresh(){
     location.reload(); //Pagination refresh button onclick function
-  }
+  } //Not ment to be loaded when the document object model is ready.
   //jQuery Code
 
   //Bootstrap Popover
@@ -249,7 +251,6 @@ else{
   $(document).ready(function(){
     //pagination();
     filter();
-    refresh();
   }); //Waits until DOM elements are loaded and ready to execute
 
   //User Interface functions
