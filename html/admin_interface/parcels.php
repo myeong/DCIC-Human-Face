@@ -229,24 +229,24 @@ else{
 
   //Search filter
   function filter(){
-    var input, filter, table, tr, td, x;
+    var input, filter, table, tr, td, x, q;
       input = document.getElementById("input");
       filter = input.value;
       table = document.getElementById("table");
       tr = table.getElementsByTagName("tr");
       //Loop through all the table rows, and hide those that do not match the search query
       for(x = 0; x < tr.length; x++){
-        td = tr[x].getElementsByTagName("td")[5]; //Table filter
-        if(td){
-          if(td.innerHTML.indexOf(filter) > -1){
+        f = tr[x].getElementsByTagName("td")[5]; //Table filter
+        if(f){
+          if(f.innerHTML.indexOf(filter) > -1){
             tr[x].style.display = "";
           }
           else{
             tr[x].style.display = "none";
           }
         }
+        }
       }
-  }
   //Refreshes the webpage
   function refresh(){
     location.reload(); //Pagination refresh button onclick function
