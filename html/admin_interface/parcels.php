@@ -261,7 +261,6 @@ else{
   //jQuery Pagination
 
   $(document).ready(function(){
-    //pagination();
     filter();
     pagination();
   }); //Waits until DOM elements are loaded and ready to execute
