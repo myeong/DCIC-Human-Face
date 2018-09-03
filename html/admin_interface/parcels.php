@@ -142,7 +142,7 @@ else{
   <br><br>
 <!-- Bootstrap Table-->
 
-  <table class="table table-light table-hover table-striped table-bordered table-responsive-md" id="table">
+  <table class="table table-light table-hover table-striped table-bordered table-responsive-md pager" id="table">
     <thead class="thead-dark">
       <tr>
         <th scope="col" class="pr-md-3 pr-5 text-center">
@@ -219,6 +219,20 @@ else{
       $pagi.bind('repaginate', function(){
         $pagi.find('tbody tr').hide().slice(page * numpage, (page + 1) * numpage).show();
       });
+      $pagi.trigger('repaginate');
+      var numrows = $pagi.find('tbody tr').length;
+      var numpages = Math.ceil(numrows/numpages);
+      var $pager = $('<div class = pager></div>');
+      for(var curpage = 0; curpage < numpages; curpage++){
+        $('<span class = "page-number"></span>').text(curpage + 1).bind('click',
+        {newPage: curpage},
+      function(event) {
+        setpage = event.data['newPage'];
+        $pagi.trigger('repaginate');
+        $(this).addClass('active').siblings().removeClass('active');
+      }).appendTo($pager).addClass('clickable');
+      }
+      $pager.insertBefore($pagi).find('span.page-number:first').addClass('active');
     });
   }
 
@@ -258,6 +272,7 @@ else{
   $(document).ready(function(){
     //pagination();
     filter();
+    pagination();
   }); //Waits until DOM elements are loaded and ready to execute
 
   //User Interface functions
