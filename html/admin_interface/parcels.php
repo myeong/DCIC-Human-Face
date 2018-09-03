@@ -202,15 +202,6 @@ else{
 
   //JavaScript & jQuery Table Pagination, Sort, & Filter
   function pagination(){
-    //Selectors
-    var table = "#table";
-    var tablebody = table + "tbody";
-    var tablerows = table + "tr"
-    var tablecolumns = table + "th";
-
-    //Table sort
-    $(tablecolumns).eq(0).addClass("sorted-asc");
-    //Table Pagination
     $("table").each(function(){
       //Variables
       var page = 0;
@@ -226,11 +217,11 @@ else{
       for(var curpage = 0; curpage < numpages; curpage++){
         $('<span class = "page-number"></span>').text(curpage + 1).bind('click',
         {newPage: curpage},
-      function(event) {
-        setpage = event.data['newPage'];
-        $pagi.trigger('repaginate');
-        $(this).addClass('active').siblings().removeClass('active');
-      }).appendTo($pager).addClass('clickable');
+        function(event) {
+          setpage = event.data['newPage'];
+          $pagi.trigger('repaginate');
+          $(this).addClass('active').siblings().removeClass('active');
+        }).appendTo($pager).addClass('clickable');
       }
       $pager.insertBefore($pagi).find('span.page-number:first').addClass('active');
     });
