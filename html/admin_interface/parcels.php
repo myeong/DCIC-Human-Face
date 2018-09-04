@@ -156,7 +156,7 @@ else{
           <input class="form-check-input" type="checkbox">
           <label class="form-check-label" for = "checkbox"></label>
         </th>
-        <th class="text-center">Parcel ID <i class="fas fa-sort"></i></th>
+        <th class="text-center">Parcel ID <button class="btn"><i class="fas fa-sort" onclick="sort()"></i></button></th>
         <th scope="col" class="text-center">Block Number <i class="fas fa-sort"></i></th>
         <th scope="col" class="text-center">Parcel Number <i class="fas fa-sort"></i></th>
         <th scope="col" class="text-center">Ward Number <i class="fas fa-sort"></i></th>
@@ -234,7 +234,7 @@ else{
     });
   }
   function sort(){
-    var table, sort, rows, dir, s;
+    var table, sort, rows, dir, s, switching;
     table = document.getElementById("table");
     dir = "asc";
     sort = true;
@@ -242,9 +242,13 @@ else{
       sort = false;
       rows = table.rows;
       for(s = 1; s < (rows.length - 1); s++){
-        //var switch = false;
+        switching = false;
         var x = rows[s].getElementsByTagName("TD")[1];
-        var y = rows[s].getElementsByTagName("TD")[5];
+        var y = rows[s + 1].getElementsByTagName("TD")[2];
+      }
+      if(switching){
+        rows[s].parentNode.insertBefore(rows[s + 1, rows[s]]);
+        switching = true;
       }
     }
   }
@@ -283,6 +287,7 @@ else{
   $(document).ready(function(){
     filter();
     pagination();
+    sort();
   }); //Waits until DOM elements are loaded and ready to execute
 
   //User Interface functions
