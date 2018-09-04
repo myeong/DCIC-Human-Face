@@ -157,10 +157,10 @@ else{
           <label class="form-check-label" for = "checkbox"></label>
         </th>
         <th class="text-center">Parcel ID <i class="fas fa-sort"></i></th>
-        <th scope="col" class="text-center">Block Number</th>
-        <th scope="col" class="text-center">Parcel Number</th>
-        <th scope="col" class="text-center">Ward Number</th>
-        <th scope="col" class="text-center">Land Use</th>
+        <th scope="col" class="text-center">Block Number <i class="fas fa-sort"></i></th>
+        <th scope="col" class="text-center">Parcel Number <i class="fas fa-sort"></i></th>
+        <th scope="col" class="text-center">Ward Number <i class="fas fa-sort"></i></th>
+        <th scope="col" class="text-center">Land Use <i class="fas fa-sort"></i></th>
       </tr>
     </thead>
     <tbody>
