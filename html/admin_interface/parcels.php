@@ -234,7 +234,8 @@ else{
     });
   }
   function sort(){
-
+    var table;
+    table = document.getElementById("table");
   }
   //Search filter
   function filter(){
