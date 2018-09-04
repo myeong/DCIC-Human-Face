@@ -234,9 +234,18 @@ else{
     });
   }
   function sort(){
-    var table, sort;
+    var table, sort, rows, s;
     table = document.getElementById("table");
     sort = true;
+    while(sort){
+      sort = false;
+      rows = table.rows;
+      for(s = 1; s < (rows.length - 1); s++){
+        var switch = false;
+        var x = rows[s].getElementsByTagName("TD")[1];
+        var y = rows[s].getElementsByTagName("TD")[5];
+      }
+    }
   }
   //Search filter
   function filter(){
