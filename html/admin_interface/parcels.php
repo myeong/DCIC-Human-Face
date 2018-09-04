@@ -156,11 +156,11 @@ else{
           <input class="form-check-input" type="checkbox">
           <label class="form-check-label" for = "checkbox"></label>
         </th>
-        <th class="text-center">Parcel ID <button class="btn"><i class="fas fa-sort" onclick="sort()"></i></button></th>
-        <th scope="col" class="text-center">Block Number <i class="fas fa-sort"></i></th>
-        <th scope="col" class="text-center">Parcel Number <i class="fas fa-sort"></i></th>
-        <th scope="col" class="text-center">Ward Number <i class="fas fa-sort"></i></th>
-        <th scope="col" class="text-center">Land Use <i class="fas fa-sort"></i></th>
+        <th class="text-center">Parcel ID <button class="btn btn-primary"><i class="fas fa-sort" onclick="sort()"></i></button></th>
+        <th scope="col" class="text-center">Block Number <button class="btn btn-primary"><i class="fas fa-sort"></i></button></th>
+        <th scope="col" class="text-center">Parcel Number <button class="btn btn-primary"><i class="fas fa-sort"></i></button></th>
+        <th scope="col" class="text-center">Ward Number <button class="btn btn-primary"><i class="fas fa-sort"></i></button></th>
+        <th scope="col" class="text-center">Land Use <button class="btn btn-primary"><i class="fas fa-sort"></i></button></th>
       </tr>
     </thead>
     <tbody>
