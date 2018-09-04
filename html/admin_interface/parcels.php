@@ -124,7 +124,7 @@ else{
         data-placement="bottom">
         <i class="fas fa-table"></i>
       </button>
-      <button class="btn btn-dark" onclick="sort()"
+      <button class="btn btn-dark"
         data-toggle="popover"
         data-trigger="hover"
         data-content="sort table"
@@ -156,7 +156,7 @@ else{
           <input class="form-check-input" type="checkbox">
           <label class="form-check-label" for = "checkbox"></label>
         </th>
-        <th class="text-center">Parcel ID</th>
+        <th class="text-center">Parcel ID <i class="fas fa-sort"></i></th>
         <th scope="col" class="text-center">Block Number</th>
         <th scope="col" class="text-center">Parcel Number</th>
         <th scope="col" class="text-center">Ward Number</th>
@@ -234,14 +234,15 @@ else{
     });
   }
   function sort(){
-    var table, sort, rows, s;
+    var table, sort, rows, dir, s;
     table = document.getElementById("table");
+    dir = "asc";
     sort = true;
     while(sort){
       sort = false;
       rows = table.rows;
       for(s = 1; s < (rows.length - 1); s++){
-        var switch = false;
+        //var switch = false;
         var x = rows[s].getElementsByTagName("TD")[1];
         var y = rows[s].getElementsByTagName("TD")[5];
       }
