@@ -124,6 +124,13 @@ else{
         data-placement="bottom">
         <i class="fas fa-table"></i>
       </button>
+      <button class="btn btn-dark"
+        data-toggle="popover"
+        data-trigger="hover"
+        data-content="sort table"
+        data-placement="bottom">
+        <i class="fas fa-sort"></i>
+      </button>
         <button type="button" class="btn btn-dark" onclick="refresh()"
           data-toggle="popover"
           data-trigger="hover"
@@ -226,7 +233,9 @@ else{
       $pager.insertBefore($pagi).find('span.page-number:first').addClass('active');
     });
   }
+  function sort(){
 
+  }
   //Search filter
   function filter(){
     var input, filter, table, tr, td, x, q;
@@ -250,15 +259,14 @@ else{
   //Refreshes the webpage
   function refresh(){
     location.reload(); //Pagination refresh button onclick function
-  } //Not ment to be loaded when the document object model is ready.
+  } //Not intended to be loaded when the document object model is ready.
+
   //jQuery Code
 
   //Bootstrap Popover
   $(function () {
     $('[data-toggle="popover"]').popover();
   });
-
-  //jQuery Pagination
 
   $(document).ready(function(){
     filter();
