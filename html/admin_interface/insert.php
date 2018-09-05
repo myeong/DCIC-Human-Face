@@ -115,6 +115,12 @@ $("#parcel_id").on("click", function(){
   alert("Please provide the Parcel ID number!");
 });
 
+$(document).ready(function(){
+  $("form").submit(function(){
+    alert("Submitted!");
+  });
+});
+
 //Form Submission Event
 </script>
 </body>

@@ -204,6 +204,10 @@ else{
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
+<!-- W3.JS JavaScript -->
+<script src="https://www.w3schools.com/lib/w3.js"></script>
+
+
 <script>
   //Javascript Code
 
@@ -234,23 +238,6 @@ else{
     });
   }
   function sort(){
-    var table, sort, rows, dir, s, switching;
-    table = document.getElementById("table");
-    dir = "asc";
-    sort = true;
-    while(sort){
-      sort = false;
-      rows = table.rows;
-      for(s = 1; s < (rows.length - 1); s++){
-        switching = false;
-        var x = rows[s].getElementsByTagName("TD")[1];
-        var y = rows[s + 1].getElementsByTagName("TD")[2];
-      }
-      if(switching){
-        rows[s].parentNode.insertBefore(rows[s + 1, rows[s]]);
-        switching = true;
-      }
-    }
   }
   //Search filter
   function filter(){
@@ -285,9 +272,9 @@ else{
   });
 
   $(document).ready(function(){
-    filter();
     pagination();
     sort();
+    filter();
   }); //Waits until DOM elements are loaded and ready to execute
 
   //User Interface functions
