@@ -148,7 +148,7 @@ else{
 
   <br><br>
 <!-- Bootstrap Table-->
-
+  <div class="pager">
   <table class="table table-light table-hover table-striped table-bordered table-responsive-md pager" id="table">
     <thead class="thead-dark">
       <tr>
@@ -156,7 +156,7 @@ else{
           <input class="form-check-input" type="checkbox">
           <label class="form-check-label" for = "checkbox"></label>
         </th>
-        <th class="text-center">Parcel ID <button class="btn btn-link"><i class="fas fa-sort" onclick="sort()"></i></button></th>
+        <th class="text-center">Parcel ID <button class="btn btn-link"><i class="fas fa-sort"></i></button></th>
         <th scope="col" class="text-center">Block Number <button class="btn btn-link"><i class="fas fa-sort"></i></button></th>
         <th scope="col" class="text-center">Parcel Number <button class="btn btn-link"><i class="fas fa-sort"></i></button></th>
         <th scope="col" class="text-center">Ward Number <button class="btn btn-link"><i class="fas fa-sort"></i></button></th>
@@ -179,7 +179,7 @@ else{
       <?php } ?>
     </tbody>
   </table>
-
+</div>
 <!-- Bootstrap Table Pagination-->
 
 <div class="float-md-right">
@@ -237,8 +237,18 @@ else{
       $pager.insertBefore($pagi).find('span.page-number:first').addClass('active');
     });
   }
-  function sort(){
-  }
+
+  /*function sort(){
+    var tableData = document.getElementById(table).getElementsByTagName('tbody').item(0);
+    var rowData = tableData.getElementsByTagName('tr');
+    for(var i = 0; i < rowData.length - 1; i++){
+        for(var j = 0; j < rowData.length - (i + 1); j++){
+            if(Number(rowData.item(j).getElementsByTagName('td').item(sortColumn).innerHTML.replace(/[^0-9\.]+/g, "")) < Number(rowData.item(j+1).getElementsByTagName('td').item(sortColumn).innerHTML.replace(/[^0-9\.]+/g, ""))){
+                tableData.insertBefore(rowData.item(j+1),rowData.item(j));
+            }
+        }
+    }
+  }*/
   //Search filter
   function filter(){
     var input, filter, table, tr, td, x, q;
