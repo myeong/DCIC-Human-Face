@@ -148,8 +148,7 @@ else{
 
   <br><br>
 <!-- Bootstrap Table-->
-  <div class="pager">
-  <table class="table table-light table-hover table-striped table-bordered table-responsive-md pager" id="table">
+  <table class="table table-light table-hover table-striped table-bordered table-responsive-md" id="table">
     <thead class="thead-dark">
       <tr>
         <th scope="col" class="pr-md-3 pr-5 text-center">
@@ -179,17 +178,28 @@ else{
       <?php } ?>
     </tbody>
   </table>
-</div>
 <!-- Bootstrap Table Pagination-->
 
-<div class="float-md-right">
+<div class="float-md-right page-number">
   <nav>
     <ul class="pagination" id="pagination">
-      <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+      <!-- Arrow Left -->
+      <li class="page-item">
+        <a class="page-link" href="#" aria-label="Previous">
+          <span aria-hidden="true">&laquo</span>
+          <span class="sr-only">Previous</span>
+        </a></li>
+        <!-- Page Numbers -->
       <li class="page-item"><a class="page-link" href="#">1</a></li>
       <li class="page-item"><a class="page-link" href="#">2</a></li>
       <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item"><a class="page-link" href="#">Next</a></li>
+      <!-- Arrow Right -->
+      <li class="page-item">
+        <a class="page-link" href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo</span>
+          <span class="sr-only">Next</span>
+        </a>
+      </li>
     </ul>
   </nav>
 </div>
@@ -212,6 +222,13 @@ else{
   //Javascript Code
 
   //JavaScript & jQuery Table Pagination, Sort, & Filter
+  window.onerror = function (msg, url, line) {
+                 alert("An error occurred.");
+                 alert("Message: " + msg);
+                 alert("url" + url);
+                 alert("line number" + line);
+              }
+
   function pagination(){
     $("table").each(function(){
       //Variables
@@ -223,32 +240,34 @@ else{
       });
       $pagi.trigger('repaginate');
       var numrows = $pagi.find('tbody tr').length;
-      var numpages = Math.ceil(numrows/numpages);
-      var $pager = $('<div class = pager></div>');
+      var numpages = Math.ceil(numrows/numpage);
+      var $pager = $('<div class = "pager"></div>');
       for(var curpage = 0; curpage < numpages; curpage++){
         $('<span class = "page-number"></span>').text(curpage + 1).bind('click',
         {newPage: curpage},
         function(event) {
-          setpage = event.data['newPage'];
+          page = event.data['newPage'];
           $pagi.trigger('repaginate');
           $(this).addClass('active').siblings().removeClass('active');
         }).appendTo($pager).addClass('clickable');
       }
       $pager.insertBefore($pagi).find('span.page-number:first').addClass('active');
+
     });
   }
 
-  /*function sort(){
-    var tableData = document.getElementById(table).getElementsByTagName('tbody').item(0);
-    var rowData = tableData.getElementsByTagName('tr');
-    for(var i = 0; i < rowData.length - 1; i++){
-        for(var j = 0; j < rowData.length - (i + 1); j++){
-            if(Number(rowData.item(j).getElementsByTagName('td').item(sortColumn).innerHTML.replace(/[^0-9\.]+/g, "")) < Number(rowData.item(j+1).getElementsByTagName('td').item(sortColumn).innerHTML.replace(/[^0-9\.]+/g, ""))){
-                tableData.insertBefore(rowData.item(j+1),rowData.item(j));
-            }
-        }
-    }
-  }*/
+  /*function sort(table_id, sortColumn){
+    var tableData = document.getElementById('table').getElementsByTagName('tbody').item(0);
+      var rowData = tableData.getElementsByTagName('tr');
+      for(var i = 0; i < rowData.length - 1; i++){
+          for(var j = 0; j < rowData.length - (i + 1); j++){
+              if(Number(rowData.item(j).getElementsByTagName('td').item(sortColumn).innerHTML.replace(/[^0-9\.]+/g, "")) < Number(rowData.item(j+1).getElementsByTagName('td').item(sortColumn).innerHTML.replace(/[^0-9\.]+/g, ""))){
+                  tableData.insertBefore(rowData.item(j+1),rowData.item(j));
+              }
+          }
+      }
+}*/
+
   //Search filter
   function filter(){
     var input, filter, table, tr, td, x, q;
@@ -269,6 +288,7 @@ else{
         }
         }
       }
+
   //Refreshes the webpage
   function refresh(){
     location.reload(); //Pagination refresh button onclick function
@@ -283,7 +303,7 @@ else{
 
   $(document).ready(function(){
     pagination();
-    sort();
+    //sort('table', 3);
     filter();
   }); //Waits until DOM elements are loaded and ready to execute
 
