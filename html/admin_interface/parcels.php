@@ -9,6 +9,9 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
@@ -180,7 +183,7 @@ else{
   </table>
 <!-- Bootstrap Table Pagination-->
 
-<div class="float-md-right page-number">
+<div class="float-md-right paginated-table" id="paginated-table">
   <nav>
     <ul class="pagination" id="pagination">
       <!-- Arrow Left -->
@@ -219,6 +222,9 @@ else{
 <!-- W3.JS JavaScript -->
 <script src="https://www.w3schools.com/lib/w3.js"></script>
 
+<!-- DataTables JavaScript -->
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+
 
 <script>
   //Javascript Code
@@ -254,9 +260,27 @@ else{
         }).appendTo($pager).addClass('clickable');
       }
       $pager.insertBefore($pagi).find('span.page-number:first').addClass('active');
-
     });
   }
+//Show all page numbers in table Pagination
+  function paginationnumber(){
+    var items = [];
+    var row = 10;
+    var max = 87;
+    for(var page = 1; page <= max; page++){
+      var html = "";
+      if(page % row == 1){
+        html += '<ul class="pagination" id="pagination">';
+    }
+      html += '<li class="page-item">';
+      html += '<a class="page-link" href="#">' + page + '<a>';
+      html += '</li>';
+      if("page % row == 0"){
+        html += '</ul>';
+      }
+      items.push(html);
+  }
+}
 
   /*function sort(table_id, sortColumn){
     var tableData = document.getElementById('table').getElementsByTagName('tbody').item(0);
@@ -304,6 +328,7 @@ else{
   });
 
   $(document).ready(function(){
+    //$('#table').DataTable(); //Initialize Datatable
     pagination();
     //sort('table', 3);
     filter();
