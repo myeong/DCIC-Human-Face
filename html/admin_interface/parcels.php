@@ -184,7 +184,7 @@ else{
 <!-- Bootstrap Table Pagination-->
 
 <div class="float-md-right paginated-table" id="paginated-table">
-  <nav>
+  <pagination id="pag" total-items="87">
     <ul class="pagination" id="pagination">
       <!-- Arrow Left -->
       <li class="page-item">
@@ -206,12 +206,16 @@ else{
         </a>
       </li>
     </ul>
-  </nav>
+  </pagination>
 </div>
 
 <div class="card col-sm-3" id="postgres">
 <?php echo "There are " . $num . " rows in the " . pg_dbname() . " parcels table"; ?>
 </div>
+
+<footer>
+  <p>DCIC Human Face of Big Data</p>
+</footer>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -224,6 +228,10 @@ else{
 
 <!-- DataTables JavaScript -->
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+
+<!-- Angular JavaScript -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
 
 
 <script>
@@ -261,26 +269,8 @@ else{
       }
       $pager.insertBefore($pagi).find('span.page-number:first').addClass('active');
     });
+    //$("#pag a:first").addClass('active');
   }
-//Show all page numbers in table Pagination
-  function paginationnumber(){
-    var items = [];
-    var row = 10;
-    var max = 87;
-    for(var page = 1; page <= max; page++){
-      var html = "";
-      if(page % row == 1){
-        html += '<ul class="pagination" id="pagination">';
-    }
-      html += '<li class="page-item">';
-      html += '<a class="page-link" href="#">' + page + '<a>';
-      html += '</li>';
-      if("page % row == 0"){
-        html += '</ul>';
-      }
-      items.push(html);
-  }
-}
 
   /*function sort(table_id, sortColumn){
     var tableData = document.getElementById('table').getElementsByTagName('tbody').item(0);
