@@ -183,22 +183,32 @@ else{
   </table>
 <!-- Bootstrap Table Pagination-->
 
-<div class="float-md-right paginated-table" id="paginated-table">
+<div ng-app="todos">
+<div ng-controller="pagination">
+  <pagination ng-model="currentPage"
+      total-items="todos.length"
+      max-size="maxSize"
+      boundary-links="true">
+  </pagination>
+</div>
+</div>
+<!--
+<div class="float-md-right paginated-table" id="paginated-table" ng-controller="pagination">
   <pagination id="pag" total-items="87">
     <ul class="pagination" id="pagination">
-      <!-- Arrow Left -->
+
       <li class="page-item">
         <a class="page-link" href="#" aria-label="Previous">
           <span aria-hidden="true">&laquo</span>
           <span class="sr-only">Previous</span>
         </a></li>
-        <!-- Page Numbers -->
+
       <li class="page-item"><a class="page-link" href="#">1</a></li>
       <li class="page-item"><a class="page-link" href="#">2</a></li>
       <li class="page-item"><a class="page-link" href="#">3</a></li>
       <li class="page-item"><a class="page-link" href="#">4</a></li>
       <li class="page-item"><a class="page-link" href="#">5</a></li>
-      <!-- Arrow Right -->
+
       <li class="page-item">
         <a class="page-link" href="#" aria-label="Next">
           <span aria-hidden="true">&raquo</span>
@@ -207,7 +217,7 @@ else{
       </li>
     </ul>
   </pagination>
-</div>
+</div> -->
 
 <div class="card col-sm-3" id="postgres">
 <?php echo "There are " . $num . " rows in the " . pg_dbname() . " parcels table"; ?>
@@ -231,6 +241,7 @@ else{
 
 <!-- Angular JavaScript -->
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script data-require="ui-bootstrap@*" data-semver="0.12.1" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.min.js"></script>
 
 
 
@@ -335,6 +346,30 @@ else{
     $('#pagination').toggle();
     $('#postgres').toggle();
   });
+  //Angular JS pagination
+  var todos = angular.module('todos', ['ui.bootstrap']);
+
+todos.controller('pagination', function($scope) {
+   $scope.filteredTodos = []
+  ,$scope.currentPage = 1
+  ,$scope.numPerPage = 10
+  ,$scope.maxSize = 5;
+
+  $scope.makeTodos = function() {
+    $scope.todos = [];
+    for (i=1;i<=1000;i++) {
+      $scope.todos.push({ text:'todo '+i, done:false});
+    }
+  };
+  $scope.makeTodos();
+
+  $scope.$watch('currentPage + numPerPage', function() {
+    var begin = (($scope.currentPage - 1) * $scope.numPerPage)
+    , end = begin + $scope.numPerPage;
+
+    $scope.filteredTodos = $scope.todos.slice(begin, end);
+  });
+});
 
 </script>
 </body>
