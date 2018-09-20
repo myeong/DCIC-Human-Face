@@ -183,7 +183,7 @@ else{
   </table>
 <!-- Bootstrap Table Pagination-->
 
-<div ng-app="todos">
+<div class="float-md-right" ng-app="todos">
 <div ng-controller="pagination">
   <pagination ng-model="currentPage"
       total-items="todos.length"
@@ -235,9 +235,6 @@ else{
 
 <!-- W3.JS JavaScript -->
 <script src="https://www.w3schools.com/lib/w3.js"></script>
-
-<!-- DataTables JavaScript -->
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 
 <!-- Angular JavaScript -->
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
