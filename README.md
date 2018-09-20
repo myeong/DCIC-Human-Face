@@ -36,26 +36,32 @@ Slack is a team-based chattinng tool. We will use a Slack channel for quick comm
 
 
 ### Participants
-- Shiyun Chen (shiyunchen1993@gmail.com)
-- Edel Spencer (espence2@umd.edu)
-- David Yuheng Zhang (yzhang63@umd.edu)
-- Simmi Pastakia (simmi.p106@gmail.com) 
-- Tanya Sehgal (tans1127@gmail.com) 
-- Richard Bool (boolrichard@gmail.com) 
-- Jhon Dela Cruz (jhonrommel_delacruz@yahoo.com)
-- Hyeong-Gi Hong (hyeonghong90@gmail.com)
-- Lauren Schirle (lschirle@umd.edu) 
-- Shishiri Nganyone (snganyon@terpmail.umd.edu)
-- Kiri Houpt (kiri.houpt@gmail.com)
-- Prasad Patwardhan (ppatwardhan829@gmail.com)
-- Christina Hall (hall.christina96@gmail.com)
+- Mahitha Kalyani (HCIM)
+- Caryn Pasking (InfoSci)
+- Anam Bhatia (HCIM)
+- Rajesh Kumar (MIM)
+- Vyjayanthi Kamath (MIM)
+- Natalie Yeh (HCIM)
+- Hyeong-Gi Hong (InfoSci)
+- Shishiri Nganyone (InfoSci)
 - Myeong Lee (Project Lead, Ph.D. Student)
 - Dr. Richard Marciano (Director of DCIC)
 
 
 ### Alumni
-- Alicia Galler (alicia.d.geller@gmail.com)
-- Hardik Jhaveri (hardikjhaveri93@gmail.com)
-- Rajesh Gnanasekaran (rgnanase@umd.edu) 
-- Alisha Gonsalves (alisha27@terpmail.umd.edu) 
-- Justin Hsieh (justhsiehh@gmail.com)
+- Shiyun Chen 
+- Lauren Schirle 
+- Edel Spencer 
+- David Yuheng Zhang 
+- Simmi Pastakia 
+- Tanya Sehgal 
+- Richard Bool 
+- Jhon Dela Cruz 
+- Kiri Houpt 
+- Prasad Patwardhan 
+- Christina Hall 
+- Alicia Galler 
+- Hardik Jhaveri 
+- Rajesh Gnanasekaran 
+- Alisha Gonsalves 
+- Justin Hsieh 
