@@ -38,7 +38,7 @@ else{
   ?>
 
 </head>
-<body>
+<body   ng-app="todos">
   <header>
     <h1>DCIC: Human Face of big Data</h1>
     <p1 class="h6">Utilize this search page to find parcel specific information within the DCIC: Human Face of Big Data relational database system.</p1>
@@ -183,7 +183,7 @@ else{
   </table>
 <!-- Bootstrap Table Pagination-->
 
-<div class="float-md-right" ng-app="todos">
+<div class="float-md-right">
 <div ng-controller="pagination">
   <pagination ng-model="currentPage"
       total-items="todos.length"
@@ -343,31 +343,7 @@ else{
     $('#pagination').toggle();
     $('#postgres').toggle();
   });
-  //Angular JS pagination
-  var todos = angular.module('todos', ['ui.bootstrap']);
-
-todos.controller('pagination', function($scope) {
-   $scope.filteredTodos = []
-  ,$scope.currentPage = 1
-  ,$scope.numPerPage = 10
-  ,$scope.maxSize = 5;
-
-  $scope.makeTodos = function() {
-    $scope.todos = [];
-    for (i=1;i<=1000;i++) {
-      $scope.todos.push({ text:'todo '+i, done:false});
-    }
-  };
-  $scope.makeTodos();
-
-  $scope.$watch('currentPage + numPerPage', function() {
-    var begin = (($scope.currentPage - 1) * $scope.numPerPage)
-    , end = begin + $scope.numPerPage;
-
-    $scope.filteredTodos = $scope.todos.slice(begin, end);
-  });
-});
-
+  
 </script>
 </body>
 </html>
