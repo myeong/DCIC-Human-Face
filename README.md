@@ -49,19 +49,19 @@ Slack is a team-based chattinng tool. We will use a Slack channel for quick comm
 
 
 ### Alumni
-- Shiyun Chen 
-- Lauren Schirle 
-- Edel Spencer 
-- David Yuheng Zhang 
-- Simmi Pastakia 
-- Tanya Sehgal 
-- Richard Bool 
-- Jhon Dela Cruz 
-- Kiri Houpt 
-- Prasad Patwardhan 
-- Christina Hall 
-- Alicia Galler 
-- Hardik Jhaveri 
-- Rajesh Gnanasekaran 
-- Alisha Gonsalves 
-- Justin Hsieh 
+- Shiyun Chen (MLIS)
+- Lauren Schirle (MIM)
+- Edel Spencer (MIM)
+- David Yuheng Zhang (MIM)
+- Simmi Pastakia (InfoSci)
+- Tanya Sehgal (Psychology)
+- Richard Bool (InfoSci)
+- Jhon Dela Cruz (InfoSci)
+- Kiri Houpt (MLIS)
+- Prasad Patwardhan (InfoSci)
+- Christina Hall (InfoSci)
+- Alicia Galler (MIM)
+- Hardik Jhaveri (MIM)
+- Rajesh Gnanasekaran (MIM)
+- Alisha Gonsalves (MIM)
+- Justin Hsieh (InfoSci)
