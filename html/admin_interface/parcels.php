@@ -177,7 +177,7 @@ else{
       <?php foreach($row as $rows){ ?>
       <tr>
         <td class="pr-md-3 pr-5 text-center">
-          <button class="btn btn-primary"><i class="fas fa-edit"></i></button>
+          <a href="edit.php?pid=<?=$rows['parcel_id']?>"><button class="btn btn-primary"><i class="fas fa-edit"></i></button></a>
         </td>
         <td class="text-center"><?php echo $rows['parcel_id'] . "\n"; ?></td>
         <td class="text-center"><?php echo $rows['block_no'] . "\n"; ?></td>
