@@ -9,6 +9,9 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
@@ -35,7 +38,7 @@ else{
   ?>
 
 </head>
-<body>
+<body   ng-app="todos">
   <header>
     <h1>DCIC: Human Face of big Data</h1>
     <p1 class="h6">Utilize this search page to find parcel specific information within the DCIC: Human Face of Big Data relational database system.</p1>
@@ -180,22 +183,32 @@ else{
   </table>
 <!-- Bootstrap Table Pagination-->
 
-<div class="float-md-right page-number">
-  <nav>
+<div class="float-md-right">
+<div ng-controller="pagination">
+  <pagination ng-model="currentPage"
+      total-items="todos.length"
+      max-size="maxSize"
+      boundary-links="true">
+  </pagination>
+</div>
+</div>
+<!--
+<div class="float-md-right paginated-table" id="paginated-table" ng-controller="pagination">
+  <pagination id="pag" total-items="87">
     <ul class="pagination" id="pagination">
-      <!-- Arrow Left -->
+
       <li class="page-item">
         <a class="page-link" href="#" aria-label="Previous">
           <span aria-hidden="true">&laquo</span>
           <span class="sr-only">Previous</span>
         </a></li>
-        <!-- Page Numbers -->
+
       <li class="page-item"><a class="page-link" href="#">1</a></li>
       <li class="page-item"><a class="page-link" href="#">2</a></li>
       <li class="page-item"><a class="page-link" href="#">3</a></li>
       <li class="page-item"><a class="page-link" href="#">4</a></li>
       <li class="page-item"><a class="page-link" href="#">5</a></li>
-      <!-- Arrow Right -->
+
       <li class="page-item">
         <a class="page-link" href="#" aria-label="Next">
           <span aria-hidden="true">&raquo</span>
@@ -203,12 +216,16 @@ else{
         </a>
       </li>
     </ul>
-  </nav>
-</div>
+  </pagination>
+</div> -->
 
 <div class="card col-sm-3" id="postgres">
 <?php echo "There are " . $num . " rows in the " . pg_dbname() . " parcels table"; ?>
 </div>
+
+<footer>
+  <p>DCIC Human Face of Big Data</p>
+</footer>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -218,6 +235,11 @@ else{
 
 <!-- W3.JS JavaScript -->
 <script src="https://www.w3schools.com/lib/w3.js"></script>
+
+<!-- Angular JavaScript -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script data-require="ui-bootstrap@*" data-semver="0.12.1" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.min.js"></script>
+
 
 
 <script>
@@ -254,8 +276,8 @@ else{
         }).appendTo($pager).addClass('clickable');
       }
       $pager.insertBefore($pagi).find('span.page-number:first').addClass('active');
-
     });
+    //$("#pag a:first").addClass('active');
   }
 
   /*function sort(table_id, sortColumn){
@@ -304,6 +326,7 @@ else{
   });
 
   $(document).ready(function(){
+    //$('#table').DataTable(); //Initialize Datatable
     pagination();
     //sort('table', 3);
     filter();
@@ -320,7 +343,7 @@ else{
     $('#pagination').toggle();
     $('#postgres').toggle();
   });
-
+  
 </script>
 </body>
 </html>
