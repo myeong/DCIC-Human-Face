@@ -343,7 +343,9 @@ else{
     $('#pagination').toggle();
     $('#postgres').toggle();
   });
-  
+/*
+php link to edit interface add new column to table
+*/
 </script>
 </body>
 </html>
