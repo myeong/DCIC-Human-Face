@@ -40,6 +40,7 @@ else{
   if($_GET['pid']){
     $x = "SELECT * FROM humanface.parcels = " . $_GET['pid'];
     $p = pg_query($connect, $x);
+    $prow = pg_fetch_assoc($p);
   }
   ?>
 
