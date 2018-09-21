@@ -35,6 +35,12 @@ else{
   $par = pg_query($connect, $query);
   $row = pg_fetch_all($par);
   $num = pg_num_rows($par);
+
+  //Obtain Parcel ID when user selects Edit button in table
+  if($_GET['pid']){
+    $x = "SELECT * FROM humanface.parcels = " . $_GET['pid'];
+    $p = pg_query($connect, $x);
+  }
   ?>
 
 </head>
