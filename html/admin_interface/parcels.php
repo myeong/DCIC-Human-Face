@@ -38,7 +38,7 @@ else{
   ?>
 
 </head>
-<body   ng-app="todos">
+<body>
   <header>
     <h1>DCIC: Human Face of big Data</h1>
     <p1 class="h6">Utilize this search page to find parcel specific information within the DCIC: Human Face of Big Data relational database system.</p1>
@@ -154,10 +154,11 @@ else{
   <table class="table table-light table-hover table-striped table-bordered table-responsive-md" id="table">
     <thead class="thead-dark">
       <tr>
-        <th scope="col" class="pr-md-3 pr-5 text-center">
+        <!-- <th scope="col" class="pr-md-3 pr-5 text-center">
           <input class="form-check-input" type="checkbox">
           <label class="form-check-label" for = "checkbox"></label>
-        </th>
+        </th> -->
+        <th scope="col" class="text-center"></th>
         <th class="text-center">Parcel ID <button class="btn btn-link"><i class="fas fa-sort"></i></button></th>
         <th scope="col" class="text-center">Block Number <button class="btn btn-link"><i class="fas fa-sort"></i></button></th>
         <th scope="col" class="text-center">Parcel Number <button class="btn btn-link"><i class="fas fa-sort"></i></button></th>
@@ -169,8 +170,7 @@ else{
       <?php foreach($row as $rows){ ?>
       <tr>
         <td class="pr-md-3 pr-5 text-center">
-          <input data-placement = "top" class="form-check-input" type="checkbox">
-          <label class="form-check-label" for = "checkbox"></label>
+          <button class="btn btn-primary"><i class="fas fa-edit"></i></button>
         </td>
         <td class="text-center"><?php echo $rows['parcel_id'] . "\n"; ?></td>
         <td class="text-center"><?php echo $rows['block_no'] . "\n"; ?></td>
@@ -183,32 +183,23 @@ else{
   </table>
 <!-- Bootstrap Table Pagination-->
 
-<div class="float-md-right">
-<div ng-controller="pagination">
-  <pagination ng-model="currentPage"
-      total-items="todos.length"
-      max-size="maxSize"
-      boundary-links="true">
-  </pagination>
-</div>
-</div>
-<!--
+
 <div class="float-md-right paginated-table" id="paginated-table" ng-controller="pagination">
   <pagination id="pag" total-items="87">
     <ul class="pagination" id="pagination">
-
+      <!-- Left Arrow -->
       <li class="page-item">
         <a class="page-link" href="#" aria-label="Previous">
           <span aria-hidden="true">&laquo</span>
           <span class="sr-only">Previous</span>
         </a></li>
-
+        <!-- Page Numbers -->
       <li class="page-item"><a class="page-link" href="#">1</a></li>
       <li class="page-item"><a class="page-link" href="#">2</a></li>
       <li class="page-item"><a class="page-link" href="#">3</a></li>
       <li class="page-item"><a class="page-link" href="#">4</a></li>
       <li class="page-item"><a class="page-link" href="#">5</a></li>
-
+      <!-- Right Arrow -->
       <li class="page-item">
         <a class="page-link" href="#" aria-label="Next">
           <span aria-hidden="true">&raquo</span>
@@ -217,7 +208,7 @@ else{
       </li>
     </ul>
   </pagination>
-</div> -->
+</div>
 
 <div class="card col-sm-3" id="postgres">
 <?php echo "There are " . $num . " rows in the " . pg_dbname() . " parcels table"; ?>
