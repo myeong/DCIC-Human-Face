@@ -31,11 +31,15 @@
 		die("Error in connection!:" . pg_last_error());
 	}
 
-	// $parcel_num = $_POST[""];
-	// $block_num = $_POST[""];
+	$p_id = $_GET["pid"];
+	$query = "SELECT block_no, parcel_no
+				FROM humanface.parcels
+				WHERE parcel_id = '" . $p_id . "';";
+	$result = pg_query($connect, $query);
+	$parcel_block_nums = pg_fetch_all($result);
 
-	$parcel_num = 1;
-	$block_num = 3;
+	$parcel_num = $parcel_block_nums[0]['parcel_no'];
+	$block_num = $parcel_block_nums[0]['block_no'];
 
 	//Query for parcel information
 	// $query = "SELECT p.parcel_id, p.block_no, p.parcel_no, p.ward_no, p.land_use, 
@@ -107,10 +111,10 @@
       			<!--Iterate the parcel_info array -->
       			<?php foreach ($parcel_info[0] as $key => $value) { if ($key == 'parcel_id') { continue;}?>
   					<label for="<?php echo $key?>"><?php echo $key;?><small class="required">*</small></label>
-        			<input type="text" class="form-control" for="<?php echo $key;?>" id= "<?php echo "parcel_id" . " " . $parcel_info[0]['parcel_id'];?>" num = value = "<?php echo $value;?>" required minlength="1">
+        			<input type="text" class="form-control" for="<?php echo $key;?>" parcel_id=<?php echo $parcel_info[0]['parcel_id'];?> value = "<?php echo $value;?>" required minlength="1">
 	        	<?php } for ($i=0; $i<sizeof($address_info); $i++) { foreach($address_info[$i] as $key => $value) { if ($key == 'address_id') {continue;}?>
 	        		<label for="<?php echo $key?>"><?php echo $key;?><small class="required">*</small></label>
-        			<input type="text" class="form-control" for="<?php echo $key;?>" id= "<?php echo "address_id" . " " . $address_info[$i]['address_id'];?>" value = "<?php echo trim($value);?>" required minlength="1">
+        			<input type="text" class="form-control" for="<?php echo $key;?>" address_id=<?php echo $address_info[$i]['address_id'];?> value = "<?php echo trim($value);?>" required minlength="1">
 	        	<?php }} ?>
     		</div>    
 			<div class="col-md-12" role="titlebar"  id="titlebar">
@@ -125,7 +129,7 @@
 	    					<label for="<?php echo $key?>"><?php echo $key;?><small class="required">*</small></label>
 	    					<form autocomplete="off" action="/action_page.php">
 							  <div class="autocomplete" style="width:300px;">
-							    <input class="namecell" type="text" id= "person_id" num="<?php echo $event_info[$i]['person_id'];?>" name="names" value="<?php echo trim($value);?>">
+							    <input class="namecell" type="text" person_id="<?php echo $event_info[$i]['person_id'];?>" value="<?php echo trim($value);?>">
 							  </div>
 							</form>
 		                </div>
@@ -290,6 +294,7 @@ foreach ($names as $key => $value) {
     }
 }
 ?>;
+// ajax call
 var names = <?php echo '["' . implode('", "', array_unique($n)) . '"]' ?>;
 
 /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
