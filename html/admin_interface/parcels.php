@@ -9,9 +9,6 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
-  <!-- DataTables CSS -->
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
@@ -37,11 +34,11 @@ else{
   $num = pg_num_rows($par);
 
   //Obtain Parcel ID when user selects Edit button in table
-  if($_GET['pid']){
-    $x = "SELECT * FROM humanface.parcels = " . $_GET['pid'];
+  /*if($_GET['pid']){
+    $x = "SELECT * FROM humanface.parcels WHERE parcel_id = " . $_GET['pid'];
     $p = pg_query($connect, $x);
     $prow = pg_fetch_assoc($p);
-  }
+  }*/
   ?>
 
 </head>
