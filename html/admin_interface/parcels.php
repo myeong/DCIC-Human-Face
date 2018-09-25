@@ -188,31 +188,33 @@ else{
 <!-- Bootstrap Table Pagination-->
 
 
-<div class="float-md-right paginated-table" id="paginated-table" ng-controller="pagination">
-  <pagination id="pag" total-items="87">
+<!-- <div class="float-md-right paginated-table" id="pagination">
+  <pagination class="pagination">
+  </pagination>
+</div> -->
+    <!--
     <ul class="pagination" id="pagination">
-      <!-- Left Arrow -->
+
       <li class="page-item">
         <a class="page-link" href="#" aria-label="Previous">
           <span aria-hidden="true">&laquo</span>
           <span class="sr-only">Previous</span>
         </a></li>
-        <!-- Page Numbers -->
+
       <li class="page-item"><a class="page-link" href="#">1</a></li>
       <li class="page-item"><a class="page-link" href="#">2</a></li>
       <li class="page-item"><a class="page-link" href="#">3</a></li>
       <li class="page-item"><a class="page-link" href="#">4</a></li>
       <li class="page-item"><a class="page-link" href="#">5</a></li>
-      <!-- Right Arrow -->
+
       <li class="page-item">
         <a class="page-link" href="#" aria-label="Next">
           <span aria-hidden="true">&raquo</span>
           <span class="sr-only">Next</span>
         </a>
       </li>
-    </ul>
-  </pagination>
-</div>
+    </ul> -->
+
 
 <div class="card col-sm-3" id="postgres">
 <?php echo "There are " . $num . " rows in the " . pg_dbname() . " parcels table"; ?>
@@ -231,12 +233,7 @@ else{
 <!-- W3.JS JavaScript -->
 <script src="https://www.w3schools.com/lib/w3.js"></script>
 
-<!-- Angular JavaScript -->
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-<script data-require="ui-bootstrap@*" data-semver="0.12.1" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.min.js"></script>
-
-
-
+<!-- JQuery Pages Pagination Plug-In-->
 <script>
   //Javascript Code
 
@@ -262,7 +259,7 @@ else{
       var numpages = Math.ceil(numrows/numpage);
       var $pager = $('<div class = "pager"></div>');
       for(var curpage = 0; curpage < numpages; curpage++){
-        $('<span class = "page-number"></span>').text(curpage + 1).bind('click',
+        $('<button class = "page-number"></button>').text(curpage + 1).bind('click',
         {newPage: curpage},
         function(event) {
           page = event.data['newPage'];
@@ -272,8 +269,9 @@ else{
       }
       $pager.insertBefore($pagi).find('span.page-number:first').addClass('active');
     });
-    //$("#pag a:first").addClass('active');
+
   }
+  //Pagination Plug-in function
 
   /*function sort(table_id, sortColumn){
     var tableData = document.getElementById('table').getElementsByTagName('tbody').item(0);
