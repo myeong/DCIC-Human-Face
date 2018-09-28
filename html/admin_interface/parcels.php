@@ -185,37 +185,34 @@ else{
       <?php } ?>
     </tbody>
   </table>
+
 <!-- Bootstrap Table Pagination-->
 
-
-<!-- <div class="float-md-right paginated-table" id="pagination">
-  <pagination class="pagination">
-  </pagination>
-</div> -->
-    <!--
-    <ul class="pagination" id="pagination">
-
+<div class="float-md-right paginated-table pager" id="pagination">
+    <pagination class="pagination">
+    <ul class="pagination">
+      <!-- Left Arrow -->
       <li class="page-item">
         <a class="page-link" href="#" aria-label="Previous">
           <span aria-hidden="true">&laquo</span>
           <span class="sr-only">Previous</span>
         </a></li>
-
+        <!-- Page Numbers -->
       <li class="page-item"><a class="page-link" href="#">1</a></li>
       <li class="page-item"><a class="page-link" href="#">2</a></li>
       <li class="page-item"><a class="page-link" href="#">3</a></li>
       <li class="page-item"><a class="page-link" href="#">4</a></li>
       <li class="page-item"><a class="page-link" href="#">5</a></li>
-
+      <!-- Right Arrow -->
       <li class="page-item">
         <a class="page-link" href="#" aria-label="Next">
           <span aria-hidden="true">&raquo</span>
           <span class="sr-only">Next</span>
         </a>
       </li>
-    </ul> -->
-
-
+    </ul>
+    </pagination>
+    </div>
 <div class="card col-sm-3" id="postgres">
 <?php echo "There are " . $num . " rows in the " . pg_dbname() . " parcels table"; ?>
 </div>
@@ -233,19 +230,16 @@ else{
 <!-- W3.JS JavaScript -->
 <script src="https://www.w3schools.com/lib/w3.js"></script>
 
-<!-- JQuery Pages Pagination Plug-In-->
 <script>
-  //Javascript Code
-
   //JavaScript & jQuery Table Pagination, Sort, & Filter
-  window.onerror = function (msg, url, line) {
+  window.onerror = function(msg, url, line) {
                  alert("An error occurred.");
                  alert("Message: " + msg);
                  alert("url" + url);
                  alert("line number" + line);
               }
 
-  function pagination(){
+  function pagination() {
     $("table").each(function(){
       //Variables
       var page = 0;
@@ -258,20 +252,21 @@ else{
       var numrows = $pagi.find('tbody tr').length;
       var numpages = Math.ceil(numrows/numpage);
       var $pager = $('<div class = "pager"></div>');
+      //var $pagination = $('#pagination');
+      //console.log(pagination);
       for(var curpage = 0; curpage < numpages; curpage++){
-        $('<button class = "page-number"></button>').text(curpage + 1).bind('click',
+        $('<button class="page-number""></button>').text(curpage + 1).bind('click',
         {newPage: curpage},
         function(event) {
           page = event.data['newPage'];
+          console.log(page); //Prints selected page number onto the console
           $pagi.trigger('repaginate');
           $(this).addClass('active').siblings().removeClass('active');
         }).appendTo($pager).addClass('clickable');
       }
       $pager.insertBefore($pagi).find('span.page-number:first').addClass('active');
     });
-
   }
-  //Pagination Plug-in function
 
   /*function sort(table_id, sortColumn){
     var tableData = document.getElementById('table').getElementsByTagName('tbody').item(0);
@@ -292,11 +287,14 @@ else{
       filter = input.value;
       table = document.getElementById("table");
       tr = table.getElementsByTagName("tr");
+
       //Loop through all the table rows, and hide those that do not match the search query
       for(x = 0; x < tr.length; x++){
-        f = tr[x].getElementsByTagName("td")[5]; //Table filter
-        if(f){
-          if(f.innerHTML.indexOf(filter) > -1){
+        f = tr[x].getElementsByTagName("td"); //Table filter
+        if(f[1]){
+          if(f[1].innerHTML.indexOf(filter) > -1 || f[2].innerHTML.indexOf(filter) > -1
+        || f[3].innerHTML.indexOf(filter) > -1 || f[4].innerHTML.indexOf(filter) > -1
+        || f[5].innerHTML.indexOf(filter) > -1){
             tr[x].style.display = "";
           }
           else{
@@ -336,9 +334,7 @@ else{
     $('#pagination').toggle();
     $('#postgres').toggle();
   });
-/*
-php link to edit interface add new column to table
-*/
+
 </script>
 </body>
 </html>
