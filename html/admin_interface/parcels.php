@@ -188,7 +188,7 @@ else{
 
 <!-- Bootstrap Table Pagination-->
 
-<div class="float-md-right paginated-table pager" id="pagination">
+<div class="float-md-right paginated-table" id="pagination">
     <pagination class="pagination">
     <ul class="pagination">
       <!-- Left Arrow -->
@@ -251,11 +251,9 @@ else{
       $pagi.trigger('repaginate');
       var numrows = $pagi.find('tbody tr').length;
       var numpages = Math.ceil(numrows/numpage);
-      var $pager = $('<div class = "pager"></div>');
-      //var $pagination = $('#pagination');
-      //console.log(pagination);
-      for(var curpage = 0; curpage < numpages; curpage++){
-        $('<button class="page-number""></button>').text(curpage + 1).bind('click',
+      var $pager = $('<div class = "pager float-md-right"></div>');
+      for(var curpage = 0; curpage < 5; curpage++){
+        $('<button class="page-number"></button>').text(curpage + 1).bind('click',
         {newPage: curpage},
         function(event) {
           page = event.data['newPage'];
