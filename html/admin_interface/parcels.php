@@ -156,7 +156,7 @@ else{
   <br><br>
 <!-- Bootstrap Table-->
   <table class="table table-light table-hover table-striped table-bordered table-responsive-md" id="table">
-    <thead class="thead-dark">
+    <thead class="thead-light">
       <tr>
         <!-- <th scope="col" class="pr-md-3 pr-5 text-center">
           <input class="form-check-input" type="checkbox">
