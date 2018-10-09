@@ -163,11 +163,11 @@ else{
           <label class="form-check-label" for = "checkbox"></label>
         </th> -->
         <th scope="col" class="text-center"></th>
-        <th class="text-center">Parcel ID <button class="btn btn-link"><i class="fas fa-sort"></i></button></th>
-        <th scope="col" class="text-center">Block Number <button class="btn btn-link"><i class="fas fa-sort"></i></button></th>
-        <th scope="col" class="text-center">Parcel Number <button class="btn btn-link"><i class="fas fa-sort"></i></button></th>
-        <th scope="col" class="text-center">Ward Number <button class="btn btn-link"><i class="fas fa-sort"></i></button></th>
-        <th scope="col" class="text-center">Land Use <button class="btn btn-link"><i class="fas fa-sort"></i></button></th>
+        <th class="text-center">Parcel ID <button class="btn btn-link" onclick="sort()"><i class="fas fa-sort"></i></button></th>
+        <th scope="col" class="text-center">Block Number <button class="btn btn-link" onclick="sort()"><i class="fas fa-sort"></i></button></th>
+        <th scope="col" class="text-center">Parcel Number <button class="btn btn-link" onclick="sort()"><i class="fas fa-sort"></i></button></th>
+        <th scope="col" class="text-center">Ward Number <button class="btn btn-link" onclick="sort()"><i class="fas fa-sort"></i></button></th>
+        <th scope="col" class="text-center">Land Use <button class="btn btn-link" onclick="sort()"><i class="fas fa-sort"></i></button></th>
       </tr>
     </thead>
     <tbody>
@@ -265,11 +265,12 @@ else{
       $pager.insertBefore($pagi).find('span.page-number:first').addClass('active');
     });
   }
-  
+
 //Table Sort
   function sort(){
-    var table;
+    var table, rows;
     table = document.getElementById("table");
+    rows = table.rows;
   }
 
 //Search filter
@@ -311,7 +312,7 @@ else{
   $(document).ready(function(){
     //$('#table').DataTable(); //Initialize Datatable
     pagination();
-    //sort('table', 3);
+    sort();
     filter();
   }); //Waits until DOM elements are loaded and ready to execute
 
