@@ -268,11 +268,16 @@ else{
 
 //Table Sort
   function sort(){
-    var table, rows;
+    var table, rows, dir;
     table = document.getElementById("table");
     rows = table.rows;
+    dir = "asc";
+    while(true){
+    for(var i = 1; i < rows.length; i++){
+      x = rows[i].getElementsByTagName("TD")[0];
+    }
   }
-
+}
 //Search filter
   function filter(){
     var input, filter, table, tr, td, x, q;
@@ -286,8 +291,8 @@ else{
         f = tr[x].getElementsByTagName("td"); //Table filter
         if(f[1]){
           if(f[1].innerHTML.indexOf(filter) > -1 || f[2].innerHTML.indexOf(filter) > -1
-        || f[3].innerHTML.indexOf(filter) > -1 || f[4].innerHTML.indexOf(filter) > -1
-        || f[5].innerHTML.indexOf(filter) > -1){
+              || f[3].innerHTML.indexOf(filter) > -1 || f[4].innerHTML.indexOf(filter) > -1
+              || f[5].innerHTML.indexOf(filter) > -1){
             tr[x].style.display = "";
           }
           else{
