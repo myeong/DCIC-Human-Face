@@ -1,7 +1,12 @@
 <?php
 ini_set('display_errors', 1);
 require 'credentials.inc.php';
+<<<<<<< HEAD
+$connect = pg_connect('host= ' . DBHOST . ' dbname=' .DBNAME . ' user=' .DBUSER . ' password=' . DBPASS);
+
+=======
 $connect = pg_connect('host=' . DBHOST . ' dbname=' .DBNAME . ' user=' .DBUSER . ' password=' . DBPASS);
+>>>>>>> 510733ecd377659bfb256398c9700a3dafe101da
 if (!$connect){
 	die("Error in connection!");
 }
