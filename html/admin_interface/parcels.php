@@ -4,8 +4,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <link rel="stylesheet" href="main_php.css">
-
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
@@ -252,7 +250,7 @@ else{
       var numrows = $pagi.find('tbody tr').length;
       var numpages = Math.ceil(numrows/numpage);
       var $pager = $('<div class = "pager float-md-right"></div>');
-      for(var curpage = 0; curpage < 5; curpage++){
+      for(var curpage = 0; curpage < numpages; curpage++){
         $('<button class="page-number"></button>').text(curpage + 1).bind('click',
         {newPage: curpage},
         function(event) {
@@ -262,7 +260,7 @@ else{
           $(this).addClass('active').siblings().removeClass('active');
         }).appendTo($pager).addClass('clickable');
       }
-      $pager.insertBefore($pagi).find('span.page-number:first').addClass('active');
+      $pager.insertBefore($pagi).find('button.page-number:first').addClass('active');
     });
   }
 
@@ -272,11 +270,11 @@ else{
     table = document.getElementById("table");
     rows = table.rows;
     dir = "asc";
-    while(true){
+    /*while(true){
     for(var i = 1; i < rows.length; i++){
       x = rows[i].getElementsByTagName("TD")[0];
     }
-  }
+  }*/
 }
 //Search filter
   function filter(){
