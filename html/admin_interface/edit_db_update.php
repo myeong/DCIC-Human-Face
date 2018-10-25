@@ -8,24 +8,12 @@ function send_query($con, $q) {
 }
 
 ini_set('display_errors', 1);
+
 require '../credentials.inc.php';
 $connect = pg_connect('host=' . DBHOST . ' dbname=' . DBNAME . ' user=' . DBUSER . ' password=' . DBPASS);
 if (!$connect){
 	die("Error in connection!");
 }
-
-		// $person_query = "SELECT name FROM humanface.people;";
-		// $person_result = pg_query($connect, $person_query);
-
-		// while ($row = pg_fetch_array($person_result)) {
-		// 	$person_name = array(
-		// 		"name" => trim($row['name'])
-		// 	);
-		// 	$people_names[] = $person_name;
-		// }	
-		// echo "<pre>";
-		// print_r($people_names);
-		// echo "</pre>";
 
 // javascript object from edit page
 $a_parcel = $_POST;
@@ -54,6 +42,21 @@ foreach ($a_parcel as $key => $value) {
 		}
 	}
 	else if ($key == 'events') {
+		foreach ($value as $k => $v) {
+			$event_id = $v['event_id'];
+			$response = $v['response'];
+			$extra_information = $v['extra_information'];
+			$date = $v['date'];
+			$price = $v['price'];
+			$event_type_id = $v['event_type_id'];
+			$event_type = $v['event_type'];
+
+			$e_query = "UPDATE humanface.events SET response='" . $response . "', extra_information='" . $extra_information . "', date='" . $date . "', price=" . $price . ", type=" . $event_type_id . " WHERE event_id=" . $event_id . ";";
+
+			send_query($connect, $e_query);
+		}
+	}
+	else if ($key == 'people') {
 		// person name case
 		$person_query = "SELECT name FROM humanface.people;";
 		$person_result = pg_query($connect, $person_query);
@@ -66,33 +69,25 @@ foreach ($a_parcel as $key => $value) {
 		}	
 
 		foreach ($value as $k => $v) {
-			$event_id = $v['event_id'];
-			$response = $v['response'];
-			$extra_information = $v['extra_information'];
-			$date = $v['date'];
-			$price = $v['price'];
-			$event_type_id = $v['event_type_id'];
-			$event_type = $v['event_type'];
 			$event_asso_id = $v['event_asso_id'];
 			$role = $v['role'];
 			$person_id = $v['person_id'];
 			$name = $v['name'];
 
-			$e_query = "UPDATE humanface.events SET response='" . $response . "', extra_information='" . $extra_information . "', date='" . $date . "', price=" . $price . ", type=" . $event_type_id . " WHERE event_id=" . $event_id . ";";
-
-			send_query($connect, $e_query);
-
+			// if person name exists in current list
 			if (array_search($name, array_column($people_names, 'name')) !== False) {
 				$peo_query = "UPDATE humanface.event_people_assoc SET person_id=" . $person_id  . ", role='" . $role . "' WHERE id=" . $event_asso_id . ";";
 				
 				send_query($connect, $peo_query);
 			}
+
+			// if person name DOES NOT exists in current list
 			else {
-				echo "name is NOT in the list";
 				$peo_query = "UPDATE humanface.people SET name='" . $name . "' WHERE person_id=" . $person_id . ";";
+				$role_query = "UPDATE humanface.event_people_assoc SET role='" . $role . "' WHERE id=" .$event_asso_id . ";";
 				
 				send_query($connect, $peo_query);
-				
+				send_query($connect, $role_query);
 			}
 		}
 	}
