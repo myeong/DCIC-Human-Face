@@ -10,7 +10,7 @@ $action = $_GET['action'];
 if ($action == "type_request") {
 	$event_type = $_GET['type'];
 
-	$query = "SELECT id FROM humanface. WHERE type='" . $event_type . "';";
+	$query = "SELECT id FROM humanface.event_types WHERE type='" . $event_type . "';";
 } else if ($action == "person_request") {
 	$person_name = $_GET['name'];
 
