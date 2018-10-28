@@ -10,6 +10,8 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
+  <link rel="stylesheet" href="css/parcels.css">
+
   <title>DCIC Human Face of Big Data</title>
 
   <?php
@@ -22,9 +24,9 @@
   	die("Error in connection!:" . pg_last_error());
   }
 else{
-   echo "<div class='alert alert-success' role='alert'>";
+   /*echo "<div class='alert alert-success' role='alert'>";
    print "Successfully connected to database:" . " " . pg_dbname() . " on " . pg_host();
-   echo "</div>";
+   echo "</div>";*/
   }
 
   //Querying Parcels Table Information
@@ -218,13 +220,16 @@ else{
 <div class="card col-sm-3" id="postgres">
 <?php echo "There are " . $num . " rows in the " . pg_dbname() . " parcels table"; ?>
 </div>
+<br><br><br><br>
 
-<footer>
-  <div class="container-fluid">
-  <p class="text-center">DCIC Human Face of Big Data</p>
-</div>
-</footer>
-
+<!-- Footer -->
+<footer class="page-footer font-small cyan darken-3">
+  <div class="container">
+    <div class="row">
+    </div>
+  </div>
+  </footer>
+  <!-- Footer -->
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
