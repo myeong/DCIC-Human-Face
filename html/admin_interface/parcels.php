@@ -8,9 +8,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-
-  <link rel="stylesheet" href="css/parcels.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
 
   <title>DCIC Human Face of Big Data</title>
 
@@ -223,12 +221,19 @@ else{
 <br><br><br><br>
 
 <!-- Footer -->
+<div class="footer">
 <footer class="page-footer font-small cyan darken-3">
   <div class="container">
     <div class="row">
+        <div class="col-md-12 py-5">
+          <div class="mb-5 flex-center">
+
+          </div>
+        </div>
     </div>
   </div>
   </footer>
+</div>
   <!-- Footer -->
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
