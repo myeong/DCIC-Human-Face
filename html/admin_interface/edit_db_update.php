@@ -18,6 +18,10 @@ if (!$connect){
 // javascript object from edit page
 $a_parcel = $_POST;
 
+// echo "<pre>";
+// print_r($a_parcel);
+// echo "</pre>";
+
 foreach ($a_parcel as $key => $value) {
 	if ($key == 'parcel') {
 		$parcel_id = $value[0]['parcel_id'];
@@ -28,7 +32,7 @@ foreach ($a_parcel as $key => $value) {
 
 		$p_query = "UPDATE humanface.parcels SET block_no=" . $block_no . ", parcel_no=" . $parcel_no . ", ward_no=" . $ward_no . ", land_use='" . $land_use . "' WHERE parcel_id=" . $parcel_id . ";";
 
-		send_query($connect, $p_query);
+		// send_query($connect, $p_query);
 	}
 	else if ($key == 'address') {
 		foreach ($value as $k => $v) {
@@ -38,7 +42,7 @@ foreach ($a_parcel as $key => $value) {
 
 			$a_query = "UPDATE humanface.addresses SET st_num='" . $st_num . "', st_name='" . $st_name . "' WHERE id=" . $address_id . ";";
 
-			send_query($connect, $a_query);
+			// send_query($connect, $a_query);
 		}
 	}
 	else if ($key == 'events') {
@@ -53,7 +57,7 @@ foreach ($a_parcel as $key => $value) {
 
 			$e_query = "UPDATE humanface.events SET response='" . $response . "', extra_information='" . $extra_information . "', date='" . $date . "', price=" . $price . ", type=" . $event_type_id . " WHERE event_id=" . $event_id . ";";
 
-			send_query($connect, $e_query);
+			// send_query($connect, $e_query);
 		}
 	}
 	else if ($key == 'people') {
@@ -78,7 +82,7 @@ foreach ($a_parcel as $key => $value) {
 			if (array_search($name, array_column($people_names, 'name')) !== False) {
 				$peo_query = "UPDATE humanface.event_people_assoc SET person_id=" . $person_id  . ", role='" . $role . "' WHERE id=" . $event_asso_id . ";";
 				
-				send_query($connect, $peo_query);
+				// send_query($connect, $peo_query);
 			}
 
 			// if person name DOES NOT exists in current list
@@ -86,8 +90,33 @@ foreach ($a_parcel as $key => $value) {
 				$peo_query = "UPDATE humanface.people SET name='" . $name . "' WHERE person_id=" . $person_id . ";";
 				$role_query = "UPDATE humanface.event_people_assoc SET role='" . $role . "' WHERE id=" .$event_asso_id . ";";
 				
-				send_query($connect, $peo_query);
-				send_query($connect, $role_query);
+				// send_query($connect, $peo_query);
+				// send_query($connect, $role_query);
+			}
+		}
+	} else if ($key == 'extra') {
+		foreach ($value as $k => $v) {
+			$event_id = $v['event_id'];
+			$role = $v['role'];
+			$name = $v['name'];
+
+			if (isset($v['person_id'])) {
+				$person_id = $v['person_id'];
+
+				$extra_query = "INSERT INTO humanface.event_people_assoc (event_id, person_id, role) VALUES (" . $event_id . ", " . $person_id . ", '" . $role . "');";
+
+				send_query($connect, $extra_query);
+			}
+			else {
+				$extra_query = "INSERT INTO humanface.people (name) VALUES ('" . $name . "');";
+
+				send_query($connect, $extra_query);
+
+				// $per_id = send_query($connect, "SELECT person_id FROM humanface.people WHERE name='" . $name . "';");
+
+				$extra_query_2 = "INSERT INTO humanface.event_people_assoc (event_id, person_id, role) VALUES (" . $event_id . ", (SELECT person_id FROM humanface.people WHERE name='" . $name . "') , '" . $role . "');";
+
+				send_query($connect, $extra_query_2);
 			}
 		}
 	}

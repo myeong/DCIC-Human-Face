@@ -15,6 +15,8 @@ if ($action == "type_request") {
 	$person_name = $_GET['name'];
 
 	$query = "SELECT person_id FROM humanface.people WHERE name='" . $person_name . "';";
+} else if ($action == "name_request") {
+	$query = "SELECT DISTINCT name FROM humanface.people;";
 }
 
 // if ($q_request == "parcel_request") {
@@ -49,19 +51,28 @@ if(!$result){
 
 if ($action == "type_request"){
 	while ($row = pg_fetch_array($result)) {
-			$data = array(
-				"event_type_id" => $row['id']
-			);
-			$datas[] = $data;
-		}
+		$data = array(
+			"event_type_id" => $row['id']
+		);
+		$datas[] = $data;
+	}
 	echo json_encode($datas);
-} else if ($action == "person_request"){
+} else if ($action == "person_request") {
 	while ($row = pg_fetch_array($result)) {
-			$data = array(
-				"person_id" => $row['person_id']
-			);
-			$datas[] = $data;
-		}
+		$data = array(
+			"person_id" => $row['person_id']
+		);
+		$datas[] = $data;
+	}
+	echo json_encode($datas);
+} else if ($action == "name_request") {
+	# process names
+	while ($row = pg_fetch_array($result)) {
+		$data = array(
+			"name" => $row['name']
+		);
+		$datas[] = $data;
+	}
 	echo json_encode($datas);
 }
 pg_free_result($result);

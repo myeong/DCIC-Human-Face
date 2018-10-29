@@ -23,9 +23,9 @@
 
 </head>
 <body>
-	<header>
-	<h1>DCIC: Human Face of big Data</h1>
-	<p1>Utilize this search page to find parcel specific information within the DCIC: Human Face of Big Data relational database system.</p1>
+	<header class="my-2 mx-5">
+	<h1>DCIC: Administrative Interface</h1>
+	<p1>Modify each parcel data. Once the modification is done, press a submit button to make change in the database.</p1>
 	</header>
 
 	<div class="container">
@@ -38,8 +38,10 @@
   			<?php $i=0; foreach ($parcel_info[0] as $key => $value){ if($key == 'parcel_id'){continue;} ?>
   			<div class="col-md-3">
 				<label><?php echo $key;?><small class="required">*</small></label>
-				<?php if($key != 'land_use') { ?>
+				<?php if($key == 'block_no' || $key == 'parcel_no') { ?>
     			<input type="text" class="parcel" id="<?php echo 'parcel' . $i;?>" parcel_id=<?php echo $parcel_info[0]['parcel_id'];?> name="<?php echo $key;?>" value = "<?php echo trim($value);?>" required minlength="1" onblur="pageUpdate(id)">
+    			<?php } else if ($key == 'ward_no') { ?>
+    			<input type="number" class="parcel" id="<?php echo 'parcel' . $i;?>" parcel_id=<?php echo $parcel_info[0]['parcel_id'];?> name="<?php echo $key;?>" value = "<?php echo trim($value);?>" onblur="pageUpdate(id)">
     			<?php } else { ?>
 				<select class="form-control" id="<?php echo 'parcel' . $i;?>" parcel_id="<?php echo $parcel_info[0]['parcel_id'];?>" name="land_use" value="<?php echo trim($parcel_info[0]['land_use']);?>" onblur="pageUpdate(id)">
 					<option value="residential">Residential</option>
@@ -65,8 +67,11 @@
 
 		<!-- Event Information -->
 		<div class="container event-container px-0 pb-2">
-			<?php $index=0; $index_reverse = 9999; for ($i=0; $i<sizeof($event_info); $i++) { ?>
-			<div class="row rounded pb-5" role="a_event">
+			<?php $num_event=1; $index=0; $index_reverse = 9999; for ($i=0; $i<sizeof($event_info); $i++) { ?>
+			<div class="row rounded py-3 mb-5 border border-dark" role="a_event">
+				<div class="col-md-12">
+					<h5>Event <?php echo $num_event;?></h5>
+				</div>
 				<?php foreach($event_info[$i] as $key => $value) {
 					if ($key == 'event_id' || $key == 'event_type_id') {
 						continue;
@@ -128,8 +133,14 @@
 						    		</div>
 						    	</div>
 						<?php }} $index_reverse--; } ?>
-				</div>
-			<?php } ?>
+						<div class="col-md-12">
+							<div class="row" id="ext-people<?php echo $num_event;?>"></div>
+						</div>
+						<div class="col-md-12">
+							<button type="button" class="btn btn-outline-dark my-3" onclick="addPeople('<?php echo $num_event;?>', '<?php echo $people[0]['event_id']; ?>'); dropdownRegister();">+Add a Person</button>
+						</div>
+			</div>
+			<?php $num_event++; } ?>
 		</div>
 
 		<!-- Submit Button -->
@@ -154,20 +165,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
-<script>
-// ajax call
-var names = <?php echo '["' . implode('", "', array_unique($n)) . '"]' ?>;
-
-/*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
-var name_cells = document.getElementsByClassName("namecell");
-for (var i=0; i<name_cells.length; i++) {
-	autocomplete(name_cells[i], names);
-}
-</script>
-
 <script src="js/edit_pageElements_update.js"></script>
 <script src="js/edit_db_update.js"></script>
-
+<script src="js/edit_add_people.js"></script>
+<script src="js/edit_dropdown_register.js"></script>
+<script src="js/edit_dropdown_names.js"></script>
 
 </body>
 </html>
