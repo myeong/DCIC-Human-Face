@@ -1,8 +1,8 @@
 function updateDB(){
-	var property = new Object();
+	var property = new Object({action: 'edit'});
 
-	// var ids = ["parcel", "address", "event", "people", "extra"];
-	var ids = ["extra"];
+	var ids = ["parcel", "address", "event", "people", "extra"];
+	// var ids = ["people"];
 	for (var i=0; i<ids.length; i++) {
 		var input_tags = $( "input[id^='" + ids[i] + "'], select[id^='" + ids[i] + "']");
 
@@ -50,13 +50,13 @@ function updateDB(){
 		} else if (ids[i] == "event") {
 			property.events = [];
 			for (var k=0; k<input_tags.length; k+=5){
-				var evt_id = input_tags[k].getAttribute("event_id");
-				var response = input_tags[k].getAttribute("value");
-				var extra_information = input_tags[k+1].getAttribute("value");
-				var date = input_tags[k+2].getAttribute("value");
-				var price = input_tags[k+3].getAttribute("value");
-				var evt_type_id = input_tags[k+4].getAttribute("event_type_id");
-				var evt_type = input_tags[k+4].getAttribute("value");
+				var evt_type_id = input_tags[k].getAttribute("event_type_id");
+				var evt_type = input_tags[k].getAttribute("value");
+				var evt_id = input_tags[k+1].getAttribute("event_id");
+				var date = input_tags[k+1].getAttribute("value");
+				var price = input_tags[k+2].getAttribute("value");
+				var response = input_tags[k+3].getAttribute("value");
+				var extra_information = input_tags[k+4].getAttribute("value");
 				
 				var evnt =
 				{
@@ -114,7 +114,6 @@ function updateDB(){
 						name: new_name
 					}
 				}
-
 				property.extra.push(extra);
 			}
 		}
@@ -122,7 +121,7 @@ function updateDB(){
 
 	// console.log(property);
 
-	$.post("edit_db_update.php", property).done(function(data){
-		console.log( data );
-	}, "string");
+	$.post("edit_db_update.php", property).done(function(){
+		 location.reload(true);
+	});
 }
