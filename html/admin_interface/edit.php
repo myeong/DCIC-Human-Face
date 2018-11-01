@@ -4,8 +4,10 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+	<!-- People name dropdown menu -->
 	<script src="js/edit_dropdown_names.js"></script>
 
+	<!-- Auto Complete Form CSS -->
 	<link rel="stylesheet" href="../css/auto_complete_form.css">
 
 	<!-- Bootstrap CSS -->
@@ -104,12 +106,12 @@
 								<option value="End of Case" <?php if(trim($value) == 'End of Case'){ echo 'selected';}?>>End of Case</option>
 							</select>
 						</div>
-					<?php }	$index++; } 
+					<?php }	$index++; }
 					$people = people_names($event_info[$i]['event_id']);
 					for ($j=0; $j<sizeof($people); $j++) { ?>
 						<div class="col-md-12" id="<?php echo 'db_people' . $index_reverse;?>">
 							<div class="row">
-							<?php foreach ($people[$j] as $k => $v) { 
+							<?php foreach ($people[$j] as $k => $v) {
 								if ($k == 'event_asso_id' || $k == 'person_id') {
 									continue;
 								}
@@ -126,7 +128,7 @@
 										<option value="heir" <?php if(trim($v) == 'heir'){ echo 'selected';}?>>Heir</option>
 										<option value="appraiser" <?php if(trim($v) == 'appraiser'){ echo 'selected';}?>>Appraiser</option>
 										<option value="trustee" <?php if(trim($v) == 'trustee'){ echo 'selected';}?>>Trustee</option>
-									</select>	
+									</select>
 								</div>
 								<?php } elseif ($k == 'name') { ?>
 									<div class="col-md-7">
@@ -156,10 +158,10 @@
         <div class="col-md-12" role="submit-titlebar"  id="role-submit-titlebar">
             <div class="section-title"><h3>Submit this Entry</h3></div>
         </div>
-        <div class="col-md-12">    
+        <div class="col-md-12">
             <button onclick="updateDB();">SUBMIT</button>
         </div>
-        	<div class="col-md-12 form-footer">            
+        	<div class="col-md-12 form-footer">
         </div>
 	    <div class="col-md-12">
 	    	<div class="required"> * Required</div>
@@ -174,12 +176,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
-<script src="js/edit_pageElements_update.js"></script>
+<script src="js/edit_page_elements_update.js"></script>
 <script src="js/edit_db_update.js"></script>
 <script src="js/edit_add_people.js"></script>
 <script src="js/edit_delete_people.js"></script>
 <script src="js/edit_dropdown_register.js"></script>
-<script src="js/edit_dropdown_names.js"></script>
 
 </body>
 </html>
