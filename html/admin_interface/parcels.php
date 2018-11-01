@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
 
   <title>DCIC Human Face of Big Data</title>
 
@@ -22,7 +22,9 @@
   	die("Error in connection!:" . pg_last_error());
   }
 else{
-  echo "Successfully connected to database:" . " " . pg_dbname() . " on " . pg_host();
+   /*echo "<div class='alert alert-success' role='alert'>";
+   print "Successfully connected to database:" . " " . pg_dbname() . " on " . pg_host();
+   echo "</div>";*/
   }
 
   //Querying Parcels Table Information
@@ -41,10 +43,12 @@ else{
 
 </head>
 <body>
+  <div class="container-fluid">
   <header>
     <h1>DCIC: Human Face of big Data</h1>
     <p1 class="h6">Utilize this search page to find parcel specific information within the DCIC: Human Face of Big Data relational database system.</p1>
   </header>
+  </div>
 
 <!-- Bootstrap Table Button Groups-->
 
@@ -162,10 +166,10 @@ else{
         </th> -->
         <th scope="col" class="text-center"></th>
         <th class="text-center">Parcel ID <button class="btn btn-link" onclick="sort()"><i class="fas fa-sort"></i></button></th>
-        <th scope="col" class="text-center">Block Number <button class="btn btn-link" onclick="sort()"><i class="fas fa-sort"></i></button></th>
-        <th scope="col" class="text-center">Parcel Number <button class="btn btn-link" onclick="sort()"><i class="fas fa-sort"></i></button></th>
-        <th scope="col" class="text-center">Ward Number <button class="btn btn-link" onclick="sort()"><i class="fas fa-sort"></i></button></th>
-        <th scope="col" class="text-center">Land Use <button class="btn btn-link" onclick="sort()"><i class="fas fa-sort"></i></button></th>
+        <th scope="col" class="text-center">Block Number <button class="btn btn-link"><i class="fas fa-sort"></i></button></th>
+        <th scope="col" class="text-center">Parcel Number <button class="btn btn-link"><i class="fas fa-sort"></i></button></th>
+        <th scope="col" class="text-center">Ward Number <button class="btn btn-link"><i class="fas fa-sort"></i></button></th>
+        <th scope="col" class="text-center">Land Use <button class="btn btn-link"><i class="fas fa-sort"></i></button></th>
       </tr>
     </thead>
     <tbody>
@@ -214,11 +218,23 @@ else{
 <div class="card col-sm-3" id="postgres">
 <?php echo "There are " . $num . " rows in the " . pg_dbname() . " parcels table"; ?>
 </div>
+<br><br><br><br>
 
-<footer>
-  <p>DCIC Human Face of Big Data</p>
-</footer>
+<!-- Footer -->
+<div class="footer">
+<footer class="page-footer font-small cyan darken-3">
+  <div class="container">
+    <div class="row">
+        <div class="col-md-12 py-5">
+          <div class="mb-5 flex-center">
 
+          </div>
+        </div>
+    </div>
+  </div>
+  </footer>
+</div>
+  <!-- Footer -->
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -266,15 +282,35 @@ else{
 
 //Table Sort
   function sort(){
-    var table, rows, dir;
+    var table, rows, dir, sort, switching, n;
     table = document.getElementById("table");
     rows = table.rows;
+    sort = true;
     dir = "asc";
-    /*while(true){
-    for(var i = 1; i < rows.length; i++){
-      x = rows[i].getElementsByTagName("TD")[0];
+    while(sort){
+      sort = false;
+      for(var i = 1; i < (rows.length); i++){
+        switching = false;
+        x = rows[i].getElementsByTagName("td");
+        y = rows[i].getElementsByTagName("td")[2];
+        console.log(x);
+        if(dir == 'asc'){
+          if(Number(x.innerHTML)){
+            switching = true;
+            break;
+          }
+      }/*else if(dir == "desc") {
+        if(Number(x.innerHTML < Number(y.innerHTML)){
+          switching = true;
+          break;
+        }
+      }*/
+        if(switching){
+          rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+          switching = true;
+        }
     }
-  }*/
+}
 }
 //Search filter
   function filter(){
@@ -330,6 +366,8 @@ else{
     $('#pagination').toggle();
     $('#postgres').toggle();
   });
+  //Bootstrap alert
+  $('.alert').alert();
 
 </script>
 </body>
