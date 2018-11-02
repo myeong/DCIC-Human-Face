@@ -22,4 +22,3 @@ function dropdownRegister() {
 }
 
 dropdownRegister();
-
