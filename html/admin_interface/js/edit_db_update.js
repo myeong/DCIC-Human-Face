@@ -1,8 +1,8 @@
 function updateDB(){
-	var property = new Object({action: 'edit'});
+	var property = new Object();
 
-	var ids = ["parcel", "address", "event", "people", "extra"];
-	// var ids = ["people"];
+	var ids = ["parcel", "address", "event", "people", "extra", "deleted"];
+	// var ids = ["deleted"];
 	for (var i=0; i<ids.length; i++) {
 		var input_tags = $( "input[id^='" + ids[i] + "'], select[id^='" + ids[i] + "']");
 
@@ -115,6 +115,18 @@ function updateDB(){
 					}
 				}
 				property.extra.push(extra);
+			}
+		} else if (ids[i] == "deleted") {
+			property.deleted = [];
+			for (var k=0; k<input_tags.length; k+=2){
+				var deleted_assoc_id = input_tags[k].getAttribute("event_asso_id");
+
+				var del =
+				{
+					deleted_assoc_id: deleted_assoc_id,
+				}
+
+				property.deleted.push(del);
 			}
 		}
 	}
