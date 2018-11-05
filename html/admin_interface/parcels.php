@@ -283,7 +283,7 @@ else{
 
 //Table Sort
   function sort(){
-    var table, rows, switching, the_switch;
+    var table, rows, switching, the_switch, dir;
     table = document.getElementById("table");
     switching = true;
     while(switching){
@@ -292,11 +292,11 @@ else{
       for(var i = 1; i < (rows.length - 1); i++){
         the_switch = false;
         x = rows[i].getElementsByTagName("TD")[1];
-        y = rows[i].getElementsByTagName('td')[2];
+        y = rows[i].getElementsByTagName("TD")[2];
         console.log(y);
-        if(Number(x.innerHTML > Number(y.innerHTML))){
+        if(x.innerHTML > y.innerHTML){
           the_switch = true;
-          break
+          break;
         }
       }
       if(the_switch){
