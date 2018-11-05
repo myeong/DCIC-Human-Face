@@ -166,10 +166,10 @@ else{
         </th> -->
         <th scope="col" class="text-center"></th>
         <th class="text-center">Parcel ID <button class="btn btn-link" onclick="sort()"><i class="fas fa-sort"></i></button></th>
-        <th scope="col" class="text-center">Block Number <button class="btn btn-link"><i class="fas fa-sort"></i></button></th>
-        <th scope="col" class="text-center">Parcel Number <button class="btn btn-link"><i class="fas fa-sort"></i></button></th>
-        <th scope="col" class="text-center">Ward Number <button class="btn btn-link"><i class="fas fa-sort"></i></button></th>
-        <th scope="col" class="text-center">Land Use <button class="btn btn-link"><i class="fas fa-sort"></i></button></th>
+        <th scope="col" class="text-center">Block Number <button class="btn btn-link" onclick="sort()"><i class="fas fa-sort"></i></button></th>
+        <th scope="col" class="text-center">Parcel Number <button class="btn btn-link" onclick="sort()"><i class="fas fa-sort"></i></button></th>
+        <th scope="col" class="text-center">Ward Number <button class="btn btn-link" onclick="sort()"><i class="fas fa-sort"></i></button></th>
+        <th scope="col" class="text-center">Land Use <button class="btn btn-link" onclick="sort()"><i class="fas fa-sort"></i></button></th>
       </tr>
     </thead>
     <tbody>
@@ -221,19 +221,20 @@ else{
 <br><br><br><br>
 
 <!-- Footer -->
-<div class="footer">
-<footer class="page-footer font-small cyan darken-3">
+
+<!-- <footer class="page-footer font-small cyan darken-3">
   <div class="container">
     <div class="row">
         <div class="col-md-12 py-5">
           <div class="mb-5 flex-center">
-
+            <i class="fab fa-github"></i>
           </div>
         </div>
     </div>
   </div>
-  </footer>
-</div>
+</footer> -->
+
+
   <!-- Footer -->
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -282,35 +283,28 @@ else{
 
 //Table Sort
   function sort(){
-    var table, rows, dir, sort, switching, n;
+    var table, rows, switching, the_switch;
     table = document.getElementById("table");
-    rows = table.rows;
-    sort = true;
-    dir = "asc";
-    while(sort){
-      sort = false;
-      for(var i = 1; i < (rows.length); i++){
-        switching = false;
-        x = rows[i].getElementsByTagName("td");
-        y = rows[i].getElementsByTagName("td")[2];
-        console.log(x);
-        if(dir == 'asc'){
-          if(Number(x.innerHTML)){
-            switching = true;
-            break;
-          }
-      }/*else if(dir == "desc") {
-        if(Number(x.innerHTML < Number(y.innerHTML)){
-          switching = true;
-          break;
+    switching = true;
+    while(switching){
+      switching = false;
+      rows = table.rows;
+      for(var i = 1; i < (rows.length - 1); i++){
+        the_switch = false;
+        x = rows[i].getElementsByTagName("TD")[1];
+        y = rows[i].getElementsByTagName('td')[2];
+        console.log(y);
+        if(Number(x.innerHTML > Number(y.innerHTML))){
+          the_switch = true;
+          break
         }
-      }*/
-        if(switching){
-          rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-          switching = true;
-        }
+      }
+      if(the_switch){
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+        break;
+      }
     }
-}
 }
 //Search filter
   function filter(){
@@ -349,9 +343,8 @@ else{
   });
 
   $(document).ready(function(){
-    //$('#table').DataTable(); //Initialize Datatable
     pagination();
-    sort();
+    //sort();
     filter();
   }); //Waits until DOM elements are loaded and ready to execute
 
