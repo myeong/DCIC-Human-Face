@@ -1,9 +1,10 @@
 function updateDB(){
 	var property = new Object();
 
-	var ids = ["parcel", "address", "event", "people"];
+	var ids = ["parcel", "address", "event", "people", "extra", "deleted"];
+	// var ids = ["deleted"];
 	for (var i=0; i<ids.length; i++) {
-		var input_tags = $("input[id^='" + ids[i] + "']");
+		var input_tags = $( "input[id^='" + ids[i] + "'], select[id^='" + ids[i] + "']");
 
 		// for (var j=0; j<input_tags.length; j++) {
 		// 	console.log(input_tags[j]);
@@ -18,7 +19,7 @@ function updateDB(){
 			var ward_no = input_tags[2].getAttribute("value");
 			var land_use = input_tags[3].getAttribute("value");
 
-			var par = 
+			var par =
 			{
 				parcel_id: par_id,
 				block_no: block_no,
@@ -29,7 +30,7 @@ function updateDB(){
 
 			property.parcel.push(par);
 
-		} 
+		}
 		else if (ids[i] == "address") {
 			property.address = [];
 			for (var k=0; k<input_tags.length; k+=2){
@@ -37,7 +38,7 @@ function updateDB(){
 				var st_num = input_tags[k].getAttribute("value");
 				var st_name = input_tags[k+1].getAttribute("value");
 
-				var addr = 
+				var addr =
 				{
 					address_id: add_id,
 					st_num: st_num,
@@ -49,14 +50,14 @@ function updateDB(){
 		} else if (ids[i] == "event") {
 			property.events = [];
 			for (var k=0; k<input_tags.length; k+=5){
-				var evt_id = input_tags[k].getAttribute("event_id");
-				var response = input_tags[k].getAttribute("value");
-				var extra_information = input_tags[k+1].getAttribute("value");
-				var date = input_tags[k+2].getAttribute("value");
-				var price = input_tags[k+3].getAttribute("value");
-				var evt_type_id = input_tags[k+4].getAttribute("event_type_id");
-				var evt_type = input_tags[k+4].getAttribute("value");
-				
+				var evt_type_id = input_tags[k].getAttribute("event_type_id");
+				var evt_type = input_tags[k].getAttribute("value");
+				var evt_id = input_tags[k+1].getAttribute("event_id");
+				var date = input_tags[k+1].getAttribute("value");
+				var price = input_tags[k+2].getAttribute("value");
+				var response = input_tags[k+3].getAttribute("value");
+				var extra_information = input_tags[k+4].getAttribute("value");
+
 				var evnt =
 				{
 					event_id: evt_id,
@@ -88,12 +89,54 @@ function updateDB(){
 
 				property.people.push(peo);
 			}
+		} else if (ids[i] == "extra") {
+			property.extra = [];
+			for (var k=0; k<input_tags.length; k+=2){
+				var evt_id = input_tags[k].getAttribute("event_id");
+				var new_role = input_tags[k].getAttribute("value");
+				var new_name = input_tags[k+1].getAttribute("value");
+
+				if (input_tags[k+1].getAttribute("person_id") != "") {
+					var new_person_id = input_tags[k+1].getAttribute("person_id");
+
+					var extra =
+					{
+						event_id: evt_id,
+						role: new_role,
+						person_id: new_person_id,
+						name: new_name
+					}
+				} else {
+					var extra =
+					{
+						event_id: evt_id,
+						role: new_role,
+						name: new_name
+					}
+				}
+				property.extra.push(extra);
+			}
+		} else if (ids[i] == "deleted") {
+			property.deleted = [];
+			for (var k=0; k<input_tags.length; k+=2){
+				var deleted_assoc_id = input_tags[k].getAttribute("event_asso_id");
+
+				var del =
+				{
+					deleted_assoc_id: deleted_assoc_id,
+				}
+
+				property.deleted.push(del);
+			}
 		}
 	}
 
 	// console.log(property);
 
 	$.post("edit_db_update.php", property).done(function(data){
-		console.log( data );
-	}, "string");
+		alert(data);
+		if (data.includes("successful")) {
+			window.location.href = 'parcels.php';
+		}
+	});
 }

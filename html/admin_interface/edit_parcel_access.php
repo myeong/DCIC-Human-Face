@@ -39,25 +39,13 @@ $address_query = "SELECT a.id as \"address_id\", a.st_num, a.st_name
 $address_info = send_query($connect, $address_query);
 
 // Query for event information
-$event_query = "SELECT e.event_id, e.response, e.extra_information, e.date, e.price, 
-				et.id as event_type_id, et.type
+$event_query = "SELECT et.id as event_type_id, et.type, e.event_id, e.date, e.price, e.response, e.extra_information
 			FROM humanface.events e
             JOIN humanface.event_types et on e.type = et.id
 			WHERE e.parcel_id = " . $p_id . "
 			ORDER BY e.event_id, event_type_id;";
 
 $event_info = send_query($connect, $event_query);
-
-# Storing all names
-$name_query = "SELECT name FROM humanface.people;";
-$names = send_query($connect, $name_query);
-
-# process names
-foreach ($names as $key => $value) {
-    foreach ($value as $v) {
-        $n[] = trim($v);
-    }
-}
 
 pg_close($connect);
 ?>
