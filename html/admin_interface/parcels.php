@@ -344,7 +344,7 @@ else{
 
   $(document).ready(function(){
     pagination();
-    //sort();
+    sort();
     filter();
   }); //Waits until DOM elements are loaded and ready to execute
 
