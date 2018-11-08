@@ -32,40 +32,41 @@
 
 	<div class="container">
 		<div class="row py-3" role="titlebar" id="titlebar">
-      		<div class="section-title"><h3>Parcel Information</h3></div>
-    	</div>
-    	<!-- Basic Parcel Information -->
-  		<div class="row rounded pb-5">
-  			<!--Iterate the parcel_info array -->
-  			<?php $i=0; foreach ($parcel_info[0] as $key => $value){ if($key == 'parcel_id'){continue;} ?>
-  			<div class="col-md-3">
+			<div class="section-title"><h3>Parcel Information</h3></div>
+    </div>
+
+    <!-- Basic Parcel Information -->
+		<div class="row rounded pb-5">
+			<!--Iterate the parcel_info array -->
+			<?php $i=0; foreach ($parcel_info[0] as $key => $value){ if($key == 'parcel_id'){continue;} ?>
+			<div class="col-md-3">
 				<label><?php echo $key;?><small class="required">*</small></label>
 				<?php if($key == 'block_no' || $key == 'parcel_no') { ?>
-    			<input type="text" class="parcel" id="<?php echo 'parcel' . $i;?>" parcel_id=<?php echo $parcel_info[0]['parcel_id'];?> name="<?php echo $key;?>" value = "<?php echo trim($value);?>" required minlength="1" onblur="pageUpdate(id)">
-    			<?php } else if ($key == 'ward_no') { ?>
-    			<input type="number" class="parcel" id="<?php echo 'parcel' . $i;?>" parcel_id=<?php echo $parcel_info[0]['parcel_id'];?> name="<?php echo $key;?>" value = "<?php echo trim($value);?>" onblur="pageUpdate(id)">
-    			<?php } else { ?>
-				<select class="form-control" id="<?php echo 'parcel' . $i;?>" parcel_id="<?php echo $parcel_info[0]['parcel_id'];?>" name="land_use" value="<?php echo trim($parcel_info[0]['land_use']);?>" onblur="pageUpdate(id)">
-					<option value="residential">Residential</option>
-					<option value="commercial">Commercial</option>
-				</select>
+	  			<input type="text" class="parcel" id="<?php echo 'parcel' . $i;?>" parcel_id=<?php echo $parcel_info[0]['parcel_id'];?> name="<?php echo $key;?>" value = "<?php echo trim($value);?>" required minlength="1" onblur="pageUpdate(id)">
+	  		<?php } else if ($key == 'ward_no') { ?>
+	  			<input type="number" class="parcel" id="<?php echo 'parcel' . $i;?>" parcel_id=<?php echo $parcel_info[0]['parcel_id'];?> name="<?php echo $key;?>" value = "<?php echo trim($value);?>" onblur="pageUpdate(id)">
+	  		<?php } else { ?>
+					<select class="form-control" id="<?php echo 'parcel' . $i;?>" parcel_id="<?php echo $parcel_info[0]['parcel_id'];?>" name="land_use" value="<?php echo trim($parcel_info[0]['land_use']);?>" onblur="pageUpdate(id)">
+						<option value="residential">Residential</option>
+						<option value="commercial">Commercial</option>
+					</select>
 				<?php } $i++; ?>
 			</div>
-			<?php } ?>
+		<?php } ?>
 
-  			<!-- Address Information -->
-        	<?php $index=0; for ($i=0; $i<sizeof($address_info); $i++) { foreach($address_info[$i] as $key => $value) { if ($key == 'address_id') {continue;}?>
-        	<div class="col-md-6">
-    			<label><?php echo trim($key);?></label>
+			<!-- Address Information -->
+	  	<?php $index=0; for ($i=0; $i<sizeof($address_info); $i++) { foreach($address_info[$i] as $key => $value) { if ($key == 'address_id') {continue;}?>
+	  	<div class="col-md-6">
+				<label><?php echo trim($key);?></label>
 				<input type="text" class="form-control" id="<?php echo 'address' . $index;?>" address_id="<?php echo $address_info[$i]['address_id'];?>" value = "<?php echo trim($value);?>" onblur="pageUpdate(id)">
-        	<?php $index++; ?>
-        	</div>
-        	<?php }} ?>
+	  	<?php $index++; ?>
+	  	</div>
+	  	<?php }} ?>
 		</div>
 
 		<div class="row py-3" role="titlebar" id="titlebar">
-      		<div class="section-title"><h3>Event Information</h3></div>
-    	</div>
+			<div class="section-title"><h3>Event Information</h3></div>
+    </div>
 
 		<!-- Event Information -->
 		<div class="container event-container px-0 pb-2">
@@ -138,7 +139,8 @@
 							    		</div>
 							    	</div>
 							    	<div class="col-md-1 d-flex align-items-end justify-content-center">
-							    		<button class="btn btn-danger mb-1" onclick="deletePeople(this.parentNode.parentNode.parentNode.id, '<?php echo $people[$j]['event_asso_id'];?>')">
+							    		<button class="btn btn-danger mb-1" onclick="deletePeople(this.parentNode.parentNode.parentNode.id, this.parentNode.parentNode.children[1].children[2].children[0].id,
+											this.parentNode.parentNode.children[0].children[1].id)">
 							    			<i class="fas fa-trash-alt"></i>
 							    		</button>
 							    	</div>
@@ -155,17 +157,9 @@
 		</div>
 
 		<!-- Submit Button -->
-        <div class="col-md-12" role="submit-titlebar"  id="role-submit-titlebar">
-            <div class="section-title"><h3>Submit this Entry</h3></div>
-        </div>
-        <div class="col-md-12">
-            <button onclick="updateDB();">SUBMIT</button>
-        </div>
-        	<div class="col-md-12 form-footer">
-        </div>
-	    <div class="col-md-12">
-	    	<div class="required"> * Required</div>
-	    </div>
+    <div class="row pb-3">
+        <button class="btn btn-lg btn-outline-dark my-3" onclick="updateDB();">SUBMIT</button>
+    </div>
 	</div>
 
 	<br><br>

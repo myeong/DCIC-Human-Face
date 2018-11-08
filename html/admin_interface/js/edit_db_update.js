@@ -1,8 +1,8 @@
 function updateDB(){
-	var property = new Object({action: 'edit'});
+	var property = new Object();
 
-	var ids = ["parcel", "address", "event", "people", "extra"];
-	// var ids = ["people"];
+	var ids = ["parcel", "address", "event", "people", "extra", "deleted"];
+	// var ids = ["deleted"];
 	for (var i=0; i<ids.length; i++) {
 		var input_tags = $( "input[id^='" + ids[i] + "'], select[id^='" + ids[i] + "']");
 
@@ -19,7 +19,7 @@ function updateDB(){
 			var ward_no = input_tags[2].getAttribute("value");
 			var land_use = input_tags[3].getAttribute("value");
 
-			var par = 
+			var par =
 			{
 				parcel_id: par_id,
 				block_no: block_no,
@@ -30,7 +30,7 @@ function updateDB(){
 
 			property.parcel.push(par);
 
-		} 
+		}
 		else if (ids[i] == "address") {
 			property.address = [];
 			for (var k=0; k<input_tags.length; k+=2){
@@ -38,7 +38,7 @@ function updateDB(){
 				var st_num = input_tags[k].getAttribute("value");
 				var st_name = input_tags[k+1].getAttribute("value");
 
-				var addr = 
+				var addr =
 				{
 					address_id: add_id,
 					st_num: st_num,
@@ -57,7 +57,7 @@ function updateDB(){
 				var price = input_tags[k+2].getAttribute("value");
 				var response = input_tags[k+3].getAttribute("value");
 				var extra_information = input_tags[k+4].getAttribute("value");
-				
+
 				var evnt =
 				{
 					event_id: evt_id,
@@ -99,7 +99,7 @@ function updateDB(){
 				if (input_tags[k+1].getAttribute("person_id") != "") {
 					var new_person_id = input_tags[k+1].getAttribute("person_id");
 
-					var extra = 
+					var extra =
 					{
 						event_id: evt_id,
 						role: new_role,
@@ -107,7 +107,7 @@ function updateDB(){
 						name: new_name
 					}
 				} else {
-					var extra = 
+					var extra =
 					{
 						event_id: evt_id,
 						role: new_role,
@@ -116,12 +116,27 @@ function updateDB(){
 				}
 				property.extra.push(extra);
 			}
+		} else if (ids[i] == "deleted") {
+			property.deleted = [];
+			for (var k=0; k<input_tags.length; k+=2){
+				var deleted_assoc_id = input_tags[k].getAttribute("event_asso_id");
+
+				var del =
+				{
+					deleted_assoc_id: deleted_assoc_id,
+				}
+
+				property.deleted.push(del);
+			}
 		}
 	}
 
 	// console.log(property);
 
-	$.post("edit_db_update.php", property).done(function(){
-		 location.reload(true);
+	$.post("edit_db_update.php", property).done(function(data){
+		alert(data);
+		if (data.includes("successful")) {
+			window.location.href = 'parcels.php';
+		}
 	});
 }

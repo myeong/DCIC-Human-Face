@@ -1,11 +1,9 @@
-function deletePeople(div_id, event_asso_id){
-	if (div_id.includes("db")) {
-		var people = new Object({action: 'delete'});
+function deletePeople(row_id, role_div_id, people_div_id){
+	if (row_id.includes("db")) {
+		
+		$( "#" + role_div_id).attr("id", "deleted_" + role_div_id);
+		$( "#" + people_div_id).attr("id", "deleted_" + people_div_id);
 
-		people.event_assoc = [];
-		people.event_assoc.push({event_asso_id: event_asso_id});
-
-		$.post("edit_db_update.php", people);
 	}
-	$( "#" + div_id ).remove();
+	$( "#" + row_id ).hide();
 }

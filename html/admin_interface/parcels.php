@@ -133,7 +133,7 @@ else{
         data-placement="bottom">
         <i class="fas fa-table"></i>
       </button>
-      <button class="btn btn-dark"
+      <button class="btn btn-dark" onclick="sort()"
         data-toggle="popover"
         data-trigger="hover"
         data-content="sort table"
@@ -166,10 +166,10 @@ else{
         </th> -->
         <th scope="col" class="text-center"></th>
         <th class="text-center">Parcel ID <button class="btn btn-link" onclick="sort()"><i class="fas fa-sort"></i></button></th>
-        <th scope="col" class="text-center">Block Number <button class="btn btn-link"><i class="fas fa-sort"></i></button></th>
-        <th scope="col" class="text-center">Parcel Number <button class="btn btn-link"><i class="fas fa-sort"></i></button></th>
-        <th scope="col" class="text-center">Ward Number <button class="btn btn-link"><i class="fas fa-sort"></i></button></th>
-        <th scope="col" class="text-center">Land Use <button class="btn btn-link"><i class="fas fa-sort"></i></button></th>
+        <th scope="col" class="text-center">Block Number <button class="btn btn-link" onclick="sort()"><i class="fas fa-sort"></i></button></th>
+        <th scope="col" class="text-center">Parcel Number <button class="btn btn-link" onclick="sort()"><i class="fas fa-sort"></i></button></th>
+        <th scope="col" class="text-center">Ward Number <button class="btn btn-link" onclick="sort()"><i class="fas fa-sort"></i></button></th>
+        <th scope="col" class="text-center">Land Use <button class="btn btn-link" onclick="sort()"><i class="fas fa-sort"></i></button></th>
       </tr>
     </thead>
     <tbody>
@@ -221,154 +221,27 @@ else{
 <br><br><br><br>
 
 <!-- Footer -->
-<div class="footer">
-<footer class="page-footer font-small cyan darken-3">
+
+<!-- <footer class="page-footer font-small cyan darken-3">
   <div class="container">
     <div class="row">
         <div class="col-md-12 py-5">
           <div class="mb-5 flex-center">
-
+            <i class="fab fa-github"></i>
           </div>
         </div>
     </div>
   </div>
-  </footer>
-</div>
+</footer> -->
+
+
   <!-- Footer -->
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-
-<!-- W3.JS JavaScript -->
-<script src="https://www.w3schools.com/lib/w3.js"></script>
-
-<script>
-  //JavaScript & jQuery Table Pagination, Sort, & Filter
-  window.onerror = function(msg, url, line) {
-                 alert("An error occurred.");
-                 alert("Message: " + msg);
-                 alert("url" + url);
-                 alert("line number" + line);
-              }
-//Table pagination
-  function pagination() {
-    $("table").each(function(){
-      //Variables
-      var page = 0;
-      var numpage = 10;
-      var $pagi = $(this);
-      $pagi.bind('repaginate', function(){
-        $pagi.find('tbody tr').hide().slice(page * numpage, (page + 1) * numpage).show();
-      });
-      $pagi.trigger('repaginate');
-      var numrows = $pagi.find('tbody tr').length;
-      var numpages = Math.ceil(numrows/numpage);
-      var $pager = $('<div class = "pager float-md-right"></div>');
-      for(var curpage = 0; curpage < numpages; curpage++){
-        $('<button class="page-number"></button>').text(curpage + 1).bind('click',
-        {newPage: curpage},
-        function(event) {
-          page = event.data['newPage'];
-          console.log(page); //Prints selected page number onto the console
-          $pagi.trigger('repaginate');
-          $(this).addClass('active').siblings().removeClass('active');
-        }).appendTo($pager).addClass('clickable');
-      }
-      $pager.insertBefore($pagi).find('button.page-number:first').addClass('active');
-    });
-  }
-
-//Table Sort
-  function sort(){
-    var table, rows, dir, sort, switching, n;
-    table = document.getElementById("table");
-    rows = table.rows;
-    sort = true;
-    dir = "asc";
-    while(sort){
-      sort = false;
-      for(var i = 1; i < (rows.length); i++){
-        switching = false;
-        x = rows[i].getElementsByTagName("td");
-        y = rows[i].getElementsByTagName("td")[2];
-        console.log(x);
-        if(dir == 'asc'){
-          if(Number(x.innerHTML)){
-            switching = true;
-            break;
-          }
-      }/*else if(dir == "desc") {
-        if(Number(x.innerHTML < Number(y.innerHTML)){
-          switching = true;
-          break;
-        }
-      }*/
-        if(switching){
-          rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-          switching = true;
-        }
-    }
-}
-}
-//Search filter
-  function filter(){
-    var input, filter, table, tr, td, x, q;
-      input = document.getElementById("input");
-      filter = input.value;
-      table = document.getElementById("table");
-      tr = table.getElementsByTagName("tr");
-
-      //Loop through all the table rows, and hide those that do not match the search query
-      for(x = 0; x < tr.length; x++){
-        f = tr[x].getElementsByTagName("td"); //Table filter
-        if(f[1]){
-          if(f[1].innerHTML.indexOf(filter) > -1 || f[2].innerHTML.indexOf(filter) > -1
-              || f[3].innerHTML.indexOf(filter) > -1 || f[4].innerHTML.indexOf(filter) > -1
-              || f[5].innerHTML.indexOf(filter) > -1){
-            tr[x].style.display = "";
-          }
-          else{
-            tr[x].style.display = "none";
-          }
-        }
-        }
-      }
-
-  //Refreshes the webpage
-  function refresh(){
-    location.reload(); //Pagination refresh button onclick function
-  } //Not intended to be loaded when the document object model is ready.
-
-  //jQuery Code
-
-  //Bootstrap Popover
-  $(function () {
-    $('[data-toggle="popover"]').popover();
-  });
-
-  $(document).ready(function(){
-    //$('#table').DataTable(); //Initialize Datatable
-    pagination();
-    sort();
-    filter();
-  }); //Waits until DOM elements are loaded and ready to execute
-
-  //User Interface functions
-
-  // Show/Hide Button Function
-  $('#table-pagi').click(function(){
-    $("table").toggle();
-  });
-  //Show/Hide Pagination Function
-  $('#pagi').on("click", function(){
-    $('#pagination').toggle();
-    $('#postgres').toggle();
-  });
-  //Bootstrap alert
-  $('.alert').alert();
-
-</script>
+<!-- Javascript File -->
+<script type="text/javascript" src="js/script.js"></script>
 </body>
 </html>

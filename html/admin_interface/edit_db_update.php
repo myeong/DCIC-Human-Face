@@ -15,20 +15,17 @@ if (!$connect){
 	die("Error in connection!");
 }
 
-// javascript object from edit page
-$a_parcel = $_POST;
+try {
+	// javascript object from edit page
+	$a_parcel = $_POST;
 
-// echo "<pre>";
-// print_r($a_parcel);
-// echo "</pre>";
-if ($a_parcel['action'] == 'edit') {
 	foreach ($a_parcel as $key => $value) {
 		if ($key == 'parcel') {
 			$parcel_id = $value[0]['parcel_id'];
 			$block_no = $value[0]['block_no'];
 			$parcel_no = $value[0]['parcel_no'];
 			$ward_no = $value[0]['ward_no'];
-			$land_use = $value[0]['land_use'];		
+			$land_use = $value[0]['land_use'];
 
 			$p_query = "UPDATE humanface.parcels SET block_no=" . $block_no . ", parcel_no=" . $parcel_no . ", ward_no=" . $ward_no . ", land_use='" . $land_use . "' WHERE parcel_id=" . $parcel_id . ";";
 
@@ -70,7 +67,7 @@ if ($a_parcel['action'] == 'edit') {
 					"name" => trim($row['name'])
 				);
 				$people_names[] = $person_name;
-			}	
+			}
 
 			foreach ($value as $k => $v) {
 				$event_asso_id = $v['event_asso_id'];
@@ -81,7 +78,7 @@ if ($a_parcel['action'] == 'edit') {
 				// if person name exists in current list
 				if (array_search($name, array_column($people_names, 'name')) !== False) {
 					$peo_query = "UPDATE humanface.event_people_assoc SET person_id=" . $person_id  . ", role='" . $role . "' WHERE id=" . $event_asso_id . ";";
-					
+
 					send_query($connect, $peo_query);
 				}
 
@@ -89,7 +86,7 @@ if ($a_parcel['action'] == 'edit') {
 				else {
 					$peo_query = "UPDATE humanface.people SET name='" . $name . "' WHERE person_id=" . $person_id . ";";
 					$role_query = "UPDATE humanface.event_people_assoc SET role='" . $role . "' WHERE id=" .$event_asso_id . ";";
-					
+
 					send_query($connect, $peo_query);
 					send_query($connect, $role_query);
 				}
@@ -117,19 +114,19 @@ if ($a_parcel['action'] == 'edit') {
 					send_query($connect, $extra_query_2);
 				}
 			}
+		} else if ($key == 'deleted') {
+			foreach ($value as $k => $v) {
+				$del_e_assoc_id = $v['deleted_assoc_id'];
+
+				$d_query = "DELETE FROM humanface.event_people_assoc WHERE id=" . $del_e_assoc_id . ";";
+
+				send_query($connect, $d_query);
+			}
 		}
 	}
-} 
-else if ($a_parcel['action'] == 'delete') {
-	foreach ($a_parcel as $key => $value) {
-		if ($key == 'event_assoc') {
-			$event_assoc_id = $value[0]['event_asso_id'];
-
-			$d_query = "DELETE FROM humanface.event_people_assoc WHERE id=" . $event_assoc_id . ";";
-
-			send_query($connect, $d_query);
-		}
-	}
+	echo 'Update was successful!';
+} catch(Exception $e){
+	echo 'ERROR: ' . $e->getMessage();
 }
 
 pg_close($connect);
@@ -140,4 +137,3 @@ pg_close($connect);
 // print_r($a_parcel);
 // echo "</pre>";
 ?>
-
