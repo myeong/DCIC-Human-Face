@@ -17,6 +17,7 @@ Any web-related materials such as PHP, Javascript, and SQL files are here. This 
 #### vm
 Vagrant and Ansible are a good solution to maintain each member's local development environment consistent. It is not required to use Vagrant, but it is highly recommended in the development process. Configuration files and scripts are available in this folder.
 
+##### As of November 2018, there have been updates on the Vagrant, Ansible, and Virtualbox versions based on OS updates: `Vagrant 2.2`, `Ansible 2.7`, and `VirtualBox 5.2` 
 
 ### Resources and Tools
 Data files and resources are not publically available, but will be open to project participants. If you need access to any of the resources, contact Myeong Lee at myeong@umd.edu.

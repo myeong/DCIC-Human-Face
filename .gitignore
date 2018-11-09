@@ -101,6 +101,8 @@ ENV/
 
 .DS_Store
 .vagrant
+playbook.retry
+
 GIS/parcels
 GIS/Asheville_map/new_Asheville_map3.tif*
 
@@ -111,7 +113,7 @@ html/credentials.inc.php
 
 !README.md
 
-python/data/transcription.csv
+python/data/*.csv
 python/Output/*.csv
 python/output/*.csv
 
