@@ -43,13 +43,10 @@ else{
 
 </head>
 <body>
+  <div>
   <img src="../images/LOGO.png">
-  <div class="container-fluid">
-  <header>
-    <h1>DCIC: Human Face of big Data</h1>
-    <p1 class="h6">Utilize this search page to find parcel specific information within the DCIC: Human Face of Big Data relational database system.</p1>
-  </header>
   </div>
+  
 
 <!-- Bootstrap Table Button Groups-->
 
