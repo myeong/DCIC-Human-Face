@@ -35,6 +35,7 @@
 
 //Table Sort
   function sort(){
+    //Map functions, two-d array column and row ids.
     var table, rows, switching, the_switch, dir;
     table = document.getElementById("table");
     switching = true;
@@ -52,7 +53,7 @@
         }
       }
       if(the_switch){
-        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        rows[i].parentNode.insertBefore(rows[i + 5], rows[i]);
         switching = true;
         break;
       }
