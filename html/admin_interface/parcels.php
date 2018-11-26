@@ -44,9 +44,9 @@ else{
 </head>
 <body>
   <div>
-  <img src="../images/LOGO.png">
+  <img src="../images/LOGO.png" alt="DCIC Logo">
   </div>
-  
+
 
 <!-- Bootstrap Table Button Groups-->
 
