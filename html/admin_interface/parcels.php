@@ -10,6 +10,9 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
 
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/parcels.css" type="text/css">
+
   <title>DCIC Human Face of Big Data</title>
 
   <?php
@@ -43,10 +46,9 @@ else{
 
 </head>
 <body>
-  <div>
+  <div id="section-header">
   <img src="../images/LOGO.png" alt="DCIC Logo">
   </div>
-
 
 <!-- Bootstrap Table Button Groups-->
 
@@ -220,17 +222,10 @@ else{
 
 <!-- Footer -->
 
-<!-- <footer class="page-footer font-small cyan darken-3">
-  <div class="container">
-    <div class="row">
-        <div class="col-md-12 py-5">
-          <div class="mb-5 flex-center">
-            <i class="fab fa-github"></i>
-          </div>
-        </div>
-    </div>
+<footer>
+  <div class="page-footer">
   </div>
-</footer> -->
+</footer>
 
 
   <!-- Footer -->
