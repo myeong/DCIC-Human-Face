@@ -6,6 +6,8 @@
   text-align: center;
   color: white;
 }
-.section-footer{
-  background-color: black;
+.footer-section{
+  background-color: #4d4d4d;
+  color: white;
+  text-align: center;
 }
