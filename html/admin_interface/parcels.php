@@ -43,6 +43,7 @@ else{
 
 </head>
 <body>
+  <img src="../images/LOGO.png">
   <div class="container-fluid">
   <header>
     <h1>DCIC: Human Face of big Data</h1>
