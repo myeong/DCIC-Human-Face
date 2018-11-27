@@ -49,7 +49,7 @@ else{
 
 </head>
 <body>
-  <div id="section-header">
+  <div class="section-header">
   <img src="../images/LOGO.png" alt="DCIC Logo">
   </div>
 
