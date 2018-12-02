@@ -67,17 +67,6 @@ else{
         Delete
       </button>
     </form>
-      <form class="form-group col" method="post" name="edit" action="edit.php">
-      <button type="button" class="btn btn-primary my-2 my-sm-0"
-      data-toggle="popover"
-      title="Edit an Existing Record"
-      data-trigger="hover"
-      data-placement="bottom"
-      data-content="Selecting this button will update an existing record in the Humanface of Big Data Relational Database">
-        <i class="fas fa-edit"></i>
-        Edit
-      </button>
-      </form>
       <form class="form-group col" action="insert.php" method="post" name="add">
       <button class="btn btn-success my-2 my-sm-0 octicon-diff-added" type="submit" value="submit"
       data-toggle="popover"

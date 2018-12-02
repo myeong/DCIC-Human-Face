@@ -11,7 +11,7 @@
       //Variables
       var page = 0;
       var numpage = 10;
-      var $pagi = $(this);
+      var $pagi =  $(this);
       $pagi.bind('repaginate', function(){
         $pagi.find('tbody tr').hide().slice(page * numpage, (page + 1) * numpage).show();
       });
@@ -45,9 +45,10 @@
       for(var i = 1; i < (rows.length - 1); i++){
         the_switch = false;
         x = rows[i].getElementsByTagName("TD")[1];
-        y = rows[i].getElementsByTagName("TD")[2];
+        y =
+        rows[i].getElementsByTagName("TD")[2];
         console.log(y);
-        if(x.innerHTML > y.innerHTML){
+        if(Number(x.innerHTML) > Number(y.innerHTML)){
           the_switch = true;
           break;
         }
