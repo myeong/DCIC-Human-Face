@@ -8,7 +8,7 @@ APP_DB_PASS=humanface
 APP_DB_NAME=$APP_DB_USER
 
 # Edit the following to change the version of PostgreSQL that is installed
-PG_VERSION=9.4
+PG_VERSION=9.5
 
 ###########################################################
 # Changes below this line are probably not necessary
@@ -48,16 +48,21 @@ apt-get -y install policykit-1
 apt-get -y install policycoreutils
 apt-get -y install gettext
 apt-get -y install apache2
-apt-get -y install php5
-apt-get -y install php5-mcrypt
-apt-get -y install php5-pgsql
-apt-get -y install php5-gd
-apt-get -y install php5-tidy
+apt-get -y install php7.0
+apt-get -y install php7.0-mcrypt
+apt-get -y install php7.0-pgsql
+apt-get -y install php7.0-gd
+apt-get -y install php7.0-tidy
 apt-get -y install php-pear
+apt-get -y install phppgadmin 
+apt-get -y install libapache2-mod-php7.0 
 echo "Apache and PHP installed."
 
 service apache2 start
-sudo rm /var/www/html/index.html
+if [ -f /var/www/html/index.html]
+then
+  sudo rm /var/www/html/index.html
+fi
 service apache2 restart
 
 PROVISIONED_ON=/etc/vm_provision_on_timestamp
@@ -101,7 +106,9 @@ service postgresql restart
 
 cat << EOF | su - postgres -c psql
 -- Create the database user:
-CREATE USER $APP_DB_USER WITH PASSWORD '$APP_DB_PASS';
+CREATE USER $APP_DB_USER WITH PASSWORD '$APP_DB_PASS'  superuser;
+
+ALTER USER $APP_DB_USER WITH SUPERUSER CREATEDB;
 
 -- Create the database:
 CREATE DATABASE $APP_DB_NAME WITH OWNER=$APP_DB_USER
@@ -121,5 +128,5 @@ print_db_usage
 service postgresql restart
 
 export PGPASSWORD=$APP_DB_PASS 
-psql -U $APP_DB_USER -h localhost $APP_DB_NAME < /var/www/db_dump/20170531.sql
+psql -U $APP_DB_USER -h localhost $APP_DB_NAME < /var/www/db_dump/180426_cleaned_up.sql
 echo "$APP_DB_NAME was successfully imported to the PostgreSQL."
