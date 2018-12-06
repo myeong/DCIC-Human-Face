@@ -760,8 +760,7 @@ $.when(load_data()).done(function() {
 			.text(function(d,i) { return d+":"+ percentage[i]+"%"; });                     	
                     	
 	//Line Chart 
-        function arrayElemCount(arrs){
-        	console.log(arrs);
+        function arrayElemCount(arrs){        	
 	    	var newArrs = [];
 	     	if(arrs.length > 0) {
 	        	for(var i = 0,ilen = arrs.length; i < ilen; i+=1) {
