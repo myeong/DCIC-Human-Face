@@ -359,6 +359,10 @@ $app->get('/list/', function () use ($app) {
 	
 });
 
+$app->get('/admin/', function () use ($app) {
+	$app->render('../admin_interface/parcels.php');
+}
+
 $app->get('/delete/:block/', function ($block) use ($app) {
 	$dbconn = connect_db();
 
