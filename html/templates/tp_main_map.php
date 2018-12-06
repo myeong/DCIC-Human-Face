@@ -364,7 +364,8 @@ $.when(load_data()).done(function() {
     	var index = 0;
 
 		feature.properties['events'] = zero; 
-
+		console.log(parcel_num)
+		console.log(block_num)
 		
 		// Search gthough Data
     	for (var i = 0; i< data.length; i++){
@@ -373,20 +374,25 @@ $.when(load_data()).done(function() {
 
     		// Only taking the first token for the array. (e.g., Transfer of Deed --> Transfer)
     		type = type.split(" ")[0];
-		 
-    		if (parseInt(data[i].block_no) == block_num && parseInt(data[i].parcel_no) == parcel_num){
+		 	
+    		if (parseInt(data[i].block_no) == block_num && parseInt(data[i].parcel_no) == parcel_num){    	
+
     			if (type && data[i].date){					
 					var obj = {};
 					obj[type] = data[i].date;
 					if (type == "Decision"){
-						obj["response"] = data[i].response.replace(/\s+/g, '');;
+						if (data[i].response){
+							obj["response"] = data[i].response.replace(/\s+/g, '');
+						}
 					}
 					events.push(obj);    				
     			}
     		}
 
     	}
+    	
     	if (events.length >0) feature.properties['events'] = events;
+    	
     };
 
 	var result_div = L.DomUtil.create('div','menu-result-container');	
@@ -1155,15 +1161,13 @@ $.when(load_data()).done(function() {
 
 	
 	// When a polygon is clicked
-	function onEachFeature(feature, layer) {
-
+	function onEachFeature(feature, layer) {		
 	    if (db_data){
 	    	parsePoly(feature, db_data);		    	
-	    }
+	    }	    
 		
 	    var popupContent = "";
 	    var circles = "";
-	    
 	    
 	    if (feature.properties.events == "No data"){
 	    	popupContent = "<p>No Data</p>";
@@ -1225,10 +1229,12 @@ $.when(load_data()).done(function() {
 		    }
 		}
 		
-
 		var parcel_num = feature.properties.parcel;
     	var block_num = feature.properties.block;
     	var container = $('<div />');
+
+    	console.log(parcel_num);
+    	console.log(block_num);
     	
     	layer.on('click', function (e) {
 	        // e = event
