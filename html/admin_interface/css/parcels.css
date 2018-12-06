@@ -1,1 +1,16 @@
-
+.section-header{
+  /*border-bottom: 1px solid black;*/
+}
+.page-footer{
+  background-color: #696969;
+  text-align: center;
+  color: white;
+}
+.footer-section{
+  background-color: #4d4d4d;
+  color: white;
+  text-align: center;
+}
+body{
+  background-color: white;
+}
