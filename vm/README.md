@@ -11,6 +11,8 @@ This folder has a Vagrantfile and Ansible scripts that automatically install PHP
 	- Ansible 2.1.x (only for Mac or Linux. On Windows, you cannot run Ansible.)
 	- Python (2.x)
 
+As of November 2018, we're using Vagrant 2.2, Ansible 2.7, and VirtualBox 5.2.
+
 # Quickstart
 
 1. Launch and configure the virtual machine by running the following command.
