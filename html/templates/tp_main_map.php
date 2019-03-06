@@ -364,8 +364,8 @@ $.when(load_data()).done(function() {
     	var index = 0;
 
 		feature.properties['events'] = zero; 
-		console.log(parcel_num)
-		console.log(block_num)
+		// console.log(parcel_num)
+		// console.log(block_num)
 		
 		// Search gthough Data
     	for (var i = 0; i< data.length; i++){

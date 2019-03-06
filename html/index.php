@@ -61,7 +61,7 @@ $app->get('/index.html', function () use ($app) {
   	$app->redirect("/");
 });
 
-$app->get('/', function () use ($app) {
+$app->get('/', function () use ($app) {	
     $content['title'] = "Human Face of Big Data";
     $content['intro'] = <<<HTML
 		<p>Asheville, NC</p>
@@ -84,7 +84,7 @@ $app->get('/map/', function () use ($app) {
 HTML;
 	// return $app->response->setBody($response);
 	// Render content with simple bespoke templates
-	$app->view()->setData(array('content' => $content));
+	$app->view()->setData(array('content' => $content));	
 	$app->render('tp_main_map.php');
     
 });
